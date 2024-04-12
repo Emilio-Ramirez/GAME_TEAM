@@ -49,7 +49,7 @@ México
 
 ### **Summary**
 
-The game will start by having the player choose an event, for example, a wedding, a picnic, or a Christmas dinner. Within this event, there will be 1 main dish and secondary dishes. The player will have to make the maximum number of dishes, either secondary or the main one, but the main dish is more complex to make in order to obtain more points. The player will only have 4 cards in their hand at all times. They can achieve this by combining cards to make the dish, either by combining ingredients or combining ingredients with utensils to perform preparation methods. The cards will have a certain number of turns to exist on the table depending on the position in which they are arranged. When the turns are over, these cards will be discarded.
+The game begins with players selecting an event, such as a wedding, a picnic, or a Christmas dinner. Each event features a main dish along with secondary dishes. Players aim to prepare as many dishes as possible, focusing on either the main dish or the secondary ones. However, crafting the main dish is more intricate and yields higher points. Throughout the game, players maintain a hand of four cards. These cards can be combined to create dishes by mixing ingredients or pairing ingredients with utensils to execute preparation methods. Alongside ingredient and utensil cards, there are also special cards that introduce bonuses or penalties, influencing the gameplay dynamics. Each card has a limited number of turns it can remain on the table based on its placement. Once the turns are exhausted, the cards are discarded.
 
 ### **Gameplay**
 
@@ -72,7 +72,6 @@ Obstacles:
 
 - Adaptability: As cards expire and new ones are drawn, players must adapt their strategy to make the most of the available ingredients and utensils.
 
-The gameplay should be engaging and challenging, requiring players to make tough decisions and think ahead to optimize their point-scoring potential within the given time constraints. The game's difficulty can be adjusted by modifying the complexity of recipes, the number of turns cards remain on the table, or the frequency of card replenishment.
 
 ### **Mindset**
 
