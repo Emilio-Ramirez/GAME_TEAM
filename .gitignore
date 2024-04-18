@@ -77,3 +77,6 @@ crashlytics-build.properties
 
 #for vscode users
 .vscode/
+
+#cache files
+VideoJuego/Library/PackageCache/
