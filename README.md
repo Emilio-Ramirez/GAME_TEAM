@@ -84,14 +84,25 @@ The Recipe Rumble card game should challenge players to think critically and cre
 ### **Screens**
 
 1. Title Screen
-   1. Options
-2. Level Select
-3. Game
-   1. Inventory
-   2. Assessment / Next Level
-4. End Credits
-
-_(example)_
+   1. Start
+   2. Recipies
+2. Event Select
+   1. Wedding
+   2. Picnic
+   3. Christmas
+3. Board
+   1. Deck
+   2. Objective Dishes
+   3. Hand
+   4. Cooking Assembly
+5. End of Game
+   1. Home
+   2. Restart
+   3. Select event
+6. Recipie book
+   1. My recipies
+   2. Purchase
+   3. View Details of recipie
 
 ### **Controls**
 
@@ -99,7 +110,42 @@ How will the player interact with the game? Will they be able to choose the cont
 
 ### **Mechanics**
 
-Are there any interesting mechanics? If so, how are you going to accomplish them? Physics, algorithms, etc.
+#### Flujo de control (mecánicas)
+
+1. Selección de Evento:
+   - Al iniciar el juego, el jugador debe seleccionar un evento entre las opciones disponibles: boda, picnic o cena de Navidad.
+   - Cada evento tiene un platillo principal y platillos secundarios asociados.
+
+2. Mazo de Cartas:
+   - El jugador recibe un mazo de cartas específico para el evento seleccionado.
+   - El mazo contiene cartas de ingredientes y utensilios necesarios para preparar los platillos del evento.
+   - El jugador roba cartas de su mazo para tener una mano de cartas para jugar.
+
+3. Combinación de Cartas:
+   - El jugador puede combinar cartas de ingredientes y utensilios para preparar platillos según las recetas disponibles.
+   - Cada receta especifica los ingredientes y utensilios necesarios para preparar un platillo.
+   - Al combinar las cartas correctamente, el jugador "cocina" el platillo y recibe puntos basados en el valor nutricional acumulado de los ingredientes utilizados.
+
+4. Cartas Especiales:
+   - Además de las cartas de ingredientes y utensilios, el mazo también contiene cartas especiales.
+   - Las cartas especiales tienen efectos únicos que pueden beneficiar o perjudicar al jugador.
+   - Ejemplos de efectos de cartas especiales incluyen duplicar la duración de las cartas en juego, bloquear combinaciones de cartas, entre otros.
+
+5. Descarte de Cartas:
+   - Cada carta tiene un número limitado de turnos que puede permanecer en juego antes de ser descartada automáticamente.
+   - El jugador debe gestionar estratégicamente sus cartas y hacer combinaciones antes de que se descarten.
+
+6. Acumulación de Puntos:
+   - El jugador acumula puntos al preparar platillos exitosamente.
+   - Cuantos más ingredientes y de mayor valor nutricional se utilicen en un platillo, más puntos se obtienen.
+
+7. Desbloqueo de Recetas:
+   - A medida que el jugador acumula puntos, puede alcanzar ciertos umbrales que le permiten desbloquear nuevas recetas.
+   - Las nuevas recetas ofrecen combinaciones de ingredientes más valiosas y la oportunidad de obtener más puntos.
+
+8. Fin del Juego:
+   - El juego termina cuando se cumplen ciertas condiciones de victoria, como alcanzar una cantidad específica de puntos o completar todos los platillos del evento.
+   - Al final de la partida, se muestran los resultados y la puntuación obtenida por el jugador.
 
 ## _Level Design_
 
