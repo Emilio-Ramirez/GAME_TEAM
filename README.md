@@ -84,14 +84,25 @@ The Recipe Rumble card game should challenge players to think critically and cre
 ### **Screens**
 
 1. Title Screen
-   1. Options
-2. Level Select
-3. Game
-   1. Inventory
-   2. Assessment / Next Level
-4. End Credits
-
-_(example)_
+   1. Start
+   2. Recipies
+2. Event Select
+   1. Wedding
+   2. Picnic
+   3. Christmas
+3. Board
+   1. Deck
+   2. Objective Dishes
+   3. Hand
+   4. Cooking Assembly
+5. End of Game
+   1. Home
+   2. Restart
+   3. Select event
+6. Recipie book
+   1. My recipies
+   2. Purchase
+   3. View Details of recipie
 
 ### **Controls**
 
