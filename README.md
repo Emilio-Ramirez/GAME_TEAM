@@ -1,6 +1,7 @@
 # **Recipe Rumble**
 
 ## _Game Design Document_
+**Team:** Lisette Melo Reyes, Sebastián Borjas Lizardi and Emilio Ramírez Mascarúa
 
 ---
 
@@ -77,9 +78,9 @@ Obstacles:
 
 The Recipe Rumble card game should challenge players to think critically and creatively while under time pressure. By strategically combining ingredients and utensils within a limited hand size, players must adapt to the changing game state and make quick decisions to create unique dishes. The complexity of recipes and card expirations should create a sense of urgency and satisfaction upon completion. Engaging artwork, balanced difficulty, rewarding sound effects, and a well-designed scoring system will provoke feelings of accomplishment and encourage continued play. The game should ultimately leave players feeling challenged yet satisfied with their strategic decisions and culinary creations.
 
-## _Technical_
 
----
+
+## _Technical_
 
 ### **Screens**
 
@@ -105,7 +106,26 @@ The Recipe Rumble card game should challenge players to think critically and cre
    3. View Details of recipie
   
 ### **Images**
-[Imagenes](RecipieRumble/Assets/Images)
+The videogame aesthetic will be cartoon animated themed with minimalistic materials 
+
+[Background Images](RecipieRumble/Assets/Images)
+
+[Sketches](https://github.com/Emilio-Ramirez/GAME_TEAM/assets/77208976/489f630f-9534-4975-afbd-b73bd34d6928)
+
+[Assets](RecipieRumble/Assets) 
+
+
+### **List of program classes**
+1. Card Generation System
+2. Hand of Card Management
+3. User Interface (UI)
+4. Card Movement and Action Mechanics
+5. Card Combination System
+6. Scoring and Redemption System
+7. Special and Sabotage Card System
+8. Game Event Management
+9. Save and Load System
+
 
 ### **Controls**
 
@@ -113,43 +133,35 @@ How will the player interact with the game? Will they be able to choose the cont
 
 ### **Mechanics**
 
-#### Flujo de control (mecánicas)
+1.Event Selection:
+ - Upon starting the game, the player selects an event from the available options, including a wedding, picnic, or Christmas dinner. Each event has a specific menu that includes a main dish and several secondary dishes.
 
-1. Selección de Evento:
-   - Al iniciar el juego, el jugador debe seleccionar un evento entre las opciones disponibles: boda, picnic o cena de Navidad.
-   - Cada evento tiene un platillo principal y platillos secundarios asociados.
+2.Deck of cards:
+ - Depending on the event chosen, the player receives a deck of cards designed specifically for that event. This deck includes cards of ingredients and utensils necessary to prepare the dishes of the event.
+The player draws cards from his deck to form a hand of cards that he will use during the game.
 
-2. Mazo de Cartas:
-   - El jugador recibe un mazo de cartas específico para el evento seleccionado.
-   - El mazo contiene cartas de ingredientes y utensilios necesarios para preparar los platillos del evento.
-   - El jugador roba cartas de su mazo para tener una mano de cartas para jugar.
+3. Combination of Cards and Preparation of Dishes:
+ - Players can combine ingredient cards and utensils to prepare dishes based on specific recipes provided in the game.
+ - For example, to prepare a Mediterranean chicken sandwich, you will need the menus of whole wheat bread, chicken, tongs or grill, feta cheese or cherry tomatoes. Some of these ingredients or utensils will have more than 1 possible option to play on the dish so that the player can make more combinations. By using these cards together, the player will prepare the dish and earn points based on the nutritional value of the ingredients.
 
-3. Combinación de Cartas:
-   - El jugador puede combinar cartas de ingredientes y utensilios para preparar platillos según las recetas disponibles.
-   - Cada receta especifica los ingredientes y utensilios necesarios para preparar un platillo.
-   - Al combinar las cartas correctamente, el jugador "cocina" el platillo y recibe puntos basados en el valor nutricional acumulado de los ingredientes utilizados.
+4. Special Cards:
+ - The deck also includes special cards that can alter the flow of the game. These cards can have positive effects such as doubling the duration of cards in play, or negative effects such as blocking card combinations.
+ - Example: A special "Extra Time" card grants the player additional time to complete their recipes before the game time runs out.
+ - Special cards will come out randomly from the deck and will be applied automatically when they come into play.
+   
+5. Discard and Card Management:
+ - Each card can remain in play for only a limited number of turns on the game table before being automatically discarded.
+ - Every time the players are missing a card, they can select the deck to add the missing cards to their hand.
 
-4. Cartas Especiales:
-   - Además de las cartas de ingredientes y utensilios, el mazo también contiene cartas especiales.
-   - Las cartas especiales tienen efectos únicos que pueden beneficiar o perjudicar al jugador.
-   - Ejemplos de efectos de cartas especiales incluyen duplicar la duración de las cartas en juego, bloquear combinaciones de cartas, entre otros.
+ 6. Points Accumulation:
+ - Points are accumulated by successfully preparing dishes. The use of ingredients with high nutritional value in a dish increases the number of points earned.
+   
+ 7. Recipe Unlocking:
+ - As players accumulate points, they can reach thresholds that allow them to unlock new recipes, which can provide more valuable ingredient combinations and the opportunity to earn more points.
 
-5. Descarte de Cartas:
-   - Cada carta tiene un número limitado de turnos que puede permanecer en juego antes de ser descartada automáticamente.
-   - El jugador debe gestionar estratégicamente sus cartas y hacer combinaciones antes de que se descarten.
-
-6. Acumulación de Puntos:
-   - El jugador acumula puntos al preparar platillos exitosamente.
-   - Cuantos más ingredientes y de mayor valor nutricional se utilicen en un platillo, más puntos se obtienen.
-
-7. Desbloqueo de Recetas:
-   - A medida que el jugador acumula puntos, puede alcanzar ciertos umbrales que le permiten desbloquear nuevas recetas.
-   - Las nuevas recetas ofrecen combinaciones de ingredientes más valiosas y la oportunidad de obtener más puntos.
-
-8. Fin del Juego:
-   - El juego termina cuando se cumplen ciertas condiciones de victoria, como alcanzar una cantidad específica de puntos o completar todos los platillos del evento.
-   - Al final de la partida, se muestran los resultados y la puntuación obtenida por el jugador.
-
+9. End of the game:
+The game concludes when specific victory conditions are met, such as achieving a set number of points or completing all required dishes in the event.
+At the end of the game, the results and the player's total score are displayed.
 ## _Level Design_
 
 ---
@@ -158,42 +170,52 @@ _(Note : These sections can safely be skipped if they&#39;re not relevant, or yo
 
 ### **Themes**
 
-1. Forest
+1. Pincnic
    1. Mood
-      1. Dark, calm, foreboding
+      1. Bright, Calm, Animated
    2. Objects
       1. _Ambient_
-         1. Fireflies
-         2. Beams of moonlight
-         3. Tall grass
+         1. Picnic tablemoth  
+         2. Chef
+         3. Picnic Objects
       2. _Interactive_
-         1. Wolves
-         2. Goblins
-         3. Rocks
-2. Castle
+         1. Cards
+         2. Deck
+2. Wedding
    1. Mood
-      1. Dangerous, tense, active
+      1. Happy, Colors, Animated
    2. Objects
       1. _Ambient_
-         1. Rodents
-         2. Torches
-         3. Suits of armor
+         1. Wedding Decorations
+         2. Chef
       2. _Interactive_
-         1. Guards
-         2. Giant rats
-         3. Chests
+         1. Cards
+         2. Deck
+3. Christmas Dinner
+   1. Mood
+      1. Festive, Lights, Animated
+   2. Objects
+      1. _Ambient_
+         1. Christmas Setting 
+         2. Chef
+      2. _Interactive_
+         1. Cards
+         2. Deck
 
 _(example)_
 
 ### **Game Flow**
-
-1. Player starts in forest
-2. Pond to the left, must move right
-3. To the right is a hill, player jumps to traverse it (&quot;jump&quot; taught)
-4. Player encounters castle - door&#39;s shut and locked
-5. There&#39;s a window within jump height, and a rock on the ground
-6. Player picks up rock and throws at glass (&quot;throw&quot; taught)
-7. … etc.
+1. The player reviews his hand and the cards in play to understand the current state of the board, taking into account any special or sabotage cards that have been activated automatically when drawn from the deck.
+2. The player chooses a card from their hand, which can be an ingredient, a utensil
+3. The player places the card on the table, activating it if it has immediate effects or preparing it for future use in recipes.
+4. When you draw from the deck, any special or sabotage cards are automatically activated.
+5. These cards can alter the game by affecting all players' cards in play, restricting actions, or significantly changing the dynamics of the game.
+6. If the player has the necessary cards on the table for a recipe from the book, he combines them.
+7. This action "cooks" the dish, granting the player nutritional points based on the recipe fulfilled.
+8. If a card in the player's hand is not useful at the moment, they can choose to discard it ny placing themn in the instant descard table place to potentially receive better cards on future turns.
+9. Each time the player draws a card from the deck, he evaluates its immediate or potential usefulness for future turns.
+10. If the drawn card is a special or sabotage card, it is activated immediately, requiring a quick adaptation of the player's strategy.
+11. Verify that all actions have been completed properly before the time ends.
 
 _(example)_
 
