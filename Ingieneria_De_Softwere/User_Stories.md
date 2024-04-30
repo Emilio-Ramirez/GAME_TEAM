@@ -1,113 +1,85 @@
-1. Pantalla de Inicio con Opciones Informativas | **Prioridad: Baja | Estimado: Medio Sprint**
-
-   a. Como jugador quiero ver una pantalla de inicio con varias opciones informativas
-
-   b. Cuando abra la página web
+1. **Pantalla de Inicio con Opciones Informativas | Prioridad: Baja | Estimado: Medio Sprint**
+   * Como jugador, quiero ver una pantalla de inicio con varias opciones informativas para obtener una perspectiva del juego.
+   * Dado que al inicio del juego cuando abro la página web, me gustaría ver una pantalla de inicio con varias opciones informativas.
+   
+2. **Acceso Fácil al Menú Principal | Prioridad: Baja | Estimado: 3 horas**
+   * Como jugador, quiero poder regresar al menú principal en cualquier momento para facilitar el acceso.
+   * Dado que haya terminado de jugar una partida o haya navegado a una nueva pestaña, cuando desee acceder al menú principal, me gustaría hacerlo fácilmente.
   
-3. Acceso Fácil al Menú Principal | **Prioridad: Baja | Estimado: 3 horas**
+3. **Acceso al Juego | Prioridad: Baja | Estimado: 1 hora**
+   * Como jugador, me gustaría acceder al juego desde una página web para tener alta accesibilidad sin importar mi ubicación.
+   * Dado que estoy en cualquier lugar físico con acceso a internet, cuando quiera jugar, me gustaría hacerlo fácilmente.
 
-  a. Quiero poder regresar al menú principal en cualquier momento
- 
-  b. Para poder orientarme  a través del sitio web con facilidad
-  
-4. Acceso al Juego | **Prioridad: Baja | Estimado: 1 hora**
-  
-  a. Como jugador me gustaría acceder al juego en una página web
-  
-  b. Para poder jugar desde cualquier dispositivo con conexión a internet 
+4. **Niveles Diferenciados | Prioridad: Alta | Estimado: 3 Sprints**
+   * Como jugador, quiero que existan diferentes niveles para tener control sobre la dificultad y adaptar el juego a varios escenarios.
+   * Dado que haya completado un nivel y mi experiencia en el juego supere la dificultad del mismo, cuando necesite obstáculos más complejos y acceso a diversas estéticas, me gustaría poder avanzar de nivel.
 
-5. Niveles Diferenciados |**Prioridad: Alta | Estimado: 3 Sprints**
- 
-  a. Como jugador me gustaría que tuviera diferentes niveles 
- 
-  b. Para disfrutar de un desafío progresivo
+5. **Personalización Estética | Prioridad: Baja | Estimado: 1 Sprint**
+   * Como jugador, quiero cambiar la estética del juego para personalizar mi experiencia de juego.
+   * Dado que desee modificar la apariencia del juego para mejorar mi experiencia, cuando acceda a las opciones de personalización, me gustaría encontrar facilidades para hacerlo.
 
-6. Personalización Estética | **Prioridad: Baja | Estimado: 1 Sprint**
+6. **Seguimiento de Progreso | Prioridad: Media | Estimado: 2 Sprints**
+   * Como jugador, quiero saber mi progreso para tener claridad sobre mi avance.
+   * Dado que desee evaluar cómo estoy avanzando en el juego, cuando revise mis logros y estadísticas, me gustaría que estuvieran claramente visibles.
 
-   a. Como jugador me gustaría cambiar la estética del juego
+7. **Valor Canjeable | Prioridad: Media | Estimado: 2 Sprints**
+   * Como jugador, quiero tener valores canjeables para obtener mejoras o beneficios exclusivos.
+   * Dado que acumule puntos o recompensas en el juego, cuando desee canjearlos, me gustaría hacerlo a través de un sistema sencillo y gratificante.
 
-   b. Para personalizar mi experiencia de juego
-  
-8. Seguimiento de Progreso | **Prioridad: Mediana | Estimado: 2 Sprints**
- 
-  a. Como jugador me gustaria saber mi progreso
-  
-  b. Para tener claridad sobre mi avance
+8. **Funcionalidad de Productos Canjeables | Prioridad: Baja | Estimado: 1 Sprint**
 
-8. Valor Canjeable | **Prioridad: Mediana | Estimado: 2 sprints**
+   * Como jugador, quiero que los productos canjeables sean funcionales dentro del juego, aportando un sentido práctico a las recompensas obtenidas.
+   * Dado que obtenga recompensas canjeables, cuando use estos elementos en el juego, me gustaría que realmente influyan en la jugabilidad.
 
-  a. Como jugador me gustaría poder tener un valor canjeable
-  
-  b. Para obtener mejoras o beneficios exclusivos
+9. **Mazo Inicial de Cartas | Prioridad: Alto | Estimado: 1 Sprint**
+    
+   * Como jugador, quiero recibir un mazo inicial de cartas para comenzar a jugar de inmediato.
+   * Dado que inicio por primera vez o reinicie el juego, cuando se me entregue el mazo de cartas inicial, me gustaría que estuviera equilibrado y me permita competir adecuadamente desde el comienzo.
 
-9. Funcionalidad de Productos Canjeables | **Prioridad: Baja | Estimado: 1 Sprint**
+10. **Límite de Tiempo | Prioridad: Alto | Estimado: 1 Sprint**
 
-  a. Como jugador me gustaría que los productos canjeables fueran funcionales dentro del juego
-  
-  b. Aportando un sentido práctico a las recompensas obtenidas
+      * Como jugador, quiero que el juego tenga un límite de tiempo para añadir un desafío de rapidez.
+      * Dado que busque una experiencia de juego rápida y dinámica, cuando juegue partidas, me gustaría enfrentarme a la presión del tiempo para mejorar mis habilidades bajo estrés.
 
-10. Mazo Inicial de Cartas | **Prioridad: Alto | Estimado: 1 Sprint**
+11. **Combinación de Cartas | Prioridad: Alto | Estimado: 1 Sprint**
+    
+      * Como jugador, quiero poder combinar cartas dentro del juego para crear estrategias complejas.
+      * Dado que desee profundizar en las tácticas del juego, cuando experimente con combinaciones de cartas, me gustaría descubrir múltiples posibilidades y efectos sinérgicos.
 
-  a. Como jugador quiero recibir un mazo inicial de cartas
-  
-  b. Para comenzar a jugar de inmediato
+12. **Rotación de Cartas | Prioridad: Alto | Estimado: 1 Sprint**
+    
+      * Como jugador, quiero tener una rotación de cartas para mantener la variabilidad en cada turno.
+      * Dado que el juego progrese y las partidas se desarrollen, cuando llegue el momento de usar nuevas cartas, me gustaría que el sistema de rotación aporte frescura y nuevos desafíos tácticos.
 
-11. Límite de Tiempo | **Prioridad: Alto | Estimado: 1 Sprint**
+13. **Cartas de Bonificaciones | Prioridad: Alto | Estimado: 2 Sprints**
+    
+      * Como jugador, quiero obtener cartas de bonificaciones para agregar elementos de sorpresa y ventaja.
+      * Dado que logre ciertos objetivos o hitos dentro del juego, cuando reciba estas cartas, me gustaría que proporcionen un beneficio significativo y alteren positivamente el curso de la partida.
 
-  a. Me gustaría que el juego tuviera un limite de tiempo
-  
-  b. Para añadir un desafío de rapidez
+14. **Cartas de Obstáculos | Prioridad: Alto | Estimado: 2 Sprints**
+    
+      * Como jugador, quiero obtener cartas de obstáculos para enfrentar desafíos adicionales.
+      * Dado que necesite incrementar la dificultad y el desafío en las partidas, cuando use estas cartas, me gustaría que realmente pongan a prueba mis habilidades y estrategias.
 
-12. Combinación de Cartas| **Prioridad: Alto | Estimado: 1 Sprint**
+15. **Puntaje | Prioridad: Alto | Estimado: 2 Sprints**
+    
+      * Como jugador, quiero llevar un puntaje para poder medir mi desempeño en el juego.
+      * Dado que desee comparar mi rendimiento con el de otros jugadores o con mis propias partidas anteriores, cuando mire el puntaje, me gustaría que sea claro, detallado y motivador.
 
-  a. Me gustaría poder combinar las cartas dentro del juego 
-  
-  b. Para crear estrategias complejas
+16. **Estadísticas de Juegos | Prioridad: Media | Estimado: 1 Sprint**
+    
+      * Como jugador, quiero ver estadísticas de los juegos que he jugado para analizar mi rendimiento.
+      * Dado que termine una partida y desee revisar mi progreso general, cuando acceda a las estadísticas del juego, me gustaría encontrar análisis detallados y útiles para mejorar.
 
-13. Rotación de Cartas| **Prioridad: Alto | Estimado: 1 Sprint**
+17. **Comparación con Otros Jugadores | Prioridad: Baja | Estimado: 2 Sprints**
+    
+      * Como jugador, quiero comparar mis juegos con otros jugadores para establecer un ranking.
+      * Dado que desee ver cómo me posiciono entre la comunidad de jugadores, cuando revise las clasificaciones, me gustaría que estas sean justas y representativas de las habilidades de cada jugador.
 
-  a. Me gustaría tener una rotación de cartas
-  
-  b. Para mantener variabilidad en cada turno
-
-14. Cartas de Bonificaciones | **Prioridad: Alto | Estimado: 2 Sprints**
-
-  a. Me gustaria obtener cartas de  bonificaciones
-  
-  b. Para agregar elementos de sorpresa y ventaja
-
-15. Cartas de Obstáculos| **Prioridad: Alto | Estimado: 2 Sprints**
-
-  a. Me gustaría obtener cartas de obstáculos 
-  
-  b. Para enfrentar desafíos adicionales
-
-16. Puntaje | **Prioridad: Alto | Estimado: 2 Sprints**
-
-  a. Me gustaria llevar un puntaje 
- 
-  b. Para poder medir mi desempeño en el juego
-
-17. Estadísticas de Juegos | **Prioridad: Mediano| Estimado: 1 Sprint**
-
-  a. Como jugador quisiera ver las estadísticas de los juegos que he jugado
-  
-  b. Para analizar mi rendimiento
-
-18. Comparación con Otros Jugadores | **Prioridad: Bajo | Estimado: 2 Sprints**
-
-  a. Me gustaría poder comparar mis juegos con otros jugadores 
-  
-  b. Para establecer un ranking
-
-19. Pantalla de Cierre | **Prioridad: Bajo | Estimado: 3 horas**
-
-  a. Me gustaría poder ver una pantalla de cierre
-  
-  b. Cerrando mi experiencia de juego de manera satisfactoria
-
-
-
+18. **Pantalla de Cierre | Prioridad: Baja | Estimado: 3 horas**
+    
+      * Como jugador, quiero ver una pantalla de cierre para concluir mi experiencia de juego de manera satisfactoria.
+      * Dado que termine de jugar, cuando cierre el juego, me gustaría que la pantalla de cierre resuma brevemente mi desempeño y me ofrezca opciones para guardar o compartir mis resultados.
 
 
 
