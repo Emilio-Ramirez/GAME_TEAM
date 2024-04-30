@@ -1,10 +1,10 @@
 1. Pantalla de Inicio con Opciones Informativas | **Prioridad: Baja | Estimado: Medio Sprint**
-   
-  a. Como jugador quiero ver una pantalla de inicio con varias opciones informativas
+
+   a. Como jugador quiero ver una pantalla de inicio con varias opciones informativas
+
+   b. Cuando abra la página web
   
-  b. Cuando abra la página web
-  
-2. Acceso Fácil al Menú Principal | **Prioridad: Baja | Estimado: 3 horas**
+3. Acceso Fácil al Menú Principal | **Prioridad: Baja | Estimado: 3 horas**
 
   a. Quiero poder regresar al menú principal en cualquier momento
  
