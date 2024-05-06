@@ -25,8 +25,10 @@ public class DragDrop : MonoBehaviour
         }
     }
     private void OnCollisionEnter2D(Collision2D collision){
+        if (collision.gameObject.activeInHierarchy) {
         isOverDropZone = true;
         dropZone = collision.gameObject;
+        }
     }
     private void OnCollisionExit2D(Collision2D collision){
         isOverDropZone = false;
