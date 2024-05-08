@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4220716221305939428}
   - component: {fileID: 2577908476617890791}
   - component: {fileID: 5260418541611588171}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ZoomCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

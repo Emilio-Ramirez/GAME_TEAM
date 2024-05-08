@@ -1,41 +1,83 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; 
 
-public class CardZoom : MonoBehaviour
+public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public GameObject Canvas;
-    public GameObject ZoomCard;
+    public GameObject ZoomCardPrefab;
+    public Transform Canvas;
+    public DropZoneManager dropZoneManager;
+
+    private bool isHovering;
+    private bool isCardOverDropZone;
+    private bool isDragging;
 
     private GameObject zoomCard;
-    private Sprite zoomSprite;
+    private Image zoomCardImage;
+    private CanvasGroup zoomCardCanvasGroup;
 
     private void Awake()
     {
-        Canvas = GameObject.Find("Main Canvas");
-        zoomSprite = gameObject.GetComponent<Image>().sprite;
-    }
-
-    private void OnHoverEnter()
-    {
-        if (ZoomCard == null)
+        if (ZoomCardPrefab == null)
         {
             Debug.LogError("Zoom card prefab not set in the inspector.", this);
             return;
         }
-
-        Vector2 cardPosition = new Vector2(transform.position.x, transform.position.y + 100);
-        zoomCard = Instantiate(ZoomCard, cardPosition, Quaternion.identity, Canvas.transform);
-        zoomCard.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
-        RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(140, 240);
-        rectTransform.anchoredPosition = Canvas.transform.InverseTransformPoint(cardPosition);
     }
 
-    private void OnHoverExit()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        if (zoomCard != null)
+        if (!isDragging && !isCardOverDropZone)
         {
-            Destroy(zoomCard);
+            isHovering = true;
+            transform.localScale = new Vector3(2, 2, 2);
+            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 100);
+
+            zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+            zoomCardImage = zoomCard.GetComponent<Image>();
+            zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
+            zoomCardImage.sprite = GetComponent<Image>().sprite;
+            zoomCard.transform.SetAsLastSibling();
+
+            if (zoomCardCanvasGroup != null)
+            {
+                zoomCardCanvasGroup.blocksRaycasts = false;
+                //zoomCardCanvasGroup.sortingOrder = 1; // Adjust as needed
+            }
         }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!isDragging && !isCardOverDropZone)
+        {
+            isHovering = false;
+            transform.localScale = new Vector3(1, 1, 1);
+            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 100);
+            if (zoomCard != null)
+            {
+                Destroy(zoomCard);
+            }
+        }
+    }
+
+    public void SetDragging(bool dragging)
+    {
+        isDragging = dragging;
+        if (dragging)
+        {
+            isHovering = false;
+            transform.localScale = new Vector3(1, 1, 1);
+            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 100);
+            if (zoomCard != null)
+            {
+                Destroy(zoomCard);
+            }
+        }
+    }
+
+    public void SetCardOverDropZone(bool overDropZone)
+    {
+        isCardOverDropZone = overDropZone;
     }
 }
