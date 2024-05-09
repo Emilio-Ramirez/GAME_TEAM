@@ -178,3 +178,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZoomCardPrefab: {fileID: 8171552711498485673}
   Canvas: {fileID: 0}
+  dropZoneManager: {fileID: 0}

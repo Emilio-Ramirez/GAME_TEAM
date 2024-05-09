@@ -50,35 +50,54 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     public void OnEndDrag(PointerEventData eventData)
+{
+    IsDragging = false;
+    canvasGroup.blocksRaycasts = true;
+
+    if (IsOverDropZone && dropZone != null)
     {
-        IsDragging = false;
-        // Reset the canvas group settings
-        canvasGroup.blocksRaycasts = true;
-        
-        if (IsOverDropZone)
+        transform.SetParent(dropZone.transform, false);
+        transform.localPosition = Vector3.zero;  // Opcional: Resetear la posición local para centrar la carta en la drop zone
+        DropZoneManager dropZoneManager = dropZone.GetComponentInParent<DropZoneManager>();
+        if (dropZoneManager != null)
         {
-            transform.SetParent(dropZone.transform, false);
-        }
-        else
-        {
-            transform.position = StartPosition;
-            transform.SetParent(StartParent, false);
-        }
-        if (cardZoom != null)
-        {
-            cardZoom.SetDragging(false);
+            int dropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, dropZone);
+            if (dropZoneIndex != -1)
+            {
+                dropZoneManager.OnCardDropped(dropZoneIndex, gameObject);
+            }
         }
     }
+    else
+    {
+        transform.position = StartPosition;
+        transform.SetParent(StartParent, false);
+    }
+    if (cardZoom != null)
+    {
+        cardZoom.SetDragging(false);
+    }
+}
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IsOverDropZone = true;
-        dropZone = collision.gameObject;
+        if (collision.gameObject.CompareTag("DropZone"))  // Asegúrate de que tus DropZones tengan este tag
+        {
+            IsOverDropZone = true;
+            dropZone = collision.gameObject;
+            Debug.Log($"Card entered DropZone: {dropZone.name}");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        IsOverDropZone = false;
-        dropZone = null;
+        if (collision.gameObject.CompareTag("DropZone"))  // Asegúrate de que tus DropZones tengan este tag
+        {
+            IsOverDropZone = false;
+            dropZone = null;
+            Debug.Log("Card exited DropZone");
+        }
     }
+
 }

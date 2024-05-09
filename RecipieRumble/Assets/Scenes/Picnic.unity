@@ -454,6 +454,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7673904826588594574, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
+      propertyPath: m_TagString
+      value: DropZone
+      objectReference: {fileID: 0}
     - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -878,6 +882,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
   m_PrefabInstance: {fileID: 488911608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1216164501 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8534436962341810690, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
+  m_PrefabInstance: {fileID: 488911608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff31c1a8eb37f94d999daa38fa9a0c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1267061985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,6 +1043,7 @@ MonoBehaviour:
   Card2: {fileID: 1165398476713593733, guid: beba9dece274ba64398d1f22b0593937, type: 3}
   RecipieCards: {fileID: 1727660348}
   PlayerArea: {fileID: 1716817534}
+  dropZoneManager: {fileID: 1216164501}
 --- !u!1 &1272976215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,11 +1614,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0024871
+      value: 0.0050333
       objectReference: {fileID: 0}
     - target: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -166.38
+      value: -166.55
       objectReference: {fileID: 0}
     - target: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -27,6 +27,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // Verificar que no se esté arrastrando la tarjeta y que no esté sobre una zona de soltado
         if (!isDragging && !isCardOverDropZone)
         {
             isHovering = true;
@@ -42,13 +43,13 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (zoomCardCanvasGroup != null)
             {
                 zoomCardCanvasGroup.blocksRaycasts = false;
-                //zoomCardCanvasGroup.sortingOrder = 1; // Adjust as needed
             }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        // Verificar que no se esté arrastrando la tarjeta y que no esté sobre una zona de soltado
         if (!isDragging && !isCardOverDropZone)
         {
             isHovering = false;
