@@ -8,12 +8,14 @@ public class DropZoneManager : MonoBehaviour
     public GameObject[] dropZones;
     public int numberOfDropZones = 4;
     public int[] turnsLeft;
+    public int[] initialTurns;  // Almacenar los turnos iniciales
     public List<GameObject>[] cardsInDropZone;
 
     void Start()
     {
         dropZones = new GameObject[numberOfDropZones];
         turnsLeft = new int[numberOfDropZones];
+        initialTurns = new int[numberOfDropZones];  // Inicializar el array de turnos iniciales
         cardsInDropZone = new List<GameObject>[numberOfDropZones];
         Vector3 centerPosition = new Vector3(0, 0, 0);
 
@@ -21,7 +23,8 @@ public class DropZoneManager : MonoBehaviour
         {
             dropZones[i] = Instantiate(dropZonePrefab, transform);
             dropZones[i].transform.position = new Vector3(centerPosition.x, centerPosition.y + (i * 2.0f - numberOfDropZones + 1) * 50, centerPosition.z);
-            turnsLeft[i] = i + 2;
+            turnsLeft[i] = i + 1;
+            initialTurns[i] = turnsLeft[i];  // Guardar los turnos iniciales
             cardsInDropZone[i] = new List<GameObject>();
 
             Collider2D collider = dropZones[i].AddComponent<BoxCollider2D>();
@@ -36,12 +39,10 @@ public class DropZoneManager : MonoBehaviour
         for (int i = 0; i < numberOfDropZones; i++)
         {
             Debug.Log($"Checking Drop Zone {i} - Turns Left: {turnsLeft[i]}, Card Count: {cardsInDropZone[i].Count}");
-
             if (cardsInDropZone[i].Count > 0)
             {
                 turnsLeft[i]--;
                 Debug.Log($"Turns decremented in Drop Zone {i}. New Turns Left: {turnsLeft[i]}");
-
                 if (turnsLeft[i] <= 0)
                 {
                     foreach (GameObject card in cardsInDropZone[i])
@@ -49,7 +50,7 @@ public class DropZoneManager : MonoBehaviour
                         Destroy(card);
                     }
                     cardsInDropZone[i].Clear();
-                    turnsLeft[i] = numberOfDropZones + 1;
+                    turnsLeft[i] = initialTurns[i];  // Resetear a los turnos iniciales específicos
                     Debug.Log($"Cards discarded and turns reset in Drop Zone {i}");
                 }
             }

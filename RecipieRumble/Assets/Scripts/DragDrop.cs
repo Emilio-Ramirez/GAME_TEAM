@@ -57,7 +57,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     if (IsOverDropZone && dropZone != null)
     {
         transform.SetParent(dropZone.transform, false);
-        transform.localPosition = Vector3.zero;  // Opcional: Resetear la posición local para centrar la carta en la drop zone
+        transform.localPosition = Vector3.zero;  
         DropZoneManager dropZoneManager = dropZone.GetComponentInParent<DropZoneManager>();
         if (dropZoneManager != null)
         {
