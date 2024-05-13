@@ -13,7 +13,10 @@ This is a Node.js project with a start command using nodemon.
 
 2. Navigate to the project directory:
 3. Install the dependencies:
-4. Start the application:
+ ```
+ npm install
+ ```
+5. Start the application:
 For runing the application use the following command:
 ```
 npm start
