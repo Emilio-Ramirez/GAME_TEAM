@@ -11,6 +11,8 @@ public class DropZoneManager : MonoBehaviour
     public int[] initialTurns;  // Almacenar los turnos iniciales
     public List<GameObject>[] cardsInDropZone;
 
+    
+
     void Start()
     {
         dropZones = new GameObject[numberOfDropZones];
@@ -60,10 +62,28 @@ public class DropZoneManager : MonoBehaviour
     public void OnCardDropped(int dropZoneIndex, GameObject card)
     {
         Debug.Log($"Card dropped in Drop Zone {dropZoneIndex}");
-        if (turnsLeft[dropZoneIndex] > 0)
+        if (cardsInDropZone[dropZoneIndex].Count == 0) // Asegurarse de que no haya cartas ya en la zona
         {
             cardsInDropZone[dropZoneIndex].Add(card);
             Debug.Log($"Card added to Drop Zone {dropZoneIndex}, new count: {cardsInDropZone[dropZoneIndex].Count}");
         }
+        else
+        {
+            Debug.Log($"Drop Zone {dropZoneIndex} already has a card. Cannot add another.");
+        }
+    }
+
+    public void ReturnCardToPlayerArea(GameObject card, Transform playerArea)
+    {
+        if (card == null || playerArea == null) {
+            Debug.LogError("Invalid card or player area.");
+            return;
+        }
+
+        // Mover la carta de regreso a la zona del jugador
+        card.transform.SetParent(playerArea, false);
+        card.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // O ajustar según el layout del área del jugador
+
+        Debug.Log("Card returned to player area.");
     }
 }

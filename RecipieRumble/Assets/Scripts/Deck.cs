@@ -10,7 +10,9 @@ public class Deck : MonoBehaviour
     public GameObject Card3;
     public Transform RecipeArea; // Ensure this is assigned in the Unity Editor
     public GameObject PlayerArea; // Ensure this is assigned in the Unity Editor
-    public DropZoneManager dropZoneManager; // Ensure this is assigned in the Unity Editor
+    public DropZoneManager dropZoneManager;
+    
+
 
     List<GameObject> playerCards = new List<GameObject>(); // List for player cards
     List<GameObject> recipeCardPrefabs = new List<GameObject>(); // List for recipe card prefabs
@@ -33,6 +35,7 @@ public class Deck : MonoBehaviour
         recipeCardPrefabs.Add(Card3);
 
         InitializeRecipeCards(); // Setup recipe cards only once
+       
     }
 
     void InitializeRecipeCards()
@@ -56,6 +59,7 @@ public class Deck : MonoBehaviour
             GameObject playerCard = Instantiate(playerCards[Random.Range(0, playerCards.Count)], Vector3.zero, Quaternion.identity);
             playerCard.transform.SetParent(PlayerArea.transform, false);
             playerCard.name = "PlayerCard_" + (cardsInHand + i); // Name the cards based on their order
+            
         }
         dropZoneManager.OnDrawButtonPressed();
     }

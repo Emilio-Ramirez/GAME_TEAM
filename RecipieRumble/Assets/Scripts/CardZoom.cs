@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
 
-public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
     public GameObject ZoomCardPrefab;
-    public Transform Canvas;
-    public DropZoneManager dropZoneManager;
+    private Transform Canvas;
 
-    private bool isHovering;
-    private bool isCardOverDropZone;
     private bool isDragging;
-
+    private bool isCardOverDropZone;
     private GameObject zoomCard;
     private Image zoomCardImage;
     private CanvasGroup zoomCardCanvasGroup;
 
     private void Awake()
     {
+        // Buscar el Canvas en el momento de inicialización
+        Canvas = FindObjectOfType<Canvas>().transform;
+
         if (ZoomCardPrefab == null)
         {
             Debug.LogError("Zoom card prefab not set in the inspector.", this);
@@ -27,38 +27,61 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Verificar que no se esté arrastrando la tarjeta y que no esté sobre una zona de soltado
         if (!isDragging && !isCardOverDropZone)
         {
-            isHovering = true;
-            transform.localScale = new Vector3(2, 2, 2);
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 100);
-
-            zoomCard = Instantiate(ZoomCardPrefab, Canvas);
-            zoomCardImage = zoomCard.GetComponent<Image>();
-            zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
-            zoomCardImage.sprite = GetComponent<Image>().sprite;
-            zoomCard.transform.SetAsLastSibling();
-
-            if (zoomCardCanvasGroup != null)
-            {
-                zoomCardCanvasGroup.blocksRaycasts = false;
-            }
+            CreateZoomCard();
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Verificar que no se esté arrastrando la tarjeta y que no esté sobre una zona de soltado
-        if (!isDragging && !isCardOverDropZone)
+        DestroyZoomCard();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (isDragging && zoomCard != null)
         {
-            isHovering = false;
-            transform.localScale = new Vector3(1, 1, 1);
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 100);
-            if (zoomCard != null)
-            {
-                Destroy(zoomCard);
-            }
+            RectTransform rt = zoomCard.GetComponent<RectTransform>();
+            rt.anchoredPosition += eventData.delta;
+        }
+    }
+
+    private void CreateZoomCard()
+    {
+        transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);  // Escalar ligeramente para efecto de zoom
+
+        zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+        zoomCardImage = zoomCard.GetComponent<Image>();
+        zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
+        zoomCardImage.sprite = GetComponent<Image>().sprite;
+        zoomCard.transform.SetAsLastSibling(); // Asegurarse de que está al frente
+
+        RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
+        RectTransform originalRectTransform = GetComponent<RectTransform>();
+
+        if (rectTransform != null && originalRectTransform != null)
+        {
+            // Asegúrate de que la carta se eleve adecuadamente
+            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 150);
+        }
+        else
+        {
+            Debug.LogError("RectTransform is missing on the zoom card or the original card.");
+        }
+
+        if (zoomCardCanvasGroup != null)
+        {
+            zoomCardCanvasGroup.blocksRaycasts = false; // Permitir clicks a través del zoomCard
+        }
+    }
+
+    private void DestroyZoomCard()
+    {
+        transform.localScale = new Vector3(1, 1, 1);  // Restaurar el tamaño original
+        if (zoomCard != null)
+        {
+            Destroy(zoomCard);
         }
     }
 
@@ -67,18 +90,16 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         isDragging = dragging;
         if (dragging)
         {
-            isHovering = false;
-            transform.localScale = new Vector3(1, 1, 1);
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - 100);
-            if (zoomCard != null)
-            {
-                Destroy(zoomCard);
-            }
+            DestroyZoomCard();
         }
     }
 
     public void SetCardOverDropZone(bool overDropZone)
     {
         isCardOverDropZone = overDropZone;
+        if (overDropZone)
+        {
+            DestroyZoomCard();
+        }
     }
 }

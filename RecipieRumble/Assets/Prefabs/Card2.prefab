@@ -93,6 +93,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZoomCardPrefab: {fileID: 1165398476713593733}
   Canvas: {fileID: 0}
+  PlayerArea: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
+  RecipeArea: {fileID: 4916790905920789709, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
+  CardToFlip: {fileID: 0}
+  CardToZoom: {fileID: 1165398476713593733}
 --- !u!114 &-8284062257920529065
 MonoBehaviour:
   m_ObjectHideFlags: 0
