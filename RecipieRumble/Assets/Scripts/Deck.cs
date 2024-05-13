@@ -8,8 +8,8 @@ public class Deck : MonoBehaviour
     public GameObject Card1;
     public GameObject Card2;
     public GameObject Card3;
-    public Transform RecipeArea; // Ensure this is assigned in the Unity Editor
-    public GameObject PlayerArea; // Ensure this is assigned in the Unity Editor
+    public Transform RecipeArea; 
+    public GameObject PlayerArea; 
     public DropZoneManager dropZoneManager;
     
 
@@ -26,11 +26,11 @@ public class Deck : MonoBehaviour
             return; // Stop further execution if critical components are missing
         }
 
-        // Initialize the card lists
+        // Initialize the player card lists
         playerCards.Add(Card1);
         playerCards.Add(Card2);
         
-        // Assuming these are the prefabs you might want to use exclusively for recipes:
+        // Initialize the recipies card lists
         recipeCardPrefabs.Add(Card3);
         recipeCardPrefabs.Add(Card3);
 
@@ -40,7 +40,7 @@ public class Deck : MonoBehaviour
 
     void InitializeRecipeCards()
     {
-        for (int i = 0; i < 4; i++) // Assuming you want exactly 4 recipe cards
+        for (int i = 0; i < 4; i++) // Exactly 4 recipe cards
         {
             GameObject recipeCard = Instantiate(recipeCardPrefabs[Random.Range(0, recipeCardPrefabs.Count)], Vector3.zero, Quaternion.identity);
             recipeCard.transform.SetParent(RecipeArea, false);

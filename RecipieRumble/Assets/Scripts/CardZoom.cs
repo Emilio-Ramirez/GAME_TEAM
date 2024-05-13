@@ -49,21 +49,19 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void CreateZoomCard()
     {
-        transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);  // Escalar ligeramente para efecto de zoom
-
-        zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+        zoomCard = Instantiate(transform.gameObject, Canvas);
+        zoomCard.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);  // Escalar ligeramente para efecto de zoom
         zoomCardImage = zoomCard.GetComponent<Image>();
         zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
         zoomCardImage.sprite = GetComponent<Image>().sprite;
-        zoomCard.transform.SetAsLastSibling(); // Asegurarse de que está al frente
+        zoomCard.transform.SetAsLastSibling(); 
 
         RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
         RectTransform originalRectTransform = GetComponent<RectTransform>();
 
         if (rectTransform != null && originalRectTransform != null)
         {
-            // Asegúrate de que la carta se eleve adecuadamente
-            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 150);
+            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 500);
         }
         else
         {
@@ -78,7 +76,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void DestroyZoomCard()
     {
-        transform.localScale = new Vector3(1, 1, 1);  // Restaurar el tamaño original
+        zoomCard.transform.localScale = new Vector3(1, 1, 1);  // Restaurar el tamaño original
         if (zoomCard != null)
         {
             Destroy(zoomCard);
