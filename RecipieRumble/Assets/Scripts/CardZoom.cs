@@ -61,7 +61,8 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (rectTransform != null && originalRectTransform != null)
         {
-            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 500);
+            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 120);
+            rectTransform.sizeDelta = new Vector2(70, 120);
         }
         else
         {
