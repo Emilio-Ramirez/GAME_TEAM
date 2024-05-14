@@ -124,7 +124,7 @@ const Carta = sequelize.define('Carta', {
     type: DataTypes.STRING,
   },
   valor_nutrimental: {
-    type: DataTypes.INT,
+    type: DataTypes.INTEGER,
   },
   tipo: {
     type: DataTypes.STRING,
