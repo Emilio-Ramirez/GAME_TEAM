@@ -123,8 +123,8 @@ const Carta = sequelize.define('Carta', {
   nombre: {
     type: DataTypes.STRING,
   },
-  afinidad: {
-    type: DataTypes.STRING,
+  valor_nutrimental: {
+    type: DataTypes.INT,
   },
   tipo: {
     type: DataTypes.STRING,
