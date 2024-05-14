@@ -77,6 +77,11 @@ const Usuario = sequelize.define('Usuario', {
     primaryKey: true,
     autoIncrement: true,
   },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
   puntaje_maximo: {
     type: DataTypes.INTEGER,
   },
