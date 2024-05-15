@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 770934620096227653}
   - component: {fileID: 4441106406138464557}
   - component: {fileID: 1040558966096045719}
+  - component: {fileID: -1268952373121419247}
   - component: {fileID: -8284062257920529065}
-  - component: {fileID: -2324756824436668220}
   - component: {fileID: -5016096285576734029}
   - component: {fileID: -3845941722555463794}
   m_Layer: 8
@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 14, y: -182.12}
-  m_SizeDelta: {x: 100, y: 140}
+  m_SizeDelta: {x: 70, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4441106406138464557
 CanvasRenderer:
@@ -62,14 +62,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8454698, g: 0.7058824, b: 0.5254902, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7be8a76ed75d44796b9934c3b5e78608, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -79,6 +79,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-1268952373121419247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165398476713593733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff94aa51c66511247842247eeeb14490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ZoomCardPrefab: {fileID: 1165398476713593733}
+  Canvas: {fileID: 0}
+  PlayerArea: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
+  RecipeArea: {fileID: 4916790905920789709, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
+  CardToFlip: {fileID: 0}
+  CardToZoom: {fileID: 1165398476713593733}
 --- !u!114 &-8284062257920529065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,51 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c44ba447cbb0c439e17ed8610bf7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2324756824436668220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165398476713593733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 13
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -8284062257920529065}
-          m_TargetAssemblyTypeName: DragDrop, Assembly-CSharp
-          m_MethodName: StartDrag
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -8284062257920529065}
-          m_TargetAssemblyTypeName: DragDrop, Assembly-CSharp
-          m_MethodName: EndDrag
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  DropZone: {fileID: 4390090138825101085, guid: 00c9ecf5a45a61e4699a662f55452c46, type: 3}
 --- !u!61 &-5016096285576734029
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -179,7 +153,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 140}
+  m_Size: {x: 70, y: 120}
   m_EdgeRadius: 0
 --- !u!50 &-3845941722555463794
 Rigidbody2D:
