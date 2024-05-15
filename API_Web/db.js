@@ -82,6 +82,10 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   puntaje_maximo: {
     type: DataTypes.INTEGER,
   },
