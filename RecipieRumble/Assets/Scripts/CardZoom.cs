@@ -58,7 +58,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
         RectTransform originalRectTransform = GetComponent<RectTransform>();
-
+    
         if (rectTransform != null && originalRectTransform != null)
         {
             rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 500);
