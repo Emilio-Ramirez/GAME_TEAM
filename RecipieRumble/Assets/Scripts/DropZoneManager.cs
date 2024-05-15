@@ -11,7 +11,7 @@ public class DropZoneManager : MonoBehaviour
     public int[] initialTurns;  // Almacenar los turnos iniciales
     public List<GameObject>[] cardsInDropZone;
 
-    
+    public Transform playerArea; // Área del jugador
 
     void Start()
     {
@@ -73,17 +73,38 @@ public class DropZoneManager : MonoBehaviour
         }
     }
 
-    public void ReturnCardToPlayerArea(GameObject card, Transform playerArea)
+    public void RemoveCardFromDropZone(int dropZoneIndex, GameObject card)
     {
-        if (card == null || playerArea == null) {
-            Debug.LogError("Invalid card or player area.");
-            return;
+        Debug.Log($"Removing card from Drop Zone {dropZoneIndex}");
+        if (cardsInDropZone[dropZoneIndex].Remove(card))
+        {
+            card.transform.SetParent(playerArea, false);
+            Debug.Log($"Card removed from Drop Zone {dropZoneIndex} and moved to Player Area");
         }
+        else
+        {
+            Debug.Log($"Card not found in Drop Zone {dropZoneIndex}");
+        }
+    }
 
-        // Mover la carta de regreso a la zona del jugador
-        card.transform.SetParent(playerArea, false);
-        card.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // O ajustar según el layout del área del jugador
+    public void ReturnCardToDropZone(int dropZoneIndex, GameObject card)
+    {
+        Debug.Log($"Returning card to Drop Zone {dropZoneIndex}");
+        if (cardsInDropZone[dropZoneIndex].Count == 0) // Asegurarse de que no haya cartas ya en la zona
+        {
+            card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
+            cardsInDropZone[dropZoneIndex].Add(card);
+            Debug.Log($"Card returned to Drop Zone {dropZoneIndex}, new count: {cardsInDropZone[dropZoneIndex].Count}");
+        }
+        else
+        {
+            Debug.Log($"Drop Zone {dropZoneIndex} already has a card. Cannot add another.");
+        }
+    }
 
-        Debug.Log("Card returned to player area.");
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        GameObject card = other.gameObject;
+        Debug.Log($"Card detected in Drop Zone area: {card.name}");
     }
 }

@@ -49,19 +49,56 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void CreateZoomCard()
     {
-        zoomCard = Instantiate(transform.gameObject, Canvas);
+        if (ZoomCardPrefab == null)
+        {
+            Debug.LogError("ZoomCardPrefab is not assigned.");
+            return;
+        }
+
+        zoomCard = Instantiate(ZoomCardPrefab, Canvas);
         zoomCard.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);  // Escalar ligeramente para efecto de zoom
+
         zoomCardImage = zoomCard.GetComponent<Image>();
         zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
-        zoomCardImage.sprite = GetComponent<Image>().sprite;
-        zoomCard.transform.SetAsLastSibling(); 
+
+        Image originalImage = GetComponent<Image>();
+        if (originalImage == null)
+        {
+            Debug.LogError("Original card is missing Image component.");
+            return;
+        }
+
+        zoomCardImage.sprite = originalImage.sprite;
+        zoomCard.transform.SetAsLastSibling();
 
         RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
         RectTransform originalRectTransform = GetComponent<RectTransform>();
 
         if (rectTransform != null && originalRectTransform != null)
         {
-            rectTransform.anchoredPosition = new Vector2(originalRectTransform.anchoredPosition.x, originalRectTransform.anchoredPosition.y + 500);
+            rectTransform.sizeDelta = originalRectTransform.sizeDelta;
+
+            Vector3[] worldCorners = new Vector3[4];
+            originalRectTransform.GetWorldCorners(worldCorners);
+
+            Vector3 centerPosition = (worldCorners[0] + worldCorners[2]) / 2; // Promedio de la esquina inferior izquierda y la esquina superior derecha
+
+            // Identificar si la carta está en la "player zone" o en la "recipe zone"
+            if (transform.parent.name == "PlayerZone")
+            {
+                // Desplazar hacia arriba en la "player zone"
+                centerPosition += new Vector3(0, originalRectTransform.sizeDelta.y, 0); // Ajustar este valor según sea necesario
+            }
+            else if (transform.parent.name == "RecipeZone")
+            {
+                // Mantener el comportamiento actual en la "recipe zone"
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y / 2, 0); // Ajustar este valor según sea necesario
+            }
+
+            rectTransform.position = centerPosition;
+
+            // Añadir un Debug.Log para ver la posición del clon
+            Debug.Log($"ZoomCard created at position: {rectTransform.position} in parent: {transform.parent.name}");
         }
         else
         {
@@ -76,10 +113,11 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void DestroyZoomCard()
     {
-        zoomCard.transform.localScale = new Vector3(1, 1, 1);  // Restaurar el tamaño original
         if (zoomCard != null)
         {
+            zoomCard.transform.localScale = new Vector3(1, 1, 1);  // Restaurar el tamaño original
             Destroy(zoomCard);
+            zoomCard = null; // Asegurarse de que la referencia se elimine
         }
     }
 
