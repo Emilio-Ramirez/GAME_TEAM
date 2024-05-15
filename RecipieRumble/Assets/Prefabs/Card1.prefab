@@ -148,7 +148,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  m_UseAutoMass: 1
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -177,8 +177,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ZoomCardPrefab: {fileID: 8171552711498485673}
-  Canvas: {fileID: 0}
-  PlayerArea: {fileID: 2810836270739202963, guid: 380f794bf0de35e4a82bdbaed7db91f1, type: 3}
-  RecipeArea: {fileID: 4916790905920789709, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
-  CardToFlip: {fileID: 0}
-  CardToZoom: {fileID: 8171552711498485673}
