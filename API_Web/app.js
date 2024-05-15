@@ -1,7 +1,13 @@
 const express = require('express');
 const { sequelize, Partida, LibroReceta, Receta, SetPlatillos, CartaReceta, Usuario, Evento, Baraja, BarajaCarta, Carta } = require('./db');
-
+const bodyParser = require('body-parser');
 const app = express();
+const bcrypt = require('bcrypt');
+
+
+// Add these lines before your routes
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Example route for Partida model
 app.get('/partidas', async (req, res) => {
@@ -114,3 +120,31 @@ app.get('/cartas', async (req, res) => {
 });
 
 
+// Route for registering a user
+app.post('/register', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Check if the username already exists
+    const existingUser = await Usuario.findOne({ where: { username } });
+    if (existingUser) {
+      return res.status(409).json({ error: 'Username already exists' });
+    }
+
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Create a new user
+    const newUser = await Usuario.create({ username, password: hashedPassword });
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
