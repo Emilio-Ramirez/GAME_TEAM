@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
-Script to provide a method to change scenes used from UI
+using UnityEngine.SceneManagement;
 
-Lisette Melo Reyes
-*/
 public class SceneChanger : MonoBehaviour
 {
-     public static void GoTo(string sceneName){
+    public static void GoTo(string sceneName)
+    {
         //load the scene with the given name
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-     }
-    
+    }
+
+    public void GoToRegister()
+    {
+        //load the scene with the given name
+        SceneManager.LoadScene(1);
+    }
+
+
 }
