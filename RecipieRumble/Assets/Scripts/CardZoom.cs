@@ -13,10 +13,16 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Image zoomCardImage;
     private CanvasGroup zoomCardCanvasGroup;
 
+    // Agregar referencia al DropZoneManager
+    private DropZoneManager dropZoneManager;
+
     private void Awake()
     {
         // Buscar el Canvas en el momento de inicialización
         Canvas = FindObjectOfType<Canvas>().transform;
+
+        // Buscar el DropZoneManager
+        dropZoneManager = FindObjectOfType<DropZoneManager>();
 
         if (ZoomCardPrefab == null)
         {
@@ -48,59 +54,78 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     private void CreateZoomCard()
-{
-    if (ZoomCardPrefab == null)
     {
-        Debug.LogError("ZoomCardPrefab is not assigned.");
-        return;
+        if (ZoomCardPrefab == null)
+        {
+            Debug.LogError("ZoomCardPrefab is not assigned.");
+            return;
+        }
+
+        zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+        zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
+
+        zoomCardImage = zoomCard.GetComponent<Image>();
+        zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
+
+        Image originalImage = GetComponent<Image>();
+        if (originalImage == null)
+        {
+            Debug.LogError("Original card is missing Image component.");
+            return;
+        }
+
+        zoomCardImage.sprite = originalImage.sprite;
+        zoomCard.transform.SetAsLastSibling();
+
+        RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
+        RectTransform originalRectTransform = GetComponent<RectTransform>();
+
+        if (rectTransform != null && originalRectTransform != null)
+        {
+            rectTransform.sizeDelta = originalRectTransform.sizeDelta;
+
+            Vector3[] worldCorners = new Vector3[4];
+            originalRectTransform.GetWorldCorners(worldCorners);
+
+            Vector3 centerPosition = (worldCorners[0] + worldCorners[2]) / 2; // Promedio de la esquina inferior izquierda y la esquina superior derecha
+
+            // Verificar si la carta está en la recipe area
+            bool isInRecipeArea = false;
+            if (dropZoneManager != null && dropZoneManager.recipeArea != null)
+            {
+                foreach (Transform child in dropZoneManager.recipeArea)
+                {
+                    if (child == transform)
+                    {
+                        isInRecipeArea = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isInRecipeArea)
+            {
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y + 200, 0); // Ajustar hacia abajo para la recipe area
+            }
+            else
+            {
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y - 160, 0); // Ajustar hacia arriba para otras áreas
+            }
+            rectTransform.position = centerPosition;
+
+            // Añadir un Debug.Log para ver la posición del clon
+            Debug.Log($"ZoomCard created at position: {rectTransform.position}");
+        }
+        else
+        {
+            Debug.LogError("RectTransform is missing on the zoom card or the original card.");
+        }
+
+        if (zoomCardCanvasGroup != null)
+        {
+            zoomCardCanvasGroup.blocksRaycasts = false; // Permitir clicks a través del zoomCard
+        }
     }
-
-    zoomCard = Instantiate(ZoomCardPrefab, Canvas);
-    zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
-
-    zoomCardImage = zoomCard.GetComponent<Image>();
-    zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
-
-    Image originalImage = GetComponent<Image>();
-    if (originalImage == null)
-    {
-        Debug.LogError("Original card is missing Image component.");
-        return;
-    }
-
-    zoomCardImage.sprite = originalImage.sprite;
-    zoomCard.transform.SetAsLastSibling();
-
-    RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
-    RectTransform originalRectTransform = GetComponent<RectTransform>();
-
-    if (rectTransform != null && originalRectTransform != null)
-    {
-        rectTransform.sizeDelta = originalRectTransform.sizeDelta;
-        
-        Vector3[] worldCorners = new Vector3[4];
-        originalRectTransform.GetWorldCorners(worldCorners);
-        
-        Vector3 centerPosition = (worldCorners[0] + worldCorners[2]) / 2; // Promedio de la esquina inferior izquierda y la esquina superior derecha
-        centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y - 160, 0); // Ajustar este valor para cambiar el desplazamiento vertical
-        
-        rectTransform.position = centerPosition;
-        
-        // Añadir un Debug.Log para ver la posición del clon
-        Debug.Log($"ZoomCard created at position: {rectTransform.position}");
-    }
-    else
-    {
-        Debug.LogError("RectTransform is missing on the zoom card or the original card.");
-    }
-
-    if (zoomCardCanvasGroup != null)
-    {
-        zoomCardCanvasGroup.blocksRaycasts = false; // Permitir clicks a través del zoomCard
-    }
-}
-
-
 
     private void DestroyZoomCard()
     {
