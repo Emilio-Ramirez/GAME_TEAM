@@ -48,6 +48,12 @@ public class DropZoneManager : MonoBehaviour
         {
             recipeArea.gameObject.SetActive(false);
         }
+
+        // Asegurarse de que la área del jugador está desactivada inicialmente
+        if (playerArea != null)
+        {
+            playerArea.gameObject.SetActive(false);
+        }
     }
 
     void OnStartButtonPressed()
@@ -58,6 +64,12 @@ public class DropZoneManager : MonoBehaviour
         if (recipeArea != null)
         {
             recipeArea.gameObject.SetActive(true);
+        }
+
+        // Activar el área del jugador
+        if (playerArea != null)
+        {
+            playerArea.gameObject.SetActive(true);
         }
 
         // Activar las zonas de entrega
