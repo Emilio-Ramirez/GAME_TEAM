@@ -140,6 +140,34 @@ const Carta = sequelize.define('Carta', {
   },
 });
 
+const Sesion = sequelize.define('Sesion', {
+  id_sesion: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  token: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  fecha_inicio: {
+    type: DataTypes.DATE,
+  },
+  fecha_expiracion: {
+    type: DataTypes.DATE,
+  },
+  ultima_actividad: {
+    type: DataTypes.DATE,
+  },
+  ip: {
+    type: DataTypes.STRING,
+  },
+  dispositivo: {
+    type: DataTypes.STRING,
+  },
+});
+
+
 // Define associations
 
 Partida.belongsTo(Usuario, { foreignKey: 'id_usuario' });
@@ -163,6 +191,8 @@ Evento.belongsTo(SetPlatillos, { foreignKey: 'id_set' });
 Baraja.belongsToMany(Carta, { through: 'BarajaCarta', foreignKey: 'id_baraja' });
 Carta.belongsToMany(Baraja, { through: 'BarajaCarta', foreignKey: 'id_carta' });
 
+Usuario.hasMany(Sesion, { foreignKey: 'id_usuario' });
+Sesion.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 // Export the Sequelize instance and models
 module.exports = {
   sequelize,
@@ -176,4 +206,5 @@ module.exports = {
   Baraja,
   BarajaCarta,
   Carta,
+  Sesion, // Add the Sesion model here
 };
