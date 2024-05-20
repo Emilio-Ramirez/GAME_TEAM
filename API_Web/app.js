@@ -145,6 +145,20 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Ruta para obtener todas las cartas
+app.get('/cartas', async (req, res) => {
+  try {
+    // Obtener todas las cartas de la base de datos
+    const cartas = await Carta.findAll();
+
+    // Enviar las cartas como respuesta
+    res.json(cartas);
+  } catch (error) {
+    console.error('Error al obtener las cartas:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
 });
