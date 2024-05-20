@@ -80,3 +80,13 @@ crashlytics-build.properties
 
 #cache files
 VideoJuego/Library/PackageCache/
+
+# Ignorar el directorio node_modules
+node_modules/
+
+# Ignorar archivos de log
+*.log
+
+# Ignorar archivos temporales del sistema
+.DS_Store
+Thumbs.db
