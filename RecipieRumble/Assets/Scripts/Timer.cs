@@ -4,56 +4,75 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float totalTime = 300f;  // Total time for the game in seconds (5 minutes)
-    private float currentTime;  // Current time remaining
+    public float totalTime = 60f;  // Tiempo total para el juego en segundos (1 minuto)
+    private float currentTime;  // Tiempo actual restante
     private bool isTimerRunning = false;
     public delegate void TimeUpAction();
-    public static event TimeUpAction OnTimeUp;  // Event triggered when time is up
+    public static event TimeUpAction OnTimeUp;  // Evento desencadenado cuando se acaba el tiempo
+    public GameObject gameOverScreenPrefab;  // Referencia al prefab de la pantalla de Game Over
+    public Canvas mainCanvas;  // Referencia al Canvas principal
 
     public TMP_Text timerText;  
 
-    public Button startButton;  // Reference to the UI button to start the timer
+    public Button startButton;  // Referencia al botón de UI para iniciar el temporizador
 
     void Start()
     {
-        // Ensure the timer is not running at the start
+        // Asegúrate de que el temporizador no esté corriendo al inicio
         isTimerRunning = false;
-        
-        // Optional: Initialize the timer text
+
+        // Inicializa currentTime con totalTime
+        currentTime = totalTime;
+
+        // Opcional: Inicializa el texto del temporizador
         UpdateTimerText();
 
-        // Assign the StartTimer method to the button's onClick event
+        // Asigna el método StartTimer al evento onClick del botón
         if (startButton != null)
         {
             startButton.onClick.AddListener(StartTimer);
         }
+
+        // Mensajes de depuración
+        Debug.Log("Start() - totalTime: " + totalTime + ", currentTime: " + currentTime);
     }
 
     void Update()
     {
-        // Update the timer if it's running
+        // Actualiza el temporizador si está corriendo
         if (isTimerRunning)
         {
-            currentTime -= Time.deltaTime;  // Reduce the current time by deltaTime each frame
+            currentTime -= Time.deltaTime;  // Reduce el tiempo actual por deltaTime en cada frame
             if (currentTime <= 0)
             {
-                // Timer has run out
+                // El temporizador ha terminado
                 currentTime = 0;
                 isTimerRunning = false;
-                Debug.Log("Time is up!");
+                Debug.Log("¡Se acabó el tiempo!");
                 if (OnTimeUp != null)
                 {
-                    OnTimeUp();  // Trigger the event when time is up
+                    OnTimeUp();  // Desencadena el evento cuando se acaba el tiempo
+                }
+                // Instancia y muestra la pantalla de Game Over
+                if (gameOverScreenPrefab != null)
+                {
+                    Debug.Log("Instanciando pantalla de Game Over");
+                    GameObject gameOverScreen = Instantiate(gameOverScreenPrefab, mainCanvas.transform);
+                    Debug.Log("Pantalla de Game Over instanciada en el Canvas");
+                }
+                else
+                {
+                    Debug.LogWarning("gameOverScreenPrefab no está asignado en el inspector.");
                 }
             }
 
-            UpdateTimerText();  // Update the UI text component with the current time
+            UpdateTimerText();  // Actualiza el componente de texto UI con el tiempo actual
         }
     }
 
     void UpdateTimerText()
     {
-        // Update the UI text component with the current time
+        // Actualiza el componente de texto UI con el tiempo actual
         if (timerText != null)
         {
             int minutes = Mathf.FloorToInt(currentTime / 60);
@@ -64,32 +83,36 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        // Start the timer
+        totalTime = 60f;
+        // Inicia el temporizador
         isTimerRunning = true;
         currentTime = totalTime;
-        
-        // Hide the start button
+
+        // Oculta el botón de inicio
         if (startButton != null)
         {
             startButton.gameObject.SetActive(false);
         }
+
+        // Mensaje de depuración
+        Debug.Log("StartTimer() - totalTime: " + totalTime + ", currentTime: " + currentTime);
     }
 
     public void StopTimer()
     {
-        // Stop the timer
+        // Detiene el temporizador
         isTimerRunning = false;
     }
 
     public float GetCurrentTime()
     {
-        // Get the current time remaining
+        // Obtiene el tiempo actual restante
         return currentTime;
     }
 
     public bool IsTimerRunning()
     {
-        // Check if the timer is running
+        // Comprueba si el temporizador está corriendo
         return isTimerRunning;
     }
 }

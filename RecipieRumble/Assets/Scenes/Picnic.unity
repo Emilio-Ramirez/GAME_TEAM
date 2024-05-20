@@ -1433,6 +1433,7 @@ MonoBehaviour:
   RecipeArea: {fileID: 1727660349}
   PlayerArea: {fileID: 1716817534}
   dropZoneManager: {fileID: 1216164501}
+  deckButton: {fileID: 1267061987}
 --- !u!1 &1347739830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,7 +1446,6 @@ GameObject:
   - component: {fileID: 1347739834}
   - component: {fileID: 1347739833}
   - component: {fileID: 1347739832}
-  - component: {fileID: 1347739835}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1347739835}
+      - m_Target: {fileID: 1898345443}
         m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
         m_MethodName: GoTo
         m_Mode: 5
@@ -1567,18 +1567,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347739830}
   m_CullTransparentMesh: 1
---- !u!114 &1347739835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347739830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87697803bfc5d5144b78ad030b235049, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1443832012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,6 +1726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1898345442}
   - component: {fileID: 1898345441}
+  - component: {fileID: 1898345443}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1758,6 +1747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTime: 300
+  gameOverScreen: {fileID: 1328581800420669933, guid: a42e485ef0a26244cb947b0f086efa56, type: 3}
   timerText: {fileID: 450357923}
   startButton: {fileID: 1063609605}
 --- !u!4 &1898345442
@@ -1775,6 +1765,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1898345443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898345440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87697803bfc5d5144b78ad030b235049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5074620108398536964
 PrefabInstance:
   m_ObjectHideFlags: 0
