@@ -18,7 +18,12 @@ public class Registration : MonoBehaviour
 
   }
 
-  IEnumerator Register()
+  public void callLogin(){
+    StartCoroutine(Login());
+  }
+
+ 
+   IEnumerator Register()
   {
       // Create a new instance of the WWWForm class
       WWWForm form = new WWWForm();
@@ -48,12 +53,54 @@ public class Registration : MonoBehaviour
       }
   }
 
+   IEnumerator Login()
+    {
+        // Create a new instance of the WWWForm class
+        WWWForm form = new WWWForm();
 
-  public void VerifyInputs()
+        // Add the username and password fields to the form
+        form.AddField("username", usernameField.text);
+        form.AddField("password", passwordField.text);
+
+        // Create the URL for the login API endpoint
+        string url = "http://localhost:3000/login";
+
+        // Send the POST request to the server
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                // Login successful
+                Debug.Log("User logged in successfully");
+
+                // Save the user's authentication token
+                string token = www.downloadHandler.text;
+                PlayerPrefs.SetString("token", token);
+
+                
+
+                // Perform any additional actions after successful login
+                // For example, load the next scene or update the UI
+            }
+            else
+            {
+                // Login failed
+                Debug.LogError("Error logging in: " + www.error);
+
+                // Display an error message to the user or handle the error appropriately
+            }
+        }
+    }
+
+   public void VerifyInputs()
   {
       // Enable the submit button if the username and password fields are not empty
       submitButton.interactable = (usernameField.text.Length >= 8 && passwordField.text.Length >= 8);
   }
+
+
 
 
 }

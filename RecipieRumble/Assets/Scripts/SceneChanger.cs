@@ -17,5 +17,22 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void GoToLogin()
+    {
+      //load the scene with the given name
+      SceneManager.LoadScene(2);
+    }
+
+    public void GoToHome()
+    {
+      //load the scene with the given name
+      SceneManager.LoadScene(0);
+    }
+    
+    public void GoToGame()
+    {
+      //load the scene with the given name
+      SceneManager.LoadScene(3);
+    }
 
 }
