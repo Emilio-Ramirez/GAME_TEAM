@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "sync_db": "node sync_db.js"
+    "sync_db": "node sync_db.js",
+    "crateCards": "node crateCards.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "express": "^4.19.2",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "uuid": "^9.0.1"
   }
 }
