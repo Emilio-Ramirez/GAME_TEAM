@@ -667,8 +667,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1500433956}
-        m_TargetAssemblyTypeName: Registration, Assembly-CSharp
+      - m_Target: {fileID: 1500433957}
+        m_TargetAssemblyTypeName: SesionManager, Assembly-CSharp
         m_MethodName: VerifyInputs
         m_Mode: 1
         m_Arguments:
@@ -983,9 +983,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1500433956}
-        m_TargetAssemblyTypeName: Registration, Assembly-CSharp
-        m_MethodName: callLogin
+      - m_Target: {fileID: 1500433957}
+        m_TargetAssemblyTypeName: SesionManager, Assembly-CSharp
+        m_MethodName: CallLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1189,8 +1189,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1500433956}
-        m_TargetAssemblyTypeName: Registration, Assembly-CSharp
+      - m_Target: {fileID: 1500433957}
+        m_TargetAssemblyTypeName: SesionManager, Assembly-CSharp
         m_MethodName: VerifyInputs
         m_Mode: 1
         m_Arguments:
@@ -1919,6 +1919,7 @@ GameObject:
   - component: {fileID: 1500433953}
   - component: {fileID: 1500433952}
   - component: {fileID: 1500433956}
+  - component: {fileID: 1500433957}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2021,12 +2022,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1500433951}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a214ac670621049f9a177917f4f0c922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1500433957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500433951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca95ffc7442544b75840fa714753f760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   usernameField: {fileID: 105189529}
   passwordField: {fileID: 822194508}
+  logedInText: {fileID: 0}
   submitButton: {fileID: 509107849}
+  enterGameButton: {fileID: 0}
 --- !u!1 &1539787680
 GameObject:
   m_ObjectHideFlags: 0

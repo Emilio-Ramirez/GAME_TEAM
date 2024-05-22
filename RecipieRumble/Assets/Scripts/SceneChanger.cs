@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,28 +12,27 @@ public class SceneChanger : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public void GoToRegister()
+    public static void GoToRegister()
     {
         //load the scene with the given name
         SceneManager.LoadScene(1);
     }
-
-    public void GoToLogin()
-    {
-      //load the scene with the given name
-      SceneManager.LoadScene(2);
-    }
-
-    public void GoToHome()
-    {
-      //load the scene with the given name
-      SceneManager.LoadScene(0);
-    }
-    
-    public void GoToGame()
-    {
+    public static void GoToLogin()
+      {
+        //load the scene with the given name
+        SceneManager.LoadScene(2);
+      }
+    public static void GoToHome()
+      {
+        //load the scene with the given name
+        SceneManager.LoadScene(0);
+      }
+    public static void GoToGame()
+      {
       //load the scene with the given name
       SceneManager.LoadScene(3);
-    }
+      }
+
 
 }
+
