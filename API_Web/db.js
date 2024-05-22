@@ -124,10 +124,10 @@ const BarajaCarta = sequelize.define('BarajaCarta', {
 });
 
 const Carta = sequelize.define('Carta', {
-  id: {
+  id_carta: {
     type: DataTypes.INTEGER,
-    unique: true,
-    primaryKey : true
+    primaryKey: true,
+    autoIncrement: true,
   },
   nombre: {
     type: DataTypes.STRING,
