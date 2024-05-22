@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LoginMenu.unity
     guid: 065c038a7c1394c349d54fed1d1f84ce
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/GameView.unity
     guid: a0f962a07bd1bf8419fd90971c3152e4
   - enabled: 1
     path: Assets/Scenes/Picnic.unity
