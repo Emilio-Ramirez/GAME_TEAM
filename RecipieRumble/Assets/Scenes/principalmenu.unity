@@ -540,7 +540,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 555960356}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1500433956}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: GoToLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &555960356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,11 +803,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1068759141}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1500433956}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: GoToGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1068759141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,6 +1231,7 @@ GameObject:
   - component: {fileID: 1500433953}
   - component: {fileID: 1500433952}
   - component: {fileID: 1500433956}
+  - component: {fileID: 1500433957}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1312,6 +1337,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87697803bfc5d5144b78ad030b235049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1500433957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500433951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca95ffc7442544b75840fa714753f760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameField: {fileID: 0}
+  passwordField: {fileID: 0}
+  logedInText: {fileID: 1371839586}
+  submitButton: {fileID: 0}
+  enterGameButton: {fileID: 1068759140}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
