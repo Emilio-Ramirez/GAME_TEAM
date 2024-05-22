@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class Card
 {
-    public int id;
+    public int id_carta;
     public string nombre;
-    public string valor_nutrimental;
-    public int tipo;
+    public int valor_nutrimental;
+    public string tipo;
 }
