@@ -1728,6 +1728,7 @@ GameObject:
   - component: {fileID: 1898345441}
   - component: {fileID: 1898345443}
   - component: {fileID: 1898345444}
+  - component: {fileID: 1898345445}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1794,6 +1795,35 @@ MonoBehaviour:
   cards:
     cards: []
   cardImages: []
+  jsonData: "\r\n    {\r\n        \"cards\": [\r\n            {\r\n               
+    \"id\": 1,\r\n                \"nombre\": \"Manzana\",\r\n                \"valor_nutrimental\":
+    \"Vitamina C, Fibra\",\r\n                \"tipo\": 1\r\n            },\r\n           
+    {\r\n                \"id\": 2,\r\n                \"nombre\": \"Pl\xE1tano\",\r\n               
+    \"valor_nutrimental\": \"Potasio, Vitamina B6\",\r\n                \"tipo\":
+    1\r\n            },\r\n            {\r\n                \"id\": 3,\r\n               
+    \"nombre\": \"Br\xF3coli\",\r\n                \"valor_nutrimental\": \"Vitamina
+    K, Vitamina C, Folato\",\r\n                \"tipo\": 2\r\n            },\r\n           
+    {\r\n                \"id\": 4,\r\n                \"nombre\": \"Zanahoria\",\r\n               
+    \"valor_nutrimental\": \"Vitamina A, Betacaroteno\",\r\n                \"tipo\":
+    2\r\n            },\r\n            {\r\n                \"id\": 5,\r\n               
+    \"nombre\": \"Salm\xF3n\",\r\n                \"valor_nutrimental\": \"Prote\xEDna,
+    Omega-3\",\r\n                \"tipo\": 3\r\n            }\r\n        ]\r\n   
+    }\r\n    "
+--- !u!114 &1898345445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898345440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726a127ab8d9b15469d12f33c9d28b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8171552711498485673, guid: db88e198e45b865408faac22a2d7d009, type: 3}
+  cardParent: {fileID: 1727660349}
+  apiUrl: http://localhost:3000/cartas
 --- !u!1001 &5074620108398536964
 PrefabInstance:
   m_ObjectHideFlags: 0
