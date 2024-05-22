@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DropZoneManager : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class DropZoneManager : MonoBehaviour
     public int[] turnsLeft;
     public int[] initialTurns;  // Almacenar los turnos iniciales
     public List<GameObject>[] cardsInDropZone;
-
     public Transform playerArea; // Área del jugador
+    public Transform recipeArea; // Área de recetas
+    public Button startButton; // Botón de inicio
 
     void Start()
     {
@@ -31,7 +33,55 @@ public class DropZoneManager : MonoBehaviour
 
             Collider2D collider = dropZones[i].AddComponent<BoxCollider2D>();
             collider.isTrigger = true;
+            dropZones[i].SetActive(false);  // Desactivar las zonas de entrega inicialmente
             Debug.Log($"DropZone {i} created with {turnsLeft[i]} turns left.");
+        }
+
+        // Asignar el método OnStartButtonPressed al evento onClick del botón
+        if (startButton != null)
+        {
+            startButton.onClick.AddListener(OnStartButtonPressed);
+        }
+
+        // Asegurarse de que la área de recetas está desactivada inicialmente
+        if (recipeArea != null)
+        {
+            recipeArea.gameObject.SetActive(false);
+        }
+
+        // Asegurarse de que la área del jugador está desactivada inicialmente
+        if (playerArea != null)
+        {
+            playerArea.gameObject.SetActive(false);
+        }
+    }
+
+    void OnStartButtonPressed()
+    {
+        Debug.Log("Start Button Pressed");
+
+        // Activar el área de recetas
+        if (recipeArea != null)
+        {
+            recipeArea.gameObject.SetActive(true);
+        }
+
+        // Activar el área del jugador
+        if (playerArea != null)
+        {
+            playerArea.gameObject.SetActive(true);
+        }
+
+        // Activar las zonas de entrega
+        for (int i = 0; i < numberOfDropZones; i++)
+        {
+            dropZones[i].SetActive(true);
+        }
+
+        // Ocultar el botón de inicio después de presionarlo
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(false);
         }
     }
 

@@ -13,10 +13,16 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Image zoomCardImage;
     private CanvasGroup zoomCardCanvasGroup;
 
+    // Agregar referencia al DropZoneManager
+    private DropZoneManager dropZoneManager;
+
     private void Awake()
     {
         // Buscar el Canvas en el momento de inicialización
         Canvas = FindObjectOfType<Canvas>().transform;
+
+        // Buscar el DropZoneManager
+        dropZoneManager = FindObjectOfType<DropZoneManager>();
 
         if (ZoomCardPrefab == null)
         {
@@ -56,7 +62,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         zoomCard = Instantiate(ZoomCardPrefab, Canvas);
-        zoomCard.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);  // Escalar ligeramente para efecto de zoom
+        zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
 
         zoomCardImage = zoomCard.GetComponent<Image>();
         zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
@@ -83,22 +89,32 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             Vector3 centerPosition = (worldCorners[0] + worldCorners[2]) / 2; // Promedio de la esquina inferior izquierda y la esquina superior derecha
 
-            // Identificar si la carta está en la "player zone" o en la "recipe zone"
-            if (transform.parent.name == "PlayerZone")
+            // Verificar si la carta está en la recipe area
+            bool isInRecipeArea = false;
+            if (dropZoneManager != null && dropZoneManager.recipeArea != null)
             {
-                // Desplazar hacia arriba en la "player zone"
-                centerPosition += new Vector3(0, originalRectTransform.sizeDelta.y, 0); // Ajustar este valor según sea necesario
-            }
-            else if (transform.parent.name == "RecipeZone")
-            {
-                // Mantener el comportamiento actual en la "recipe zone"
-                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y / 2, 0); // Ajustar este valor según sea necesario
+                foreach (Transform child in dropZoneManager.recipeArea)
+                {
+                    if (child == transform)
+                    {
+                        isInRecipeArea = true;
+                        break;
+                    }
+                }
             }
 
+            if (isInRecipeArea)
+            {
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y + 200, 0); // Ajustar hacia abajo para la recipe area
+            }
+            else
+            {
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y - 160, 0); // Ajustar hacia arriba para otras áreas
+            }
             rectTransform.position = centerPosition;
 
             // Añadir un Debug.Log para ver la posición del clon
-            Debug.Log($"ZoomCard created at position: {rectTransform.position} in parent: {transform.parent.name}");
+            Debug.Log($"ZoomCard created at position: {rectTransform.position}");
         }
         else
         {

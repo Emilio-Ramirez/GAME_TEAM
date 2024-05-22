@@ -1,77 +1,118 @@
-// using UnityEngine;
-// using UnityEngine.UI;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-// public class Timer : MonoBehaviour
-// {
-//     public float totalTime = 300f;  // Total time for the game in seconds (5 minutes)
-//     private float currentTime;  // Current time remaining
-//     private bool isTimerRunning = false;
-//     public delegate void TimeUpAction();
-//     public static event TimeUpAction OnTimeUp;  // Event triggered when time is up
+public class Timer : MonoBehaviour
+{
+    public float totalTime = 60f;  // Tiempo total para el juego en segundos (1 minuto)
+    private float currentTime;  // Tiempo actual restante
+    private bool isTimerRunning = false;
+    public delegate void TimeUpAction();
+    public static event TimeUpAction OnTimeUp;  // Evento desencadenado cuando se acaba el tiempo
+    public GameObject gameOverScreenPrefab;  // Referencia al prefab de la pantalla de Game Over
+    public Canvas mainCanvas;  // Referencia al Canvas principal
 
-//     public Text timerText;  // Reference to the UI text component to display the timer
+    public TMP_Text timerText;  
 
-//     void Start()
-//     {
-//         // Start the timer when the game starts
-//         StartTimer();
-//     }
+    public Button startButton;  // Referencia al botón de UI para iniciar el temporizador
 
-//     void Update()
-//     {
-//         // Update the timer if it's running
-//         if (isTimerRunning)
-//         {
-//             currentTime -= Time.deltaTime;  // Reduce the current time by deltaTime each frame
-//             if (currentTime <= 0)
-//             {
-//                 // Timer has run out
-//                 currentTime = 0;
-//                 isTimerRunning = false;
-//                 Debug.Log("Time is up!");
-//                 if (OnTimeUp != null)
-//                 {
-//                     OnTimeUp();  // Trigger the event when time is up
-//                 }
-//             }
+    void Start()
+    {
+        // Asegúrate de que el temporizador no esté corriendo al inicio
+        isTimerRunning = false;
 
-//             UpdateTimerText();  // Update the UI text component with the current time
-//         }
-//     }
+        // Inicializa currentTime con totalTime
+        currentTime = totalTime;
 
-//     void UpdateTimerText()
-//     {
-//         // Update the UI text component with the current time
-//         if (timerText != null)
-//         {
-//             int minutes = Mathf.FloorToInt(currentTime / 60);
-//             int seconds = Mathf.FloorToInt(currentTime % 60);
-//             timerText.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
-//         }
-//     }
+        // Opcional: Inicializa el texto del temporizador
+        UpdateTimerText();
 
-//     public void StartTimer()
-//     {
-//         // Start the timer
-//         isTimerRunning = true;
-//         currentTime = totalTime;
-//     }
+        // Asigna el método StartTimer al evento onClick del botón
+        if (startButton != null)
+        {
+            startButton.onClick.AddListener(StartTimer);
+        }
 
-//     public void StopTimer()
-//     {
-//         // Stop the timer
-//         isTimerRunning = false;
-//     }
+        // Mensajes de depuración
+        Debug.Log("Start() - totalTime: " + totalTime + ", currentTime: " + currentTime);
+    }
 
-//     public float GetCurrentTime()
-//     {
-//         // Get the current time remaining
-//         return currentTime;
-//     }
+    void Update()
+    {
+        // Actualiza el temporizador si está corriendo
+        if (isTimerRunning)
+        {
+            currentTime -= Time.deltaTime;  // Reduce el tiempo actual por deltaTime en cada frame
+            if (currentTime <= 0)
+            {
+                // El temporizador ha terminado
+                currentTime = 0;
+                isTimerRunning = false;
+                Debug.Log("¡Se acabó el tiempo!");
+                if (OnTimeUp != null)
+                {
+                    OnTimeUp();  // Desencadena el evento cuando se acaba el tiempo
+                }
+                // Instancia y muestra la pantalla de Game Over
+                if (gameOverScreenPrefab != null)
+                {
+                    Debug.Log("Instanciando pantalla de Game Over");
+                    GameObject gameOverScreen = Instantiate(gameOverScreenPrefab, mainCanvas.transform);
+                    Debug.Log("Pantalla de Game Over instanciada en el Canvas");
+                }
+                else
+                {
+                    Debug.LogWarning("gameOverScreenPrefab no está asignado en el inspector.");
+                }
+            }
 
-//     public bool IsTimerRunning()
-//     {
-//         // Check if the timer is running
-//         return isTimerRunning;
-//     }
-// }
+            UpdateTimerText();  // Actualiza el componente de texto UI con el tiempo actual
+        }
+    }
+
+    void UpdateTimerText()
+    {
+        // Actualiza el componente de texto UI con el tiempo actual
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(currentTime / 60);
+            int seconds = Mathf.FloorToInt(currentTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+    }
+
+    public void StartTimer()
+    {
+        totalTime = 60f;
+        // Inicia el temporizador
+        isTimerRunning = true;
+        currentTime = totalTime;
+
+        // Oculta el botón de inicio
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(false);
+        }
+
+        // Mensaje de depuración
+        Debug.Log("StartTimer() - totalTime: " + totalTime + ", currentTime: " + currentTime);
+    }
+
+    public void StopTimer()
+    {
+        // Detiene el temporizador
+        isTimerRunning = false;
+    }
+
+    public float GetCurrentTime()
+    {
+        // Obtiene el tiempo actual restante
+        return currentTime;
+    }
+
+    public bool IsTimerRunning()
+    {
+        // Comprueba si el temporizador está corriendo
+        return isTimerRunning;
+    }
+}
