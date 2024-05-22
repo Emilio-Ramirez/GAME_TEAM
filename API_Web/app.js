@@ -139,6 +139,17 @@ app.get('/profile', authenticateSession, async (req, res) => {
   }
 });
 
+//get to cartas
+app.get('/cartas', async (req, res) => {
+  try {
+    const cartas = await Carta.findAll();
+    res.json(cartas);
+  } catch (error) {
+    console.error('Error fetching cartas:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+)
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
