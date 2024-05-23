@@ -152,6 +152,70 @@ app.get('/cartas', async (req, res) => {
 }
 )
 
+// Ruta para actualizar los puntajes de un usuario
+app.post('/update-scores', authenticateSession, async (req, res) => {
+  try {
+    const userId = req.session.id_usuario;
+    const { puntaje_maximo, dishes_per_event, nivel } = req.body;
+
+    console.log('Updating scores for user ID:', userId);
+    console.log('Received scores:', { puntaje_maximo, dishes_per_event, nivel });
+
+    // Validar que el nivel sea uno de los tres niveles válidos
+    const validLevels = ['wedding', 'picnic', 'christmas_dinner'];
+    if (!validLevels.includes(nivel)) {
+      console.log('Invalid level:', nivel);
+      return res.status(400).json({ error: 'Invalid level' });
+    }
+
+    // Buscar el usuario en la base de datos
+    const user = await Usuario.findByPk(userId);
+    if (!user) {
+      console.log('User not found with ID:', userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('User found:', user.toJSON());
+
+    // Verificar si ya existe un registro de puntaje para el nivel especificado
+    const existingScore = user.puntajes.find((score) => score.nivel === nivel);
+
+    if (existingScore) {
+      console.log('Existing score found for level:', nivel);
+      console.log('Updating existing score:', existingScore);
+      // Actualizar los puntajes existentes para el nivel
+      existingScore.puntaje_maximo = puntaje_maximo;
+      existingScore.dishes_per_event = dishes_per_event;
+    } else {
+      console.log('No existing score found for level:', nivel);
+      console.log('Adding new score');
+      // Agregar un nuevo registro de puntaje para el nivel
+      user.puntajes.push({
+        puntaje_maximo,
+        dishes_per_event,
+        nivel,
+      });
+    }
+
+    // Update the user's puntajes field in the database
+    await Usuario.update(
+      { puntajes: user.puntajes },
+      { where: { id_usuario: userId } }
+    );
+
+    console.log('User scores updated successfully');
+
+    const updatedUser = await Usuario.findByPk(userId);
+    console.log('Updated user:', updatedUser.toJSON());
+
+    res.json({ message: 'Scores updated successfully' });
+  } catch (error) {
+    console.error('Error updating scores:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 app.listen(process.env.API_PORT, () => {
   console.log('Server is running on http://localhost:' + process.env.API_PORT)
 });
