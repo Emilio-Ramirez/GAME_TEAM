@@ -2,23 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using TMPro;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject cardPrefab; // Prefab de la carta
-    public Transform cardParent; // Transform del padre donde se añadirán las cartas
-    public string apiUrl = "http://localhost:3000/cartas"; 
+    public GameObject cardPrefab;
+    public Transform cardParent;
+    public string apiUrl = "http://localhost:3000/cartas";
 
     private List<Card> cards = new List<Card>();
 
     void Start()
     {
+        Debug.Log("GameManager Start");
+        Debug.Log("apiUrl: " + apiUrl);
         StartCoroutine(GetCards());
     }
 
     IEnumerator GetCards()
     {
+        Debug.Log("Attempting to connect to URL: " + apiUrl);
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
         {
             yield return webRequest.SendWebRequest();
@@ -26,11 +31,10 @@ public class GameManager : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError($"Error: {webRequest.error}, URL: {apiUrl}");
-                
             }
             else
             {
-                Debug.Log(webRequest.downloadHandler.text); // Para verificar la respuesta
+                Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
                 cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
                 PopulateDeck();
             }
@@ -39,23 +43,41 @@ public class GameManager : MonoBehaviour
 
     void PopulateDeck()
     {
+        Debug.Log("Populating Deck with " + cards.Count + " cards.");
+
+        foreach (Transform child in cardParent)
+        {
+            Destroy(child.gameObject);
+        }
+
         foreach (Card card in cards)
         {
             GameObject newCard = Instantiate(cardPrefab, cardParent);
+            Debug.Log($"Instantiated new card: {newCard.name}");
 
-            // Encontrar y asignar los textos dentro del prefab
-            Text nameText = newCard.transform.Find("NameText").GetComponent<Text>();
-            Text valueText = newCard.transform.Find("ValueText").GetComponent<Text>();
-            Text typeText = newCard.transform.Find("TypeText").GetComponent<Text>();
+            TMP_Text nameText = newCard.transform.Find("NameText")?.GetComponent<TMP_Text>();
+            TMP_Text valueText = newCard.transform.Find("ValueText")?.GetComponent<TMP_Text>();
+            TMP_Text typeText = newCard.transform.Find("TypeText")?.GetComponent<TMP_Text>();
+            Image cardImage = newCard.transform.Find("Image")?.GetComponent<Image>();
 
-            nameText.text = card.nombre;
-            valueText.text = card.valor_nutrimental.ToString();
-            typeText.text = card.tipo;
+            if (nameText != null && valueText != null && typeText != null)
+            {
+                nameText.text = card.nombre;
+                valueText.text = card.valor_nutrimental.ToString();
+                typeText.text = card.tipo;
+            }
+
+            if (cardImage != null)
+            {
+                string imagePath = $"Sprites/Picnic/{card.tipo}/{card.id_carta}";
+                cardImage.sprite = Resources.Load<Sprite>(imagePath);
+                if (cardImage.sprite == null)
+                    Debug.LogError($"Image not found for card: {imagePath}");
+            }
         }
     }
 }
 
-// Helper class to parse JSON array
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
