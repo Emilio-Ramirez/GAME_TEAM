@@ -29,6 +29,11 @@ npm run sync_db
 ```
 npm run createCards
 ```
+6. Populating the database:
+We have a file that if you run it drop the contents of the tables that are Recetas y Cartas
+```
+npm run populateDB
+```
 
 ## Sequelize Usage
 
