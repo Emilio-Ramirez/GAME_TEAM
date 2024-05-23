@@ -1428,7 +1428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Card1: {fileID: 8171552711498485673, guid: 1df4a01695521434081015045a621d13, type: 3}
-  Card2: {fileID: 1165398476713593733, guid: beba9dece274ba64398d1f22b0593937, type: 3}
+  Card2: {fileID: 8171552711498485673, guid: db88e198e45b865408faac22a2d7d009, type: 3}
   Card3: {fileID: 8171552711498485673, guid: db88e198e45b865408faac22a2d7d009, type: 3}
   RecipeArea: {fileID: 1727660349}
   PlayerArea: {fileID: 1716817534}
@@ -1792,23 +1792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aa5feb62728964cbea529c5494c62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-    cards: []
-  cardImages: []
-  jsonData: "\r\n    {\r\n        \"cards\": [\r\n            {\r\n               
-    \"id\": 1,\r\n                \"nombre\": \"Manzana\",\r\n                \"valor_nutrimental\":
-    \"Vitamina C, Fibra\",\r\n                \"tipo\": 1\r\n            },\r\n           
-    {\r\n                \"id\": 2,\r\n                \"nombre\": \"Pl\xE1tano\",\r\n               
-    \"valor_nutrimental\": \"Potasio, Vitamina B6\",\r\n                \"tipo\":
-    1\r\n            },\r\n            {\r\n                \"id\": 3,\r\n               
-    \"nombre\": \"Br\xF3coli\",\r\n                \"valor_nutrimental\": \"Vitamina
-    K, Vitamina C, Folato\",\r\n                \"tipo\": 2\r\n            },\r\n           
-    {\r\n                \"id\": 4,\r\n                \"nombre\": \"Zanahoria\",\r\n               
-    \"valor_nutrimental\": \"Vitamina A, Betacaroteno\",\r\n                \"tipo\":
-    2\r\n            },\r\n            {\r\n                \"id\": 5,\r\n               
-    \"nombre\": \"Salm\xF3n\",\r\n                \"valor_nutrimental\": \"Prote\xEDna,
-    Omega-3\",\r\n                \"tipo\": 3\r\n            }\r\n        ]\r\n   
-    }\r\n    "
 --- !u!114 &1898345445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1834,7 +1817,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2173588862765458801, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 0.011764706
       objectReference: {fileID: 0}
     - target: {fileID: 4916790905920789709, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
       propertyPath: m_Pivot.x

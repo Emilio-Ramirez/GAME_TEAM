@@ -121,6 +121,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log("Card on collision!!");
         if (collision.gameObject.CompareTag("DropZone"))
         {
             IsOverDropZone = false;
