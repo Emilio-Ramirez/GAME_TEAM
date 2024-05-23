@@ -86,14 +86,9 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  puntaje_maximo: {
-    type: DataTypes.INTEGER,
-  },
-  nivel: {
-    type: DataTypes.INTEGER,
-  },
-  dishes_per_event: {
-    type: DataTypes.INTEGER,
+  puntajes: {
+    type: DataTypes.JSON,
+    defaultValue: [],
   },
 });
 
