@@ -55,6 +55,7 @@ public class Deck : MonoBehaviour
             playerCard.transform.SetParent(PlayerArea.transform, false);
             playerCard.name = "PlayerCard_" + (cardsInHand + i); // Nombrar las cartas según su orden
         }
+        
         dropZoneManager.OnDrawButtonPressed();
     }
 
