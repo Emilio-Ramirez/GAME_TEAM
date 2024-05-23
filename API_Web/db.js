@@ -122,20 +122,24 @@ const BarajaCarta = sequelize.define('BarajaCarta', {
   // No additional attributes needed for the join table
 });
 
-const Carta = sequelize.define('Carta', {
-  id_carta: {
+const Receta = sequelize.define('Receta', {
+  id_receta: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  nombre: {
-    type: DataTypes.STRING,
+  es_principal: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
-  valor_nutrimental: {
-    type: DataTypes.INTEGER,
-  },
-  tipo: {
-    type: DataTypes.STRING,
+  ingredientes: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      side: {},
+      verduras: {},
+      protein: {},
+      utils: {},
+    },
   },
 });
 
