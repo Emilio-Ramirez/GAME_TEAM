@@ -55,27 +55,34 @@ h2 {
     justify-content: space-between;
 }
 
-.nav-icon{
+.nav-icon {
     height: 20px;
 }
 
 .content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 50px); /* Altura del contenedor menos la altura de la navbar */
     padding-top: 60px; 
 }
 
-  
-
-.centered-box {
-    border: 5px solid #593E2E; 
-    width: 900px; 
-    height: 700px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    border-radius: 30px; 
+#unityCanvas {
+    width: 800px;
+    height: 600px;
+    background-color: black;
 }
-  
+
+#loadingBar {
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    margin-bottom: 10px;
+}
+
+#progressBarFull {
+    height: 100%;
+    width: 0;
+    background-color: #4caf50;
+}
