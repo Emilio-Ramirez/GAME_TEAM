@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "sync_db": "node sync_db.js",
-    "crateCards": "node crateCards.js"
+    "populateDB": "node populateDB.js"
   },
   "author": "",
   "license": "ISC",

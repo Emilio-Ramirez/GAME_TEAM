@@ -48,14 +48,18 @@ const Receta = sequelize.define('Receta', {
     primaryKey: true,
     autoIncrement: true,
   },
-  puntaje: {
-    type: DataTypes.INTEGER,
+  es_principal: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
-  afinidad: {
-    type: DataTypes.STRING,
-  },
-  tiempo: {
-    type: DataTypes.INTEGER,
+  ingredientes: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      side: {},
+      verduras: {},
+      protein: {},
+      utils: {},
+    },
   },
 });
 

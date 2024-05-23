@@ -1,6 +1,6 @@
 const { sequelize } = require('./db');
 
-sequelize.sync()
+sequelize.sync({ force: true })
   .then(() => {
     console.log('Tables synced with the models');
     process.exit(0);
