@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public string apiUrl = "http://localhost:3000/cartas";
 
     private List<Card> cards = new List<Card>();
+    private HashSet<int> validCardIds = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46 };
 
     void Start()
     {
@@ -45,13 +46,30 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Populating Deck with " + cards.Count + " cards.");
 
+        // Limpiar cartas antiguas antes de añadir nuevas
         foreach (Transform child in cardParent)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (Card card in cards)
+        // Mostrar solo las primeras 4 cartas válidas
+        int cardsAdded = 0;
+        List<Card> randomCards = new List<Card>(cards);
+        randomCards.Shuffle(); // Método de extensión para mezclar la lista de cartas
+
+        foreach (Card card in randomCards)
         {
+            if (cardsAdded >= 4)
+            {
+                break;
+            }
+
+            if (!validCardIds.Contains(card.id_carta))
+            {
+                Debug.LogWarning($"Skipping card with invalid ID: {card.id_carta}");
+                continue;
+            }
+
             GameObject newCard = Instantiate(cardPrefab, cardParent);
             Debug.Log($"Instantiated new card: {newCard.name}");
 
@@ -69,11 +87,13 @@ public class GameManager : MonoBehaviour
 
             if (cardImage != null)
             {
-                string imagePath = $"Sprites/Picnic/{card.tipo}/{card.id_carta}";
+                string imagePath = $"Sprites/Picnic/{card.id_carta}";
                 cardImage.sprite = Resources.Load<Sprite>(imagePath);
                 if (cardImage.sprite == null)
                     Debug.LogError($"Image not found for card: {imagePath}");
             }
+
+            cardsAdded++;
         }
     }
 }
@@ -91,5 +111,23 @@ public static class JsonHelper
     private class Wrapper<T>
     {
         public T[] array;
+    }
+}
+
+public static class ListExtensions
+{
+    private static System.Random rng = new System.Random();  
+
+    public static void Shuffle<T>(this IList<T> list)  
+    {  
+        int n = list.Count;  
+        while (n > 1) 
+        {  
+            n--;  
+            int k = rng.Next(n + 1);  
+            T value = list[k];  
+            list[k] = list[n];  
+            list[n] = value;  
+        }  
     }
 }

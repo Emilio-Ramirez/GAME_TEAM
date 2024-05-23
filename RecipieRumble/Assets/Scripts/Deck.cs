@@ -7,7 +7,6 @@ public class Deck : MonoBehaviour
 {
     public GameObject Card1;
     public GameObject Card2;
-    public GameObject Card3;
     public Transform RecipeArea; 
     public GameObject PlayerArea; 
     public DropZoneManager dropZoneManager;
@@ -19,22 +18,19 @@ public class Deck : MonoBehaviour
 
     void Start()
     {
-        if (!Card1 || !Card2 || !Card3 || !RecipeArea || !PlayerArea || !dropZoneManager || !deckButton)
+        if (!Card1 || !Card2 || !RecipeArea || !PlayerArea || !dropZoneManager || !deckButton)
         {
             Debug.LogError("Uno o más componentes esenciales no están asignados en el script Deck.");
             return; // Detener la ejecución si faltan componentes críticos
         }
 
         // Inicializar las listas de cartas del jugador
-        playerCards.Add(Card1);
-        playerCards.Add(Card2);
+        playerCards.Add(Card2); // Solo agregar Card2 para el jugador
         
         // Inicializar las listas de cartas de receta
-        recipeCardPrefabs.Add(Card3);
-        recipeCardPrefabs.Add(Card3);
+        recipeCardPrefabs.Add(Card1); // Solo agregar Card1 para la receta
 
         InitializeRecipeCards(); // Configurar las cartas de receta solo una vez
-       
     }
 
     void InitializeRecipeCards()
@@ -58,7 +54,6 @@ public class Deck : MonoBehaviour
             GameObject playerCard = Instantiate(playerCards[Random.Range(0, playerCards.Count)], Vector3.zero, Quaternion.identity);
             playerCard.transform.SetParent(PlayerArea.transform, false);
             playerCard.name = "PlayerCard_" + (cardsInHand + i); // Nombrar las cartas según su orden
-            
         }
         dropZoneManager.OnDrawButtonPressed();
     }
