@@ -25,6 +25,11 @@ npm start
 ```
 npm run sync_db
 ```
+6. Populating the database:
+We have a file that if you run it drop the contents of the tables that are Recetas y Cartas
+```
+npm run populateDB
+```
 
 
 ## License
