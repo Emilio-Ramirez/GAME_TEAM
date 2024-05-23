@@ -54,8 +54,8 @@ async function createCards() {
     await sequelize.authenticate();
     console.log('Database connection established');
 
-    // Eliminar todas las cartas existentes
-    await Carta.destroy({ where: {}, truncate: true });
+    // Eliminar todas las cartas existentes utilizando TRUNCATE ... CASCADE
+    await sequelize.query('TRUNCATE "Carta" CASCADE');
 
     // Insertar las nuevas cartas en la base de datos
     await Carta.bulkCreate(cartas);
