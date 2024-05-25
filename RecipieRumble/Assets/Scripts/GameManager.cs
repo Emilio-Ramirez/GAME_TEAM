@@ -8,17 +8,21 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject cardPrefab;
-    public Transform cardParent;
+    public Transform playerCardParent;
     public string apiUrl = "http://localhost:3000/cartas";
+    public DropZoneManager dropZoneManager;
+    public TextMeshProUGUI scoreText;
 
     private List<Card> cards = new List<Card>();
     private HashSet<int> validCardIds = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46 };
+    private int totalScore = 0;
 
     void Start()
     {
         Debug.Log("GameManager Start");
         Debug.Log("apiUrl: " + apiUrl);
         StartCoroutine(GetCards());
+        UpdateScoreUI();
     }
 
     IEnumerator GetCards()
@@ -37,29 +41,32 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
                 cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
-                PopulateDeck();
+                ShuffleAndAddNewCards();
             }
         }
     }
 
-    void PopulateDeck()
+    void ShuffleAndAddNewCards()
     {
-        Debug.Log("Populating Deck with " + cards.Count + " cards.");
+        Debug.Log("Shuffling and adding new cards.");
 
-        // Limpiar cartas antiguas antes de añadir nuevas
-        foreach (Transform child in cardParent)
+        int currentCardCount = playerCardParent.childCount;
+        int newCardsCount = 4 - currentCardCount;
+
+        if (newCardsCount <= 0)
         {
-            Destroy(child.gameObject);
+            Debug.Log("Player already has 4 cards. No new cards will be added.");
+            return;
         }
 
-        // Mostrar solo las primeras 4 cartas válidas
-        int cardsAdded = 0;
         List<Card> randomCards = new List<Card>(cards);
-        randomCards.Shuffle(); // Método de extensión para mezclar la lista de cartas
+        randomCards.Shuffle(); // Mezclar la lista de cartas
+
+        int cardsAdded = 0;
 
         foreach (Card card in randomCards)
         {
-            if (cardsAdded >= 4)
+            if (cardsAdded >= newCardsCount)
             {
                 break;
             }
@@ -70,8 +77,12 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            GameObject newCard = Instantiate(cardPrefab, cardParent);
-            Debug.Log($"Instantiated new card: {newCard.name}");
+            GameObject newCard = Instantiate(cardPrefab, playerCardParent); // Añadir solo nuevas cartas
+            if (newCard == null)
+            {
+                Debug.LogError("Failed to instantiate new card prefab.");
+                continue;
+            }
 
             TMP_Text nameText = newCard.transform.Find("NameText")?.GetComponent<TMP_Text>();
             TMP_Text valueText = newCard.transform.Find("ValueText")?.GetComponent<TMP_Text>();
@@ -84,19 +95,53 @@ public class GameManager : MonoBehaviour
                 valueText.text = card.valor_nutrimental.ToString();
                 typeText.text = card.tipo;
             }
+            else
+            {
+                Debug.LogWarning("Failed to find one or more text components on the card prefab.");
+            }
 
             if (cardImage != null)
             {
                 string imagePath = $"Sprites/Picnic/{card.id_carta}";
                 cardImage.sprite = Resources.Load<Sprite>(imagePath);
                 if (cardImage.sprite == null)
+                {
                     Debug.LogError($"Image not found for card: {imagePath}");
+                }
             }
+            else
+            {
+                Debug.LogWarning("Failed to find Image component on the card prefab.");
+            }
+
+            // Añadir valor nutricional al puntaje total
+            totalScore += card.valor_nutrimental;
+            Debug.Log($"Added {card.valor_nutrimental} points. Total Score: {totalScore}");
+            UpdateScoreUI(); // Actualizar la UI con el nuevo puntaje
 
             cardsAdded++;
         }
+
+        // Actualizar el conteo de cartas en el DropZoneManager
+        dropZoneManager.UpdateCardCount();
+    }
+
+    public void RefreshDeck()
+    {
+        StartCoroutine(GetCards());
+    }
+
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + totalScore;
+        }
     }
 }
+
+
+
 
 public static class JsonHelper
 {
