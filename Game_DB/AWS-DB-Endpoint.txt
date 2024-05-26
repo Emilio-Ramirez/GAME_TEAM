@@ -1,0 +1,12 @@
+USERNAME & PASSWORD
+
+Admin
+RecipeRumble321
+
+PORT
+
+3306
+
+ENDPOINT
+
+recipe-db.clm20sesasin.us-east-2.rds.amazonaws.com
