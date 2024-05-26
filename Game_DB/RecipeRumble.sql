@@ -5,7 +5,7 @@ USE Recipe_Rumble;
 CREATE TABLE Usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     puntaje_maximo INT,
-    rank VARCHAR(50),
+    ranked VARCHAR(50),
     average_dishes_per_event FLOAT
 );
 
