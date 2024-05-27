@@ -7,10 +7,11 @@ public class Deck : MonoBehaviour
 {
     public GameObject Card1;
     public GameObject Card2;
-    public Transform RecipeArea; 
-    public GameObject PlayerArea; 
+    public Transform RecipeArea;
+    public GameObject PlayerArea;
     public DropZoneManager dropZoneManager;
     public Button deckButton; // Referencia al botón de la baraja
+    public GameManager gameManager;
 
     List<GameObject> playerCards = new List<GameObject>(); // Lista para las cartas del jugador
     List<GameObject> recipeCardPrefabs = new List<GameObject>(); // Lista para los prefabs de cartas de receta
@@ -18,7 +19,7 @@ public class Deck : MonoBehaviour
 
     void Start()
     {
-        if (!Card1 || !Card2 || !RecipeArea || !PlayerArea || !dropZoneManager || !deckButton)
+        if (!Card1 || !Card2 || !RecipeArea || !PlayerArea || !dropZoneManager || !deckButton || !gameManager)
         {
             Debug.LogError("Uno o más componentes esenciales no están asignados en el script Deck.");
             return; // Detener la ejecución si faltan componentes críticos
@@ -46,17 +47,10 @@ public class Deck : MonoBehaviour
 
     public void OnClick()
     {
-        int cardsInHand = PlayerArea.transform.childCount;
-        int cardsNeeded = 4 - cardsInHand; // Calcular cuántas cartas se necesitan para llegar a 4
+        gameManager.RefreshDeck();
 
-        for (int i = 0; i < cardsNeeded; i++)
-        {
-            GameObject playerCard = Instantiate(playerCards[Random.Range(0, playerCards.Count)], Vector3.zero, Quaternion.identity);
-            playerCard.transform.SetParent(PlayerArea.transform, false);
-            playerCard.name = "PlayerCard_" + (cardsInHand + i); // Nombrar las cartas según su orden
-        }
-        
-        dropZoneManager.OnDrawButtonPressed();
+        // Actualizar el conteo de cartas en el DropZoneManager después de agregar nuevas cartas
+        dropZoneManager.UpdateCardCount();
     }
 
     void Update()
