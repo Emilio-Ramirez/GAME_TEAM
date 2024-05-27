@@ -6,8 +6,8 @@ CREATE TABLE Usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     puntaje_maximo INT,
     usr_rank VARCHAR(50),
-    average_dishes_per_event FLOAT
-    username VARCHAR(50)
+    average_dishes_per_event FLOAT,
+    username VARCHAR(50),
     password_ VARCHAR(200)
 );
 

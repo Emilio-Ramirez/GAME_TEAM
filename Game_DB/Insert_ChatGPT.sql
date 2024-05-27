@@ -1,313 +1,49 @@
 USE Recipe_Rumble;
 
--- Insertar registros en la tabla Usuario
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1000, 'Nivel 1', 2.5);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1100, 'Nivel 2', 2.6);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1200, 'Nivel 3', 2.7);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1300, 'Nivel 4', 2.8);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1400, 'Nivel 5', 2.9);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1500, 'Nivel 6', 3.0);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1600, 'Nivel 7', 3.1);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1700, 'Nivel 8', 3.2);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1800, 'Nivel 9', 3.3);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (1900, 'Nivel 10', 3.4);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2000, 'Nivel 11', 3.5);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2100, 'Nivel 12', 3.6);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2200, 'Nivel 13', 3.7);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2300, 'Nivel 14', 3.8);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2400, 'Nivel 15', 3.9);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2500, 'Nivel 16', 4.0);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2600, 'Nivel 17', 4.1);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2700, 'Nivel 18', 4.2);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2800, 'Nivel 19', 4.3);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (2900, 'Nivel 20', 4.4);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3000, 'Nivel 21', 4.5);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3100, 'Nivel 22', 4.6);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3200, 'Nivel 23', 4.7);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3300, 'Nivel 24', 4.8);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3400, 'Nivel 25', 4.9);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3500, 'Nivel 26', 5.0);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3600, 'Nivel 27', 5.1);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3700, 'Nivel 28', 5.2);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3800, 'Nivel 29', 5.3);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (3900, 'Nivel 30', 5.4);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4000, 'Nivel 31', 5.5);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4100, 'Nivel 32', 5.6);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4200, 'Nivel 33', 5.7);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4300, 'Nivel 34', 5.8);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4400, 'Nivel 35', 5.9);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4500, 'Nivel 36', 6.0);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4600, 'Nivel 37', 6.1);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4700, 'Nivel 38', 6.2);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4800, 'Nivel 39', 6.3);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (4900, 'Nivel 40', 6.4);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5000, 'Nivel 41', 6.5);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5100, 'Nivel 42', 6.6);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5200, 'Nivel 43', 6.7);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5300, 'Nivel 44', 6.8);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5400, 'Nivel 45', 6.9);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5500, 'Nivel 46', 7.0);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5600, 'Nivel 47', 7.1);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5700, 'Nivel 48', 7.2);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5800, 'Nivel 49', 7.3);
-INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event) VALUES (5900, 'Nivel 50', 7.4);
+-- Insertar datos en la tabla Usuario
+INSERT INTO Usuario (puntaje_maximo, usr_rank, average_dishes_per_event, username, password_)
+VALUES (1200, 'Gold', 5.3, 'user1', 'password1'),
+       (1500, 'Platinum', 6.0, 'user2', 'password2'),
+       (800, 'Silver', 4.5, 'user3', 'password3'),
+       (2000, 'Diamond', 7.8, 'user4', 'password4'),
+       (600, 'Bronze', 3.2, 'user5', 'password5');
 
--- Insertar registros en la tabla Receta
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 1, '{"ingredientes": ["ingrediente1A", "ingrediente1B", "ingrediente1C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 1, '{"ingredientes": ["ingrediente2A", "ingrediente2B", "ingrediente2C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 2, '{"ingredientes": ["ingrediente3A", "ingrediente3B", "ingrediente3C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 2, '{"ingredientes": ["ingrediente4A", "ingrediente4B", "ingrediente4C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 3, '{"ingredientes": ["ingrediente5A", "ingrediente5B", "ingrediente5C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 3, '{"ingredientes": ["ingrediente6A", "ingrediente6B", "ingrediente6C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 4, '{"ingredientes": ["ingrediente7A", "ingrediente7B", "ingrediente7C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 4, '{"ingredientes": ["ingrediente8A", "ingrediente8B", "ingrediente8C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 5, '{"ingredientes": ["ingrediente9A", "ingrediente9B", "ingrediente9C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 5, '{"ingredientes": ["ingrediente10A", "ingrediente10B", "ingrediente10C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 1, '{"ingredientes": ["ingrediente11A", "ingrediente11B", "ingrediente11C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 1, '{"ingredientes": ["ingrediente12A", "ingrediente12B", "ingrediente12C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 2, '{"ingredientes": ["ingrediente13A", "ingrediente13B", "ingrediente13C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 2, '{"ingredientes": ["ingrediente14A", "ingrediente14B", "ingrediente14C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 3, '{"ingredientes": ["ingrediente15A", "ingrediente15B", "ingrediente15C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 3, '{"ingredientes": ["ingrediente16A", "ingrediente16B", "ingrediente16C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 4, '{"ingredientes": ["ingrediente17A", "ingrediente17B", "ingrediente17C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 4, '{"ingredientes": ["ingrediente18A", "ingrediente18B", "ingrediente18C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 5, '{"ingredientes": ["ingrediente19A", "ingrediente19B", "ingrediente19C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 5, '{"ingredientes": ["ingrediente20A", "ingrediente20B", "ingrediente20C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 1, '{"ingredientes": ["ingrediente21A", "ingrediente21B", "ingrediente21C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 1, '{"ingredientes": ["ingrediente22A", "ingrediente22B", "ingrediente22C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 2, '{"ingredientes": ["ingrediente23A", "ingrediente23B", "ingrediente23C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 2, '{"ingredientes": ["ingrediente24A", "ingrediente24B", "ingrediente24C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 3, '{"ingredientes": ["ingrediente25A", "ingrediente25B", "ingrediente25C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 3, '{"ingredientes": ["ingrediente26A", "ingrediente26B", "ingrediente26C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 4, '{"ingredientes": ["ingrediente27A", "ingrediente27B", "ingrediente27C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 4, '{"ingredientes": ["ingrediente28A", "ingrediente28B", "ingrediente28C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 5, '{"ingredientes": ["ingrediente29A", "ingrediente29B", "ingrediente29C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 5, '{"ingredientes": ["ingrediente30A", "ingrediente30B", "ingrediente30C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 1, '{"ingredientes": ["ingrediente31A", "ingrediente31B", "ingrediente31C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 1, '{"ingredientes": ["ingrediente32A", "ingrediente32B", "ingrediente32C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 2, '{"ingredientes": ["ingrediente33A", "ingrediente33B", "ingrediente33C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 2, '{"ingredientes": ["ingrediente34A", "ingrediente34B", "ingrediente34C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 3, '{"ingredientes": ["ingrediente35A", "ingrediente35B", "ingrediente35C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 3, '{"ingredientes": ["ingrediente36A", "ingrediente36B", "ingrediente36C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 4, '{"ingredientes": ["ingrediente37A", "ingrediente37B", "ingrediente37C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 4, '{"ingredientes": ["ingrediente38A", "ingrediente38B", "ingrediente38C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 5, '{"ingredientes": ["ingrediente39A", "ingrediente39B", "ingrediente39C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 5, '{"ingredientes": ["ingrediente40A", "ingrediente40B", "ingrediente40C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 1, '{"ingredientes": ["ingrediente41A", "ingrediente41B", "ingrediente41C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 1, '{"ingredientes": ["ingrediente42A", "ingrediente42B", "ingrediente42C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 2, '{"ingredientes": ["ingrediente43A", "ingrediente43B", "ingrediente43C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 2, '{"ingredientes": ["ingrediente44A", "ingrediente44B", "ingrediente44C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 3, '{"ingredientes": ["ingrediente45A", "ingrediente45B", "ingrediente45C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 3, '{"ingredientes": ["ingrediente46A", "ingrediente46B", "ingrediente46C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 4, '{"ingredientes": ["ingrediente47A", "ingrediente47B", "ingrediente47C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 4, '{"ingredientes": ["ingrediente48A", "ingrediente48B", "ingrediente48C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (TRUE, 5, '{"ingredientes": ["ingrediente49A", "ingrediente49B", "ingrediente49C"]}');
-INSERT INTO Receta (es_principal, belongs_to_level, ingredientes) VALUES (FALSE, 5, '{"ingredientes": ["ingrediente50A", "ingrediente50B", "ingrediente50C"]}');
+-- Insertar datos en la tabla Receta
+INSERT INTO Receta (es_principal, belongs_to_level, ingredientes)
+VALUES (TRUE, 1, '{"ingredientes": ["tomate", "queso", "albahaca"]}'),
+       (FALSE, 1, '{"ingredientes": ["pollo", "pimienta", "limón"]}'),
+       (TRUE, 2, '{"ingredientes": ["carne", "sal", "ajo"]}'),
+       (FALSE, 2, '{"ingredientes": ["pescado", "perejil", "aceite"]}'),
+       (TRUE, 3, '{"ingredientes": ["huevo", "harina", "leche"]}');
 
--- Insertar registros en la tabla Nivel
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 1', 1);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 2', 3);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 3', 5);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 4', 7);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 5', 9);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 6', 11);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 7', 13);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 8', 15);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 9', 17);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 10', 19);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 11', 21);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 12', 23);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 13', 25);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 14', 27);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 15', 29);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 16', 31);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 17', 33);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 18', 35);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 19', 37);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 20', 39);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 21', 41);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 22', 43);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 23', 45);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 24', 47);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 25', 49);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 26', 1);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 27', 3);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 28', 5);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 29', 7);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 30', 9);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 31', 11);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 32', 13);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 33', 15);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 34', 17);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 35', 19);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 36', 21);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 37', 23);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 38', 25);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 39', 27);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 40', 29);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 41', 31);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 42', 33);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 43', 35);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 44', 37);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 45', 39);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 46', 41);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 47', 43);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 48', 45);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 49', 47);
-INSERT INTO Nivel (titulo, id_receta_principal) VALUES ('Nivel 50', 49);
+-- Insertar datos en la tabla Nivel
+INSERT INTO Nivel (titulo, id_receta_principal)
+VALUES ('Nivel 1: Básico', 1),
+       ('Nivel 2: Intermedio', 3),
+       ('Nivel 3: Avanzado', 5),
+       ('Nivel 4: Experto', 1),
+       ('Nivel 5: Maestro', 3);
 
--- Insertar registros en la tabla Partida
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-01', 1200, 1, 1);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-02', 1250, 2, 2);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-03', 1300, 3, 3);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-04', 1350, 4, 4);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-05', 1400, 5, 5);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-06', 1450, 6, 6);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-07', 1500, 7, 7);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-08', 1550, 8, 8);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-09', 1600, 9, 9);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-10', 1650, 10, 10);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-11', 1700, 11, 11);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-12', 1750, 12, 12);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-13', 1800, 13, 13);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-14', 1850, 14, 14);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-15', 1900, 15, 15);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-16', 1950, 16, 16);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-17', 2000, 17, 17);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-18', 2050, 18, 18);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-19', 2100, 19, 19);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-20', 2150, 20, 20);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-21', 2200, 21, 21);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-22', 2250, 22, 22);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-23', 2300, 23, 23);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-24', 2350, 24, 24);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-25', 2400, 25, 25);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-26', 2450, 26, 26);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-27', 2500, 27, 27);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-28', 2550, 28, 28);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-29', 2600, 29, 29);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-30', 2650, 30, 30);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-05-31', 2700, 31, 31);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-01', 2750, 32, 32);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-02', 2800, 33, 33);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-03', 2850, 34, 34);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-04', 2900, 35, 35);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-05', 2950, 36, 36);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-06', 3000, 37, 37);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-07', 3050, 38, 38);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-08', 3100, 39, 39);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-09', 3150, 40, 40);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-10', 3200, 41, 41);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-11', 3250, 42, 42);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-12', 3300, 43, 43);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-13', 3350, 44, 44);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-14', 3400, 45, 45);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-15', 3450, 46, 46);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-16', 3500, 47, 47);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-17', 3550, 48, 48);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-18', 3600, 49, 49);
-INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel) VALUES ('2024-06-19', 3650, 50, 50);
+-- Insertar datos en la tabla Partida
+INSERT INTO Partida (fecha, puntaje, id_usuario, id_nivel)
+VALUES ('2023-01-01', 100, 1, 1),
+       ('2023-02-01', 150, 2, 2),
+       ('2023-03-01', 200, 3, 3),
+       ('2023-04-01', 250, 4, 4),
+       ('2023-05-01', 300, 5, 5);
 
--- Insertar registros en la tabla Ingrediente
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente1A', 5, 'tipo1', 1);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente2A', 6, 'tipo2', 2);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente3A', 7, 'tipo3', 3);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente4A', 8, 'tipo4', 4);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente5A', 9, 'tipo5', 5);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente6A', 10, 'tipo6', 6);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente7A', 11, 'tipo7', 7);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente8A', 12, 'tipo8', 8);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente9A', 13, 'tipo9', 9);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente10A', 14, 'tipo10', 10);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente11A', 15, 'tipo1', 11);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente12A', 16, 'tipo2', 12);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente13A', 17, 'tipo3', 13);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente14A', 18, 'tipo4', 14);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente15A', 19, 'tipo5', 15);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente16A', 20, 'tipo6', 16);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente17A', 21, 'tipo7', 17);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente18A', 22, 'tipo8', 18);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente19A', 23, 'tipo9', 19);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente20A', 24, 'tipo10', 20);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente21A', 25, 'tipo1', 21);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente22A', 26, 'tipo2', 22);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente23A', 27, 'tipo3', 23);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente24A', 28, 'tipo4', 24);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente25A', 29, 'tipo5', 25);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente26A', 30, 'tipo6', 26);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente27A', 31, 'tipo7', 27);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente28A', 32, 'tipo8', 28);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente29A', 33, 'tipo9', 29);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente30A', 34, 'tipo10', 30);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente31A', 35, 'tipo1', 31);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente32A', 36, 'tipo2', 32);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente33A', 37, 'tipo3', 33);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente34A', 38, 'tipo4', 34);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente35A', 39, 'tipo5', 35);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente36A', 40, 'tipo6', 36);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente37A', 41, 'tipo7', 37);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente38A', 42, 'tipo8', 38);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente39A', 43, 'tipo9', 39);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente40A', 44, 'tipo10', 40);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente41A', 45, 'tipo1', 41);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente42A', 46, 'tipo2', 42);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente43A', 47, 'tipo3', 43);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente44A', 48, 'tipo4', 44);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente45A', 49, 'tipo5', 45);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente46A', 50, 'tipo6', 46);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente47A', 51, 'tipo7', 47);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente48A', 52, 'tipo8', 48);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente49A', 53, 'tipo9', 49);
-INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta) VALUES ('ingrediente50A', 54, 'tipo10', 50);
+-- Insertar datos en la tabla Ingrediente
+INSERT INTO Ingrediente (nombre, puntaje, tipo, id_receta)
+VALUES ('tomate', 10, 'vegetal', 1),
+       ('queso', 15, 'lácteo', 1),
+       ('pollo', 20, 'carne', 2),
+       ('pimienta', 5, 'especia', 2),
+       ('carne', 25, 'carne', 3);
 
--- Insertar registros en la tabla Sesion
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token1', '2024-05-01 10:00:00', '2024-05-01 12:00:00', '2024-05-01 11:00:00', 1);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token2', '2024-05-02 10:00:00', '2024-05-02 12:00:00', '2024-05-02 12:00:00', 2);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token3', '2024-05-03 10:00:00', '2024-05-03 12:00:00', '2024-05-03 11:00:00', 3);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token4', '2024-05-04 10:00:00', '2024-05-04 12:00:00', '2024-05-04 11:00:00', 4);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token5', '2024-05-05 10:00:00', '2024-05-05 12:00:00', '2024-05-05 11:00:00', 5);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token6', '2024-05-06 10:00:00', '2024-05-06 12:00:00', '2024-05-06 11:00:00', 6);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token7', '2024-05-07 10:00:00', '2024-05-07 12:00:00', '2024-05-07 11:00:00', 7);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token8', '2024-05-08 10:00:00', '2024-05-08 12:00:00', '2024-05-08 11:00:00', 8);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token9', '2024-05-09 10:00:00', '2024-05-09 12:00:00', '2024-05-09 11:00:00', 9);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token10', '2024-05-10 10:00:00', '2024-05-10 12:00:00', '2024-05-10 11:00:00', 10);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token11', '2024-05-11 10:00:00', '2024-05-11 12:00:00', '2024-05-11 11:00:00', 11);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token12', '2024-05-12 10:00:00', '2024-05-12 12:00:00', '2024-05-12 11:00:00', 12);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token13', '2024-05-13 10:00:00', '2024-05-13 12:00:00', '2024-05-13 11:00:00', 13);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token14', '2024-05-14 10:00:00', '2024-05-14 12:00:00', '2024-05-14 11:00:00', 14);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token15', '2024-05-15 10:00:00', '2024-05-15 12:00:00', '2024-05-15 11:00:00', 15);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token16', '2024-05-16 10:00:00', '2024-05-16 12:00:00', '2024-05-16 11:00:00', 16);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token17', '2024-05-17 10:00:00', '2024-05-17 12:00:00', '2024-05-17 11:00:00', 17);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token18', '2024-05-18 10:00:00', '2024-05-18 12:00:00', '2024-05-18 11:00:00', 18);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token19', '2024-05-19 10:00:00', '2024-05-19 12:00:00', '2024-05-19 11:00:00', 19);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token20', '2024-05-20 10:00:00', '2024-05-20 12:00:00', '2024-05-20 11:00:00', 20);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token21', '2024-05-21 10:00:00', '2024-05-21 12:00:00', '2024-05-21 11:00:00', 21);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token22', '2024-05-22 10:00:00', '2024-05-22 12:00:00', '2024-05-22 11:00:00', 22);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token23', '2024-05-23 10:00:00', '2024-05-23 12:00:00', '2024-05-23 11:00:00', 23);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token24', '2024-05-24 10:00:00', '2024-05-24 12:00:00', '2024-05-24 11:00:00', 24);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token25', '2024-05-25 10:00:00', '2024-05-25 12:00:00', '2024-05-25 11:00:00', 25);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token26', '2024-05-26 10:00:00', '2024-05-26 12:00:00', '2024-05-26 11:00:00', 26);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token27', '2024-05-27 10:00:00', '2024-05-27 12:00:00', '2024-05-27 11:00:00', 27);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token28', '2024-05-28 10:00:00', '2024-05-28 12:00:00', '2024-05-28 11:00:00', 28);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token29', '2024-05-29 10:00:00', '2024-05-29 12:00:00', '2024-05-29 11:00:00', 29);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token30', '2024-05-30 10:00:00', '2024-05-30 12:00:00', '2024-05-30 11:00:00', 30);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token31', '2024-05-31 10:00:00', '2024-05-31 12:00:00', '2024-05-31 11:00:00', 31);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token32', '2024-06-01 10:00:00', '2024-06-01 12:00:00', '2024-06-01 11:00:00', 32);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token33', '2024-06-02 10:00:00', '2024-06-02 12:00:00', '2024-06-02 11:00:00', 33);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token34', '2024-06-03 10:00:00', '2024-06-03 12:00:00', '2024-06-03 11:00:00', 34);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token35', '2024-06-04 10:00:00', '2024-06-04 12:00:00', '2024-06-04 11:00:00', 35);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token36', '2024-06-05 10:00:00', '2024-06-05 12:00:00', '2024-06-05 11:00:00', 36);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token37', '2024-06-06 10:00:00', '2024-06-06 12:00:00', '2024-06-06 11:00:00', 37);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token38', '2024-06-07 10:00:00', '2024-06-07 12:00:00', '2024-06-07 11:00:00', 38);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token39', '2024-06-08 10:00:00', '2024-06-08 12:00:00', '2024-06-08 11:00:00', 39);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token40', '2024-06-09 10:00:00', '2024-06-09 12:00:00', '2024-06-09 11:00:00', 40);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token41', '2024-06-10 10:00:00', '2024-06-10 12:00:00', '2024-06-10 11:00:00', 41);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token42', '2024-06-11 10:00:00', '2024-06-11 12:00:00', '2024-06-11 11:00:00', 42);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token43', '2024-06-12 10:00:00', '2024-06-12 12:00:00', '2024-06-12 11:00:00', 43);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token44', '2024-06-13 10:00:00', '2024-06-13 12:00:00', '2024-06-13 11:00:00', 44);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token45', '2024-06-14 10:00:00', '2024-06-14 12:00:00', '2024-06-14 11:00:00', 45);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token46', '2024-06-15 10:00:00', '2024-06-15 12:00:00', '2024-06-15 11:00:00', 46);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token47', '2024-06-16 10:00:00', '2024-06-16 12:00:00', '2024-06-16 11:00:00', 47);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token48', '2024-06-17 10:00:00', '2024-06-17 12:00:00', '2024-06-17 11:00:00', 48);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token49', '2024-06-18 10:00:00', '2024-06-18 12:00:00', '2024-06-18 11:00:00', 49);
-INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario) VALUES ('token50', '2024-06-19 10:00:00', '2024-06-19 12:00:00', '2024-06-19 11:00:00', 50);
+-- Insertar datos en la tabla Sesion
+INSERT INTO Sesion (token, fecha_inicio, fecha_expiracion, ultima_actividad, id_usuario)
+VALUES ('token1', '2023-01-01 10:00:00', '2023-01-01 12:00:00', '2023-01-01 11:00:00', 1),
+       ('token2', '2023-02-01 10:00:00', '2023-02-01 12:00:00', '2023-02-01 11:00:00', 2),
+       ('token3', '2023-03-01 10:00:00', '2023-03-01 12:00:00', '2023-03-01 11:00:00', 3),
+       ('token4', '2023-04-01 10:00:00', '2023-04-01 12:00:00', '2023-04-01 11:00:00', 4),
+       ('token5', '2023-05-01 10:00:00', '2023-05-01 12:00:00', '2023-05-01 11:00:00', 5);
