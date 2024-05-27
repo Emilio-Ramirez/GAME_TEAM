@@ -7,7 +7,10 @@ CREATE TABLE Usuario (
     puntaje_maximo INT,
     usr_rank VARCHAR(50),
     average_dishes_per_event FLOAT
+    username VARCHAR(50)
+    password_ VARCHAR(200)
 );
+
 
 CREATE TABLE Receta (
     id_receta INT AUTO_INCREMENT PRIMARY KEY,
