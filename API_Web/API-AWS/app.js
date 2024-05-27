@@ -187,7 +187,7 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
   }
 });
 
-const port = process.env.API_PORT || 3000;
+const port = process.env.API_PORT || 80;
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://0.0.0.0:${port}`);
 });
