@@ -215,6 +215,18 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
   }
 });
 
+app.get('/recetas', async (req, res) => {
+  try {
+    const recetas = await Receta.findAll();
+    res.json(recetas);
+  } catch (error) {
+    console.error('Error fetching recetas:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+)
+
+
 
 app.listen(process.env.API_PORT, () => {
   console.log('Server is running on http://localhost:' + process.env.API_PORT)

@@ -303,6 +303,9 @@ async function populateDatabase() {
     await sequelize.query('TRUNCATE "Carta" CASCADE');
     await sequelize.query('TRUNCATE "Receta" CASCADE');
 
+    // Reiniciar el contador de la secuencia de la tabla "Receta"
+    await sequelize.query('ALTER SEQUENCE "Receta_id_receta_seq" RESTART WITH 1');
+
     // Insertar las nuevas cartas en la base de datos
     await Carta.bulkCreate(cartas);
     console.log('Cartas successfully populated');
