@@ -49,249 +49,119 @@ const cartas = [
   { id_carta: 46, nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' }
 ];
 
+
 const recetas = [
   // Picnic
   {
-    es_principal: true,
+    is_main: true,
     ingredientes: {
-      side: {
-        ingrediente1: 'Aceite de oliva',
-        ingrediente2: 'Sal',
-      },
-      verduras: {
-        ingrediente1: 'Cebolla',
-        ingrediente2: 'Tocino',
-      },
-      protein: {
-        ingrediente1: 'Huevo',
-        ingrediente2: 'Jamon',
-      },
-      utils: {
-        ingrediente1: 'Cuchillo',
-        ingrediente2: 'Boul',
-      },
-    },
+      side: ['Olive oil', 'Salt'],
+      verduras: ['Onion', 'Bacon'],
+      protein: ['Egg', 'Ham'],
+      utils: ['Knife', 'Bowl']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Pan integral',
-      },
-      verduras: {
-        ingrediente1: 'Queso feta',
-        ingrediente2: 'Tomates cherry',
-      },
-      protein: {
-        ingrediente1: 'Pollo',
-      },
-      utils: {
-        ingrediente1: 'Pinzas',
-        ingrediente2: 'Parrilla',
-      },
-    },
+      side: ['Whole wheat bread'],
+      verduras: ['Feta cheese', 'Cherry tomatoes'],
+      protein: ['Chicken'],
+      utils: ['Tongs', 'Grill']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Aceitunas negras',
-        ingrediente2: 'Palta omega',
-      },
-      verduras: {
-        ingrediente1: 'Tomates cherry',
-        ingrediente2: 'Ensalada',
-      },
-      protein: {
-        ingrediente1: 'Pollo',
-      },
-      utils: {
-        ingrediente1: 'Sarten',
-        ingrediente2: 'Pinzas',
-      },
-    },
+      side: ['Black olives', 'Avocado'],
+      verduras: ['Cherry tomatoes', 'Salad'],
+      protein: ['Chicken'],
+      utils: ['Pan', 'Tongs']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Aceitunas negras',
-      },
-      verduras: {
-        ingrediente1: 'Ensalada',
-        ingrediente2: 'Queso feta',
-      },
-      protein: {
-        ingrediente1: 'Queso',
-      },
-      utils: {
-        ingrediente1: 'Parrilla',
-        ingrediente2: 'Sarten',
-      },
-    },
+      side: ['Black olives'],
+      verduras: ['Salad', 'Feta cheese'],
+      protein: ['Cheese'],
+      utils: ['Grill', 'Pan']
+    }
   },
-  // Cena de Navidad
+  // Christmas Dinner
   {
-    es_principal: true,
+    is_main: true,
     ingredientes: {
-      side: {
-        ingrediente1: 'Mostaza',
-        ingrediente2: 'Sidra de manzana',
-      },
-      verduras: {
-        ingrediente1: 'Romero',
-        ingrediente2: 'Cebolla',
-      },
-      protein: {
-        ingrediente1: 'Cerdo',
-      },
-      utils: {
-        ingrediente1: 'Tabla de cortar',
-        ingrediente2: 'Termometro de carne',
-      },
-    },
+      side: ['Mustard', 'Apple cider'],
+      verduras: ['Rosemary', 'Onion'],
+      protein: ['Pork'],
+      utils: ['Cutting board', 'Meat thermometer']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Pure de papas',
-        ingrediente2: 'Salsa arandanos',
-      },
-      verduras: {
-        ingrediente1: 'Zanahorias Glaseadas',
-        ingrediente2: 'Coles de bruselas',
-      },
-      protein: {
-        ingrediente1: 'Pavo',
-      },
-      utils: {
-        ingrediente1: 'Cuchara de madera',
-        ingrediente2: 'Pinzas',
-      },
-    },
+      side: ['Mashed potatoes', 'Cranberry sauce'],
+      verduras: ['Glazed carrots', 'Brussels sprouts'],
+      protein: ['Turkey'],
+      utils: ['Wooden spoon', 'Tongs']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Arroz',
-        ingrediente2: 'Salsa de arandanos',
-      },
-      verduras: {
-        ingrediente1: 'Ensalada',
-        ingrediente2: 'Esparragos',
-      },
-      protein: {
-        ingrediente1: 'Jamon',
-      },
-      utils: {
-        ingrediente1: 'Pinzas',
-        ingrediente2: 'Olla',
-      },
-    },
+      side: ['Rice', 'Cranberry sauce'],
+      verduras: ['Salad', 'Asparagus'],
+      protein: ['Ham'],
+      utils: ['Tongs', 'Pot']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Arroz',
-        ingrediente2: 'Arroz de arandanos',
-      },
-      verduras: {
-        ingrediente1: 'Ensalada',
-        ingrediente2: 'Esparragos',
-      },
-      protein: {
-        ingrediente1: 'Pavo',
-      },
-      utils: {
-        ingrediente1: 'Pinzas',
-        ingrediente2: 'Olla',
-      },
-    },
+      side: ['Rice', 'Cranberry rice'],
+      verduras: ['Salad', 'Asparagus'],
+      protein: ['Turkey'],
+      utils: ['Tongs', 'Pot']
+    }
   },
-  // Boda
+  // Wedding
   {
-    es_principal: true,
+    is_main: true,
     ingredientes: {
-      side: {
-        ingrediente1: 'Mantequilla',
-        ingrediente2: 'Azucar blanca',
-      },
-      verduras: {
-        ingrediente1: 'Fondant blanco',
-        ingrediente2: 'Mermelada de frambuesa',
-      },
-      protein: {
-        ingrediente1: 'Harina',
-        ingrediente2: 'Huevos',
-      },
-      utils: {
-        ingrediente1: 'Rodillo',
-        ingrediente2: 'Moldes',
-      },
-    },
+      side: ['Butter', 'White sugar'],
+      verduras: ['White fondant', 'Raspberry jam'],
+      protein: ['Flour', 'Eggs'],
+      utils: ['Rolling pin', 'Molds']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Limon',
-        ingrediente2: 'Crema de leche',
-      },
-      verduras: {
-        ingrediente1: 'Romero',
-        ingrediente2: 'Ensalada',
-      },
-      protein: {
-        ingrediente1: 'Salmon',
-      },
-      utils: {
-        ingrediente1: 'Sarten',
-        ingrediente2: 'Batidor',
-      },
-    },
+      side: ['Lemon', 'Heavy cream'],
+      verduras: ['Rosemary', 'Salad'],
+      protein: ['Salmon'],
+      utils: ['Pan', 'Whisk']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Papas',
-        ingrediente2: 'Limon',
-      },
-      verduras: {
-        ingrediente1: 'Fresas',
-        ingrediente2: 'Ensalada',
-      },
-      protein: {
-        ingrediente1: 'Salmon',
-      },
-      utils: {
-        ingrediente1: 'Horno',
-        ingrediente2: 'Sarten',
-      },
-    },
+      side: ['Potatoes', 'Lemon'],
+      verduras: ['Strawberries', 'Salad'],
+      protein: ['Salmon'],
+      utils: ['Oven', 'Pan']
+    }
   },
   {
-    es_principal: false,
+    is_main: false,
     ingredientes: {
-      side: {
-        ingrediente1: 'Crema de leche',
-      },
-      verduras: {
-        ingrediente1: 'Fresas',
-        ingrediente2: 'Salsa de arándanos',
-      },
-      protein: {
-        ingrediente1: 'Chocolate Oscuro',
-      },
-      utils: {
-        ingrediente1: 'Batidora',
-        ingrediente2: 'Cuchara de madera',
-      },
-    },
-  },
+      side: ['Heavy cream'],
+      verduras: ['Strawberries', 'Cranberry sauce'],
+      protein: ['Dark chocolate'],
+      utils: ['Mixer', 'Wooden spoon']
+    }
+  }
 ];
 
 async function populateDatabase() {
