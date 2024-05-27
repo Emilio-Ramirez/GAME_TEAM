@@ -48,14 +48,18 @@ const Receta = sequelize.define('Receta', {
     primaryKey: true,
     autoIncrement: true,
   },
-  puntaje: {
-    type: DataTypes.INTEGER,
+  es_principal: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
-  afinidad: {
-    type: DataTypes.STRING,
-  },
-  tiempo: {
-    type: DataTypes.INTEGER,
+  ingredientes: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      side: {},
+      verduras: {},
+      protein: {},
+      utils: {},
+    },
   },
 });
 
@@ -86,14 +90,9 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  puntaje_maximo: {
-    type: DataTypes.INTEGER,
-  },
-  nivel: {
-    type: DataTypes.INTEGER,
-  },
-  dishes_per_event: {
-    type: DataTypes.INTEGER,
+  puntajes: {
+    type: DataTypes.JSON,
+    defaultValue: [],
   },
 });
 

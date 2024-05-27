@@ -25,9 +25,10 @@ npm start
 ```
 npm run sync_db
 ```
-6. For creating the list of cards:
+6. Populating the database:
+We have a file that if you run it drop the contents of the tables that are Recetas y Cartas
 ```
-npm run createCards
+npm run populateDB
 ```
 
 ## Sequelize Usage
