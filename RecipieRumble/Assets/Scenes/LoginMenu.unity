@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 0.4392157, b: 0.4392157, a: 1}
     m_HighlightedColor: {r: 1, g: 0.5330188, b: 0.5330188, a: 1}
-    m_PressedColor: {r: 1, g: 0.4392157, b: 0.4392157, a: 1}
+    m_PressedColor: {r: 1, g: 0.5896226, b: 0.5896226, a: 1}
     m_SelectedColor: {r: 1, g: 0.4392157, b: 0.4392157, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1276,8 +1276,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: username
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
+  m_sharedMaterial: {fileID: -43342734783946199, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_text: Log In
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
-  m_sharedMaterial: {fileID: 7142992030995961421, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
+  m_sharedMaterial: {fileID: -1917108666738320207, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1612,7 +1612,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 700, y: 112}
+  m_SizeDelta: {x: 836.8543, y: 112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371839586
 MonoBehaviour:
@@ -1634,17 +1634,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Recipe Rumble
+  m_text: Let's start cooking!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
-  m_sharedMaterial: {fileID: 7142992030995961421, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
+  m_sharedMaterial: {fileID: -1917108666738320207, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281220697
-  m_fontColor: {r: 0.34901962, g: 0.24313726, b: 0.18039216, a: 1}
+    rgba: 4281220440
+  m_fontColor: {r: 0.34509805, g: 0.23921569, b: 0.18039216, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1661,8 +1661,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 96
-  m_fontSizeBase: 96
+  m_fontSize: 89
+  m_fontSizeBase: 89
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1928,8 +1928,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: password
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
+  m_sharedMaterial: {fileID: -43342734783946199, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
