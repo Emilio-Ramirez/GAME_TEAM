@@ -83,7 +83,7 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        totalTime = 60f;
+        //totalTime = 60f;
         // Inicia el temporizador
         isTimerRunning = true;
         currentTime = totalTime;

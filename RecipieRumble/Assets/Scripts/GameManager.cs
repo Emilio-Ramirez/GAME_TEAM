@@ -4,24 +4,45 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;  // Añadir esta línea
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public GameObject cardPrefab;
+    public GameObject recipeCardPrefab;
     public Transform playerCardParent;
+    public Transform recipeCardParent;
     public string apiUrl = "http://localhost:3000/cartas";
+    public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
 
     private List<Card> cards = new List<Card>();
-    private HashSet<int> validCardIds = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46 };
+    private List<Recipe> recipes = new List<Recipe>();
+    private HashSet<int> validCardIdsForRecipeArea = new HashSet<int> { 1, 2, 3, 4 };
+    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 5 };
     private int totalScore = 0;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
         Debug.Log("GameManager Start");
         Debug.Log("apiUrl: " + apiUrl);
         StartCoroutine(GetCards());
+        StartCoroutine(GetRecipes());
         UpdateScoreUI();
     }
 
@@ -41,14 +62,92 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
                 cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
-                ShuffleAndAddNewCards();
+                AddCardsToRecipeArea();
+                ShuffleAndAddNewCardsToPlayerArea();
             }
         }
     }
 
-    void ShuffleAndAddNewCards()
+    IEnumerator GetRecipes()
     {
-        Debug.Log("Shuffling and adding new cards.");
+        Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
+            }
+            else
+            {
+                Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
+                recipes = new List<Recipe>(JsonHelper.FromJson<Recipe>(webRequest.downloadHandler.text));
+            }
+        }
+    }
+
+    void AddCardsToRecipeArea()
+    {
+        Debug.Log("Adding cards to recipe area.");
+
+        if (recipeCardParent == null)
+        {
+            Debug.LogError("recipeCardParent is null.");
+            return;
+        }
+
+        foreach (Transform child in recipeCardParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Card card in cards)
+        {
+            if (!validCardIdsForRecipeArea.Contains(card.id_carta))
+            {
+                Debug.LogWarning($"Skipping card with invalid ID for recipe area: {card.id_carta}");
+                continue;
+            }
+
+            GameObject newCard = Instantiate(recipeCardPrefab, recipeCardParent);
+            if (newCard == null)
+            {
+                Debug.LogError("Failed to instantiate new card prefab for recipe area.");
+                continue;
+            }
+
+            Image cardImage = newCard.GetComponent<Image>();
+            if (cardImage != null)
+            {
+                string imagePath = $"Sprites/Picnic/EventDishes/{card.id_carta}";
+                cardImage.sprite = Resources.Load<Sprite>(imagePath);
+                if (cardImage.sprite == null)
+                {
+                    Debug.LogError($"Image not found for card: {imagePath}");
+                }
+                else
+                {
+                    Debug.Log($"Loaded image for card: {imagePath}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Failed to find Image component on the recipe card prefab.");
+            }
+        }
+    }
+
+    void ShuffleAndAddNewCardsToPlayerArea()
+    {
+        Debug.Log("Shuffling and adding new cards to player area.");
+
+        if (playerCardParent == null)
+        {
+            Debug.LogError("playerCardParent is null.");
+            return;
+        }
 
         int currentCardCount = playerCardParent.childCount;
         int newCardsCount = 4 - currentCardCount;
@@ -60,7 +159,7 @@ public class GameManager : MonoBehaviour
         }
 
         List<Card> randomCards = new List<Card>(cards);
-        randomCards.Shuffle(); // Mezclar la lista de cartas
+        randomCards.Shuffle();
 
         int cardsAdded = 0;
 
@@ -71,16 +170,16 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
-            if (!validCardIds.Contains(card.id_carta))
+            if (!validCardIdsForPlayerArea.Contains(card.id_carta))
             {
-                Debug.LogWarning($"Skipping card with invalid ID: {card.id_carta}");
+                Debug.LogWarning($"Skipping card with invalid ID for player area: {card.id_carta}");
                 continue;
             }
 
-            GameObject newCard = Instantiate(cardPrefab, playerCardParent); // Añadir solo nuevas cartas
+            GameObject newCard = Instantiate(cardPrefab, playerCardParent);
             if (newCard == null)
             {
-                Debug.LogError("Failed to instantiate new card prefab.");
+                Debug.LogError("Failed to instantiate new card prefab for player area.");
                 continue;
             }
 
@@ -94,10 +193,11 @@ public class GameManager : MonoBehaviour
                 nameText.text = card.nombre;
                 valueText.text = card.valor_nutrimental.ToString();
                 typeText.text = card.tipo;
+                newCard.name = card.nombre;
             }
             else
             {
-                Debug.LogWarning("Failed to find one or more text components on the card prefab.");
+                Debug.LogWarning("Failed to find one or more text components on the player card prefab.");
             }
 
             if (cardImage != null)
@@ -111,19 +211,14 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Failed to find Image component on the card prefab.");
+                Debug.LogWarning("Failed to find Image component on the player card prefab.");
             }
-
-            // Añadir valor nutricional al puntaje total
-            totalScore += card.valor_nutrimental;
-            Debug.Log($"Added {card.valor_nutrimental} points. Total Score: {totalScore}");
-            UpdateScoreUI(); // Actualizar la UI con el nuevo puntaje
 
             cardsAdded++;
         }
 
-        // Actualizar el conteo de cartas en el DropZoneManager
-        dropZoneManager.UpdateCardCount();
+        UpdateScoreUI();
+        dropZoneManager?.UpdateCardCount();
     }
 
     public void RefreshDeck()
@@ -138,11 +233,52 @@ public class GameManager : MonoBehaviour
             scoreText.text = "Score: " + totalScore;
         }
     }
+
+    public void CheckRecipeCombination()
+    {
+        List<string> ingredientsInRecipeArea = new List<string>();
+        foreach (Transform child in recipeCardParent)
+        {
+            Card card = child.GetComponent<Card>();
+            if (card != null)
+            {
+                ingredientsInRecipeArea.Add(card.nombre);
+                Debug.Log("Added ingredient: " + card.nombre);
+            }
+        }
+
+        Debug.Log("Ingredients in recipe area: " + string.Join(", ", ingredientsInRecipeArea));
+
+        foreach (Recipe recipe in recipes)
+        {
+            Debug.Log("Checking recipe: " + recipe.is_main);
+            foreach (var entry in recipe.ingredientes)
+            {
+                Debug.Log("Checking combination: " + string.Join(", ", entry.Value));
+                if (entry.Value.Count == ingredientsInRecipeArea.Count)
+                {
+                    var exceptResult = entry.Value.Except(ingredientsInRecipeArea).ToList();
+                    Debug.Log("Except result: " + string.Join(", ", exceptResult));
+                    if (!exceptResult.Any())
+                    {
+                        totalScore += 10;  // Incrementa la puntuación en 10 por una combinación correcta
+                        UpdateScoreUI();
+                        Debug.Log("Combination correct! Score increased.");
+                        return;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Combination does not match count.");
+                }
+            }
+        }
+
+        Debug.Log("No valid recipe combination found.");
+    }
 }
 
-
-
-
+// Extensiones para la utilidad de JSON y la función de mezclar listas (shuffle)
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
@@ -161,18 +297,26 @@ public static class JsonHelper
 
 public static class ListExtensions
 {
-    private static System.Random rng = new System.Random();  
+    private static System.Random rng = new System.Random();
 
-    public static void Shuffle<T>(this IList<T> list)  
-    {  
-        int n = list.Count;  
-        while (n > 1) 
-        {  
-            n--;  
-            int k = rng.Next(n + 1);  
-            T value = list[k];  
-            list[k] = list[n];  
-            list[n] = value;  
-        }  
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
     }
+}
+
+// Clase Recipe para representar las recetas
+[System.Serializable]
+public class Recipe
+{
+    public bool is_main;
+    public Dictionary<string, List<string>> ingredientes;
 }

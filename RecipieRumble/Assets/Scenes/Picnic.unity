@@ -472,8 +472,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f82d218604bd041acadfe36f33f3cf51, type: 2}
-  m_sharedMaterial: {fileID: -1917108666738320207, guid: f82d218604bd041acadfe36f33f3cf51, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -596,6 +596,14 @@ PrefabInstance:
       value: DropZone
       objectReference: {fileID: 0}
     - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 118.1988
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -625,11 +633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.000015259
       objectReference: {fileID: 0}
     - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -9.0994
       objectReference: {fileID: 0}
     - target: {fileID: 8479527298954042168, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1045,12 +1053,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Deck
-
-'
+  m_text: Deck
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
-  m_sharedMaterial: {fileID: -43342734783946199, guid: 650c9ee87c94442d5ada1fd4b738422b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
+  m_sharedMaterial: {fileID: -1917108666738320207, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1074,8 +1080,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 33.48
+  m_fontSizeBase: 33.48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
@@ -1326,8 +1332,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f82d218604bd041acadfe36f33f3cf51, type: 2}
-  m_sharedMaterial: {fileID: -1917108666738320207, guid: f82d218604bd041acadfe36f33f3cf51, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1931,7 +1937,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8171552711498485673, guid: db88e198e45b865408faac22a2d7d009, type: 3}
+  recipeCardPrefab: {fileID: 8171552711498485673, guid: 1df4a01695521434081015045a621d13, type: 3}
   playerCardParent: {fileID: 1716817535}
+  recipeCardParent: {fileID: 1727660349}
   apiUrl: http://localhost:3000/cartas
   dropZoneManager: {fileID: 1216164501}
   scoreText: {fileID: 1260460895}
