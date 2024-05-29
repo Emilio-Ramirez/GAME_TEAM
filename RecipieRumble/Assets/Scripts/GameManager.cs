@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private List<Card> cards = new List<Card>();
     private List<Recipe> recipes = new List<Recipe>();
     private HashSet<int> validCardIdsForRecipeArea = new HashSet<int> { 1, 2, 3, 4 };
-    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 5 };
+    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46};
     private int totalScore = 0;
 
     void Awake()
@@ -256,6 +256,7 @@ public void CheckRecipeCombination()
         Debug.Log($"Checking recipe ID: {recipe.id_receta}");
         bool isMatch = true;
         List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
+        int totalNutritionalValue = 0;
 
         foreach (var ingredientGroup in recipe.ingredientes)
         {
@@ -268,6 +269,14 @@ public void CheckRecipeCombination()
                 if (remainingIngredients.Contains(lowerCaseIngredient))
                 {
                     Debug.Log($"Found ingredient: {lowerCaseIngredient}");
+
+                    // Buscar la carta correspondiente para obtener el valor nutrimental
+                    var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
+                    if (card != null)
+                    {
+                        totalNutritionalValue += card.valor_nutrimental;
+                    }
+
                     remainingIngredients.Remove(lowerCaseIngredient);
                     groupMatched = true;
                     break;
@@ -285,7 +294,7 @@ public void CheckRecipeCombination()
         if (isMatch && remainingIngredients.Count == 0)
         {
             Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
-            IncreaseScore(recipe.valor_nutrimental);
+            IncreaseScore(totalNutritionalValue);
             return;
         }
     }
@@ -293,11 +302,31 @@ public void CheckRecipeCombination()
     Debug.Log("No valid recipe combination found.");
 }
 
+
 private void IncreaseScore(int nutritionalValue)
 {
     totalScore += nutritionalValue;
     UpdateScoreUI();
     Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
+    
+    // Descartar todas las cartas del dropzone
+    foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
+    {
+        foreach (GameObject card in cardList)
+        {
+            Destroy(card);
+        }
+        cardList.Clear();
+    }
+    
+    // Resetear los turnos
+    for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
+    {
+        DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
+    }
+
+    // Popular las cartas de la mano
+    ShuffleAndAddNewCardsToPlayerArea();
 }
 
 }

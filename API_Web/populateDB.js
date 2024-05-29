@@ -1,7 +1,7 @@
 const { sequelize, Carta, Receta } = require('./db');
 
 const cartas = [
-  { id_carta: 1, nombre: 'Whole Wheat Bread', valor_nutrimental: 4, tipo: 'Side' },
+  { id_carta: 1, nombre: 'Bread', valor_nutrimental: 4, tipo: 'Side' },
   { id_carta: 2, nombre: 'Chicken', valor_nutrimental: 2, tipo: 'Protein' },
   { id_carta: 3, nombre: 'Tongs', valor_nutrimental: 3, tipo: 'Utils' },
   { id_carta: 4, nombre: 'Grill', valor_nutrimental: 2, tipo: 'Utils' },
@@ -16,7 +16,7 @@ const cartas = [
   { id_carta: 13, nombre: 'Olive Oil', valor_nutrimental: 7, tipo: 'Side' },
   { id_carta: 14, nombre: 'Salt', valor_nutrimental: 5, tipo: 'Side' },
   { id_carta: 15, nombre: 'Turkey', valor_nutrimental: 3, tipo: 'Protein' },
-  { id_carta: 16, nombre: 'Mashed Potatoes', valor_nutrimental: 4, tipo: 'Side' },
+  { id_carta: 16, nombre: 'Potatoes', valor_nutrimental: 4, tipo: 'Side' },
   { id_carta: 17, nombre: 'Carrot', valor_nutrimental: 4, tipo: 'Vegetable' },
   { id_carta: 18, nombre: 'Brussels Sprouts', valor_nutrimental: 3, tipo: 'Vegetable' },
   { id_carta: 19, nombre: 'Oven', valor_nutrimental: 3, tipo: 'Utils' },
@@ -44,7 +44,7 @@ const cartas = [
   { id_carta: 41, nombre: 'Rolling Pin', valor_nutrimental: 6, tipo: 'Utils' },
   { id_carta: 42, nombre: 'Molds', valor_nutrimental: 7, tipo: 'Utils' },
   { id_carta: 43, nombre: 'White Fondant', valor_nutrimental: 9, tipo: 'Vegetable' },
-  { id_carta: 44, nombre: 'Raspberry Jam', valor_nutrimental: 7, tipo: 'Vegetable' },
+  { id_carta: 44, nombre: 'Jam', valor_nutrimental: 7, tipo: 'Vegetable' },
   { id_carta: 45, nombre: 'Olives', valor_nutrimental: 4, tipo: 'Side' },
   { id_carta: 46, nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' }
 ];
@@ -64,7 +64,7 @@ const recetas = [
   {
     is_main: false,
     ingredientes: {
-      side: ['Whole wheat bread'],
+      side: ['Bread'],
       verduras: ['Feta cheese', 'Cherry tomatoes'],
       protein: ['Chicken'],
       utils: ['Tongs', 'Grill']
@@ -101,7 +101,7 @@ const recetas = [
   {
     is_main: false,
     ingredientes: {
-      side: ['Mashed potatoes', 'Cranberry sauce'],
+      side: ['Potatoes', 'Cranberry sauce'],
       verduras: ['Glazed carrots', 'Brussels sprouts'],
       protein: ['Turkey'],
       utils: ['Wooden spoon', 'Tongs']
@@ -130,7 +130,7 @@ const recetas = [
     is_main: true,
     ingredientes: {
       side: ['Butter', 'White sugar'],
-      verduras: ['White fondant', 'Raspberry jam'],
+      verduras: ['White fondant', 'Jam'],
       protein: ['Flour', 'Eggs'],
       utils: ['Rolling pin', 'Molds']
     }

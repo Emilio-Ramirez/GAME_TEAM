@@ -557,7 +557,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 55634937829763291, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_Spacing.x
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 55634937829763291, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: m_CellSize.x
@@ -1892,7 +1892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554c1a5107c28d94a92f79e652d5a2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTime: 300
+  totalTime: 60
   gameOverScreenPrefab: {fileID: 1780043163824093616, guid: a42e485ef0a26244cb947b0f086efa56, type: 3}
   mainCanvas: {fileID: 208390697}
   timerText: {fileID: 450357923}
@@ -1941,6 +1941,7 @@ MonoBehaviour:
   playerCardParent: {fileID: 1716817535}
   recipeCardParent: {fileID: 1727660349}
   apiUrl: http://localhost:3000/cartas
+  apiRecipeUrl: http://localhost:3000/recetas
   dropZoneManager: {fileID: 1216164501}
   scoreText: {fileID: 1260460895}
 --- !u!1001 &5074620108398536964
