@@ -177,5 +177,10 @@ public class DropZoneManager : MonoBehaviour
             cardCount += cardList.Count;
         }
         Debug.Log("Total cards in drop zones: " + cardCount);
+
+        if (cardCount == 4)
+        {
+            GameManager.Instance.CheckRecipeCombination();
+        }
     }
 }

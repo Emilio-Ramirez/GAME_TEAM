@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;  // Añadir esta línea
+using Newtonsoft.Json;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -69,24 +71,24 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator GetRecipes()
-    {
-        Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
+      {
+          Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
 
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
-        {
-            yield return webRequest.SendWebRequest();
+          using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
+          {
+              yield return webRequest.SendWebRequest();
 
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
-            }
-            else
-            {
-                Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                recipes = new List<Recipe>(JsonHelper.FromJson<Recipe>(webRequest.downloadHandler.text));
-            }
-        }
-    }
+              if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+              {
+                  Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
+              }
+              else
+              {
+                  Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
+                  recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+              }
+          }
+      }
 
     void AddCardsToRecipeArea()
     {
@@ -234,48 +236,70 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CheckRecipeCombination()
+public void CheckRecipeCombination()
+{
+    List<string> ingredientsInRecipeArea = new List<string>();
+    foreach (var dropZone in DropZoneManager.Instance.cardsInDropZone)
     {
-        List<string> ingredientsInRecipeArea = new List<string>();
-        foreach (Transform child in recipeCardParent)
+        foreach (GameObject cardObject in dropZone)
         {
-            Card card = child.GetComponent<Card>();
-            if (card != null)
-            {
-                ingredientsInRecipeArea.Add(card.nombre);
-                Debug.Log("Added ingredient: " + card.nombre);
-            }
+            string cardName = cardObject.name.ToLower();
+            ingredientsInRecipeArea.Add(cardName);
+            Debug.Log($"Added ingredient: {cardName}");
         }
-
-        Debug.Log("Ingredients in recipe area: " + string.Join(", ", ingredientsInRecipeArea));
-
-        foreach (Recipe recipe in recipes)
-        {
-            Debug.Log("Checking recipe: " + recipe.is_main);
-            foreach (var entry in recipe.ingredientes)
-            {
-                Debug.Log("Checking combination: " + string.Join(", ", entry.Value));
-                if (entry.Value.Count == ingredientsInRecipeArea.Count)
-                {
-                    var exceptResult = entry.Value.Except(ingredientsInRecipeArea).ToList();
-                    Debug.Log("Except result: " + string.Join(", ", exceptResult));
-                    if (!exceptResult.Any())
-                    {
-                        totalScore += 10;  // Incrementa la puntuación en 10 por una combinación correcta
-                        UpdateScoreUI();
-                        Debug.Log("Combination correct! Score increased.");
-                        return;
-                    }
-                }
-                else
-                {
-                    Debug.Log("Combination does not match count.");
-                }
-            }
-        }
-
-        Debug.Log("No valid recipe combination found.");
     }
+
+    Debug.Log($"Ingredients in recipe area: {string.Join(", ", ingredientsInRecipeArea)}");
+
+    foreach (Recipe recipe in recipes)
+    {
+        Debug.Log($"Checking recipe ID: {recipe.id_receta}");
+        bool isMatch = true;
+        List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
+
+        foreach (var ingredientGroup in recipe.ingredientes)
+        {
+            Debug.Log($"Checking ingredient group: {ingredientGroup.Key}");
+            bool groupMatched = false;
+
+            foreach (string ingredient in ingredientGroup.Value)
+            {
+                string lowerCaseIngredient = ingredient.ToLower();
+                if (remainingIngredients.Contains(lowerCaseIngredient))
+                {
+                    Debug.Log($"Found ingredient: {lowerCaseIngredient}");
+                    remainingIngredients.Remove(lowerCaseIngredient);
+                    groupMatched = true;
+                    break;
+                }
+            }
+
+            if (!groupMatched)
+            {
+                Debug.Log($"No matching ingredient found for group: {ingredientGroup.Key}");
+                isMatch = false;
+                break;
+            }
+        }
+
+        if (isMatch && remainingIngredients.Count == 0)
+        {
+            Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
+            IncreaseScore(recipe.valor_nutrimental);
+            return;
+        }
+    }
+
+    Debug.Log("No valid recipe combination found.");
+}
+
+private void IncreaseScore(int nutritionalValue)
+{
+    totalScore += nutritionalValue;
+    UpdateScoreUI();
+    Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
+}
+
 }
 
 // Extensiones para la utilidad de JSON y la función de mezclar listas (shuffle)
@@ -317,6 +341,10 @@ public static class ListExtensions
 [System.Serializable]
 public class Recipe
 {
-    public bool is_main;
+    public int id_receta;
+    public bool es_principal;
+    public string nombre;
+    public int valor_nutrimental;
     public Dictionary<string, List<string>> ingredientes;
+    public object id_libro;
 }
