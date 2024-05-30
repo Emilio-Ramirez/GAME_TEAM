@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class Timer : MonoBehaviour
     public Canvas mainCanvas;  // Referencia al Canvas principal
 
     public TMP_Text timerText;  
-
     public Button startButton;  // Referencia al botón de UI para iniciar el temporizador
+    public AudioSource audioSource;  // Referencia al AudioSource para reproducir el sonido
+
 
     void Start()
     {
@@ -33,6 +35,9 @@ public class Timer : MonoBehaviour
             startButton.onClick.AddListener(StartTimer);
         }
 
+        // Suscribirse al evento de cambio de escena
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+
         // Mensajes de depuración
         Debug.Log("Start() - totalTime: " + totalTime + ", currentTime: " + currentTime);
     }
@@ -49,6 +54,10 @@ public class Timer : MonoBehaviour
                 currentTime = 0;
                 isTimerRunning = false;
                 Debug.Log("¡Se acabó el tiempo!");
+
+                // Detener el audio
+                StopAudio();
+
                 if (OnTimeUp != null)
                 {
                     OnTimeUp();  // Desencadena el evento cuando se acaba el tiempo
@@ -83,7 +92,6 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        //totalTime = 60f;
         // Inicia el temporizador
         isTimerRunning = true;
         currentTime = totalTime;
@@ -92,6 +100,12 @@ public class Timer : MonoBehaviour
         if (startButton != null)
         {
             startButton.gameObject.SetActive(false);
+        }
+
+        // Reproduce el sonido de inicio si hay un AudioSource y un AudioClip asignados
+        if (audioSource != null)
+        {
+            audioSource.Play();
         }
 
         // Mensaje de depuración
@@ -114,5 +128,25 @@ public class Timer : MonoBehaviour
     {
         // Comprueba si el temporizador está corriendo
         return isTimerRunning;
+    }
+
+    void OnDestroy()
+    {
+        // Asegurarse de desuscribirse del evento
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    void OnSceneUnloaded(Scene current)
+    {
+        // Detener el audio cuando la escena se descarga
+        StopAudio();
+    }
+
+    private void StopAudio()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
     }
 }
