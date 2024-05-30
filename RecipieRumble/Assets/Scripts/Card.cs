@@ -7,4 +7,6 @@ public class Card
     public string nombre;
     public int valor_nutrimental;
     public string tipo;
+
+    
 }
