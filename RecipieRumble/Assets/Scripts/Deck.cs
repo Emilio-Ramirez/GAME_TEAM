@@ -13,6 +13,8 @@ public class Deck : MonoBehaviour
     public Button deckButton; // Referencia al botón de la baraja
     public GameManager gameManager;
 
+    private bool cardMoved = false; // Indicar si una carta ha sido movida
+
     List<GameObject> playerCards = new List<GameObject>(); // Lista para las cartas del jugador
     List<GameObject> recipeCardPrefabs = new List<GameObject>(); // Lista para los prefabs de cartas de receta
     List<GameObject> instantiatedRecipeCards = new List<GameObject>(); // Lista para las cartas de receta instanciadas
@@ -32,6 +34,9 @@ public class Deck : MonoBehaviour
         recipeCardPrefabs.Add(Card1); // Solo agregar Card1 para la receta
 
         InitializeRecipeCards(); // Configurar las cartas de receta solo una vez
+
+        // Agregar el listener al botón de la baraja
+        deckButton.onClick.AddListener(OnClick);
     }
 
     void InitializeRecipeCards()
@@ -47,6 +52,16 @@ public class Deck : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log("Deck button clicked.");
+
+        if (cardMoved)
+        {
+            Debug.Log("Registering turn because a card was moved.");
+            // Registrar un cambio de turno solo si se ha movido una carta
+            dropZoneManager.RegisterTurn();
+            cardMoved = false; // Reiniciar el indicador después de registrar el turno
+        }
+
         gameManager.RefreshDeck();
 
         // Actualizar el conteo de cartas en el DropZoneManager después de agregar nuevas cartas
@@ -55,7 +70,22 @@ public class Deck : MonoBehaviour
 
     void Update()
     {
-        // Verificar si ya hay 4 cartas en el área del jugador y desactivar el botón de la baraja en consecuencia
-        deckButton.interactable = PlayerArea.transform.childCount < 4;
+        int playerCardCount = PlayerArea.transform.childCount;
+        //  Debug.Log($"Player card count: {playerCardCount}");
+        deckButton.interactable = playerCardCount < 4;
+
+        // Verificar si se ha movido una carta y actualizar el botón de la baraja
+        if (cardMoved)
+        {
+            Debug.Log("Card was moved, enabling deck button.");
+            deckButton.interactable = true;
+        }
+    }
+
+    // Método para ser llamado cuando se mueve una carta entre DropZones
+    public void CardMoved()
+    {
+        Debug.Log("Card moved between drop zones.");
+        cardMoved = true;
     }
 }
