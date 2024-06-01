@@ -56,7 +56,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             {
                 int fromDropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, StartParent.gameObject);
                 int toDropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, dropZone);
-
                 if (fromDropZoneIndex != -1 && toDropZoneIndex != -1 && fromDropZoneIndex != toDropZoneIndex)
                 {
                     dropZoneManager.MoveCardBetweenDropZones(gameObject, fromDropZoneIndex, toDropZoneIndex);
@@ -67,8 +66,12 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 }
             }
 
-            transform.SetParent(dropZone.transform, true);
-            transform.localPosition = Vector3.zero;
+            // Add a null check for dropZone before accessing its transform
+            if (dropZone != null)
+            {
+                transform.SetParent(dropZone.transform, true);
+                transform.localPosition = Vector3.zero;
+            }
         }
         else
         {
