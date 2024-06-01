@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 public class SesionManager : MonoBehaviour
-{
+{ 
     public TMP_InputField usernameField;
     public TMP_InputField passwordField;
     public TMP_Text logedInText;
@@ -24,24 +24,29 @@ public class SesionManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        Debug.Log("Token: " + PlayerPrefs.GetString("token"));
-        Debug.Log("Username: " + PlayerPrefs.GetString("username"));
-        
-        if (PlayerPrefs.GetString("token") != "")
+        if (logedInText != null  && enterGameButton != null) //if all UI elements are assigned
         {
-            // User is already logged in
+            Debug.Log("Token: " + PlayerPrefs.GetString("token"));
+            Debug.Log("Username: " + PlayerPrefs.GetString("username"));
 
-            logedInText.text = "Hello " + PlayerPrefs.GetString("username");
-            enterGameButton.interactable = true;
+            if (PlayerPrefs.GetString("token") != "")
+            {
+                // User is already logged in
+                logedInText.text = "Hello " + PlayerPrefs.GetString("username");
+                enterGameButton.interactable = true;
+            }
+            else
+            {
+                // User is not logged in
+                logedInText.text = "Please log in to enter the game.";
+                enterGameButton.interactable = false;
+            }
         }
         else
         {
-            // User is not logged in
-            logedInText.text = "Please log in to enter the game.";
-            enterGameButton.interactable = false;
+            Debug.LogError("One or more UI elements are not assigned correctly.");
         }
     }
-
     public void CallRegister()
     {
         StartCoroutine(Register());
