@@ -56,6 +56,20 @@ cd recipe-rumble
 
 The game should now be running, and you can interact with it. Make sure to follow any additional instructions or documentation provided for the game.
 
+Currently the only event with functionality is "Picnic". Once in picnic event you can see there are several buttons. The start button shows the game. The deck button cannot be used if the start button is not pressed. We also provided the arrows button which shows the 4 ingridient combination you can make in the game(this button is enabled throughout the entire game). And also the menu button which leads you to the game menu.
+
+Once you start playing, there will be 3 parts, the panel closest to the keyboard is your hand. You need to drag the cards to the middle part of the game where the white containers are. This containers have limited tuns before being descarted. The first container starting from the left hand has 1 tun available and the truns inrease by one endind with the right hand container which has 4 turns available.
+
+A turn is defined by the pressed deck button which you can find it in the lower left corner of the screen. This button is enabled if you drag and drop a card in the containers or if you change a card from one container to another.
+
+The cards can only move throughout the middle white containers, but they cannot be droped in the player hand again.
+
+The combinations must have 1 of the 3 types of ingridients (1 protine, 1 side, 1 utensil and 1 vegetable). These combinatios can aldo have alternative ingridients so you can add more points.
+
+The score is calculated with the addition of nutritional value written in the cards.
+
+You have 5 minutes to make the most combinations possible.
+
 
 ## _Game Design Document_
 **Team:** Lisette Melo Reyes, Sebastián Borjas Lizardi and Emilio Ramírez Mascarúa
