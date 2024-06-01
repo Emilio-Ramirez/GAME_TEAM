@@ -1,5 +1,62 @@
 # **Recipe Rumble**
 
+## Installation Guide
+
+1. **Clone the Repository**
+
+Clone the repository using HTTPS or SSH:
+
+```
+git clone https://github.com/your-username/recipe-rumble.git
+```
+
+2. **Navigate to the Project Directory**
+
+```
+cd recipe-rumble
+```
+
+3. **Run the Node Server**
+
+   1. Navigate to the API_WEB directory:
+      ```
+      cd api_web
+      ```
+
+   2. Create the `.env` file and add the required environment variables:
+      ```
+      touch .env
+      ```
+
+      Add the following variables to the `.env` file:
+      ```
+      DB_HOST=your_database_host
+      DB_PORT=your_database_port
+      DB_USERNAME=your_database_username
+      DB_PASSWORD=your_database_password
+      DB_DATABASE=your_database_name
+      API_PORT=3000
+      ```
+
+   3. Install the dependencies and start the server:
+      ```
+      npm install
+      npm start
+      ```
+      Make sure not to close the terminal window.
+
+4. **Run the Game**
+
+   1. Open Unity Hub.
+   2. Click on the "Add" button in the top right corner of the screen.
+   3. Select the "RecipeRumble" folder from the project directory.
+   4. Click "Open" to open the project in Unity.
+   5. In the Unity Project window, navigate to the "Scenes" folder and open the "principal menu" scene.
+   6. Click the "Play" button to start the game.
+
+The game should now be running, and you can interact with it. Make sure to follow any additional instructions or documentation provided for the game.
+
+
 ## _Game Design Document_
 **Team:** Lisette Melo Reyes, Sebastián Borjas Lizardi and Emilio Ramírez Mascarúa
 
