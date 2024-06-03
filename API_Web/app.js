@@ -205,3 +205,5 @@ app.get('/recetas', async (req, res) => {
 app.listen(process.env.API_PORT, () => {
   console.log(`Server is running on http://localhost:${process.env.API_PORT}`);
 });
+
+module.exports = app;
