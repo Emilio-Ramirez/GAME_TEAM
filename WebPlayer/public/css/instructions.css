@@ -1,0 +1,73 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FAF4D9; /* Color de fondo */
+    color: #4B3E2F; /* Color del texto */
+    margin: 0;
+    padding: 20px;
+    position: relative; /* Para posicionar los contenedores */
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #FFF5E1; /* Fondo de la tarjeta */
+    border: 5px solid #FFF5E1; /* Borde */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.header img {
+    width: 100%;
+    max-width: 800px; /* Hacer la imagen del título más grande */
+}
+.instruction-container {
+    background: #FFF5E1; 
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.instruction-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; /* Ajustar imagen para cubrir el contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    margin: 0 auto; /* Centrar la imagen */
+    display: block; /* Centrar la imagen */
+    margin-bottom: 10px; /* Espacio debajo de la imagen */
+}
+.instruction-text {
+    font-size: 18px;
+    text-align: center;
+}
+.instruction-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.double-column {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los contenedores se ajusten en filas múltiples */
+}
+.column {
+    width: 48%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.chef-image {
+    position: fixed;
+    bottom: 20px;
+    right: -140px;
+    width: 500px; /* Aumenta el tamaño del chef */
+    border-radius: 10px; /* Bordes redondeados para el chef */
+    z-index: 1000; /* Mantener en la parte superior */
+}
+.title-red { color: #D5A875; }
+.title-blue { color: #BF372F; }
+.title-green { color: #568759; }
+.title-orange { color: #F68B3F; }
+.title-purple { color: #99B0AF; }
