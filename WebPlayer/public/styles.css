@@ -5,14 +5,38 @@
 }
 
 body {
+    font-family: 'Inter', sans-serif; /* Aplicar la fuente Inter a todo el contenido */
     background-color: #F5F5DC;
     text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.top-bar {
+    width: 100%;
+    background-color: #593E2E; /* Color de fondo de la barra superior */
+    padding: 10px 0;
+    text-align: right; /* Alinear el texto a la derecha */
+    color: #FFFFFF; /* Color del texto */
+    position: fixed; /* Barra fija */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding-right: 20px; /* Espacio a la derecha */
+}
+
+.top-bar a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .centered-div {
+    text-align: center;
+    margin-top: 60px; /* Espacio para la barra superior */
     background-color: #F5F5DC;
     padding: 300px;
-    text-align: center;
     border-radius: 8px;
 }
 
@@ -45,44 +69,4 @@ h2 {
 
 .button:hover {
     background-color: #FF9191;
-}
-
-.navbar {
-    background-color: #593E2E;
-    padding: 10px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.nav-icon {
-    height: 20px;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 50px); /* Altura del contenedor menos la altura de la navbar */
-    padding-top: 60px; 
-}
-
-#unityCanvas {
-    width: 800px;
-    height: 600px;
-    background-color: black;
-}
-
-#loadingBar {
-    width: 100%;
-    height: 4px;
-    background-color: #ccc;
-    margin-bottom: 10px;
-}
-
-#progressBarFull {
-    height: 100%;
-    width: 0;
-    background-color: #4caf50;
 }

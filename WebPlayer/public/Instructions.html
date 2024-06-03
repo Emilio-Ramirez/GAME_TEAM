@@ -6,6 +6,32 @@
     <title>Instruction Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/instructions.css">
+    <style>
+        .chef-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+    
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #FF7171;
+            color: white;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .return-button:hover {
+            background-color: #FF9191;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -78,6 +104,9 @@
             </div>
         </div>
     </div>
-    <img src="../public/Assets/Pictures/Chef.png" alt="Chef" class="chef-image">
+    <div class="chef-container">
+        <!--<img src="../public/Assets/Pictures/Chef.png" alt="Chef" class="chef-image">-->
+        <a href="index.html" class="return-button">Return to Home</a>
+    </div>
 </body>
 </html>
