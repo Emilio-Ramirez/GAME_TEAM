@@ -1,125 +1,132 @@
-const { sequelize, Carta, Receta } = require('./db');
+const { sequelize, Receta, Ingrediente } = require('./db');
 
-const cartas = [
-  { id_carta: 1, nombre: 'Bread', valor_nutrimental: 4, tipo: 'Side' },
-  { id_carta: 2, nombre: 'Chicken', valor_nutrimental: 2, tipo: 'Protein' },
-  { id_carta: 3, nombre: 'Tongs', valor_nutrimental: 3, tipo: 'Utils' },
-  { id_carta: 4, nombre: 'Grill', valor_nutrimental: 2, tipo: 'Utils' },
-  { id_carta: 5, nombre: 'Feta Cheese', valor_nutrimental: 3, tipo: 'Vegetable' },
-  { id_carta: 6, nombre: 'Cherry Tomatoes', valor_nutrimental: 2, tipo: 'Vegetable' },
-  { id_carta: 7, nombre: 'Egg', valor_nutrimental: 8, tipo: 'Protein' },
-  { id_carta: 8, nombre: 'Ham', valor_nutrimental: 7, tipo: 'Protein' },
-  { id_carta: 9, nombre: 'Onion', valor_nutrimental: 6, tipo: 'Vegetable' },
-  { id_carta: 10, nombre: 'Bacon', valor_nutrimental: 7, tipo: 'Vegetable' },
-  { id_carta: 11, nombre: 'Knife', valor_nutrimental: 6, tipo: 'Utils' },
-  { id_carta: 12, nombre: 'Bowl', valor_nutrimental: 8, tipo: 'Utils' },
-  { id_carta: 13, nombre: 'Olive Oil', valor_nutrimental: 7, tipo: 'Side' },
-  { id_carta: 14, nombre: 'Salt', valor_nutrimental: 5, tipo: 'Side' },
-  { id_carta: 15, nombre: 'Turkey', valor_nutrimental: 3, tipo: 'Protein' },
-  { id_carta: 16, nombre: 'Potatoes', valor_nutrimental: 4, tipo: 'Side' },
-  { id_carta: 17, nombre: 'Carrot', valor_nutrimental: 4, tipo: 'Vegetable' },
-  { id_carta: 18, nombre: 'Brussels Sprouts', valor_nutrimental: 3, tipo: 'Vegetable' },
-  { id_carta: 19, nombre: 'Oven', valor_nutrimental: 3, tipo: 'Utils' },
-  { id_carta: 20, nombre: 'Pot', valor_nutrimental: 4, tipo: 'Utils' },
-  { id_carta: 21, nombre: 'Wooden Spoon', valor_nutrimental: 4, tipo: 'Utils' },
-  { id_carta: 22, nombre: 'Rice', valor_nutrimental: 3, tipo: 'Side' },
-  { id_carta: 23, nombre: 'Cranberry Sauce', valor_nutrimental: 5, tipo: 'Side' },
-  { id_carta: 24, nombre: 'Pork', valor_nutrimental: 8, tipo: 'Protein' },
-  { id_carta: 25, nombre: 'Cutting Board', valor_nutrimental: 6, tipo: 'Utils' },
-  { id_carta: 26, nombre: 'Thermometer', valor_nutrimental: 8, tipo: 'Utils' },
-  { id_carta: 27, nombre: 'Mustard', valor_nutrimental: 6, tipo: 'Side' },
-  { id_carta: 28, nombre: 'Apple Cider', valor_nutrimental: 7, tipo: 'Side' },
-  { id_carta: 29, nombre: 'Salmon', valor_nutrimental: 3, tipo: 'Protein' },
-  { id_carta: 30, nombre: 'Heavy Cream', valor_nutrimental: 4, tipo: 'Side' },
-  { id_carta: 31, nombre: 'Pan', valor_nutrimental: 2, tipo: 'Utils' },
-  { id_carta: 32, nombre: 'Mixer', valor_nutrimental: 3, tipo: 'Utils' },
-  { id_carta: 33, nombre: 'Lemon', valor_nutrimental: 2, tipo: 'Side' },
-  { id_carta: 34, nombre: 'Asparagus', valor_nutrimental: 3, tipo: 'Vegetable' },
-  { id_carta: 35, nombre: 'Chocolate', valor_nutrimental: 4, tipo: 'Protein' },
-  { id_carta: 36, nombre: 'Strawberry', valor_nutrimental: 3, tipo: 'Vegetable' },
-  { id_carta: 37, nombre: 'Rosemary', valor_nutrimental: 3, tipo: 'Vegetable' },
-  { id_carta: 38, nombre: 'Butter', valor_nutrimental: 7, tipo: 'Side' },
-  { id_carta: 39, nombre: 'Sugar', valor_nutrimental: 6, tipo: 'Side' },
-  { id_carta: 40, nombre: 'Flour', valor_nutrimental: 8, tipo: 'Protein' },
-  { id_carta: 41, nombre: 'Rolling Pin', valor_nutrimental: 6, tipo: 'Utils' },
-  { id_carta: 42, nombre: 'Molds', valor_nutrimental: 7, tipo: 'Utils' },
-  { id_carta: 43, nombre: 'White Fondant', valor_nutrimental: 9, tipo: 'Vegetable' },
-  { id_carta: 44, nombre: 'Jam', valor_nutrimental: 7, tipo: 'Vegetable' },
-  { id_carta: 45, nombre: 'Olives', valor_nutrimental: 4, tipo: 'Side' },
-  { id_carta: 46, nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' }
+const ingredientes = [
+  { nombre: 'Bread', puntaje: 4, tipo: 'Side' },
+  { nombre: 'Chicken', puntaje: 2, tipo: 'Protein' },
+  { nombre: 'Tongs', puntaje: 3, tipo: 'Utils' },
+  { nombre: 'Grill', puntaje: 2, tipo: 'Utils' },
+  { nombre: 'Feta Cheese', puntaje: 3, tipo: 'Vegetable' },
+  { nombre: 'Cherry Tomatoes', puntaje: 2, tipo: 'Vegetable' },
+  { nombre: 'Egg', puntaje: 8, tipo: 'Protein' },
+  { nombre: 'Ham', puntaje: 7, tipo: 'Protein' },
+  { nombre: 'Onion', puntaje: 6, tipo: 'Vegetable' },
+  { nombre: 'Bacon', puntaje: 7, tipo: 'Vegetable' },
+  { nombre: 'Knife', puntaje: 6, tipo: 'Utils' },
+  { nombre: 'Bowl', puntaje: 8, tipo: 'Utils' },
+  { nombre: 'Olive Oil', puntaje: 7, tipo: 'Side' },
+  { nombre: 'Salt', puntaje: 5, tipo: 'Side' },
+  { nombre: 'Turkey', puntaje: 3, tipo: 'Protein' },
+  { nombre: 'Potatoes', puntaje: 4, tipo: 'Side' },
+  { nombre: 'Carrot', puntaje: 4, tipo: 'Vegetable' },
+  { nombre: 'Brussels Sprouts', puntaje: 3, tipo: 'Vegetable' },
+  { nombre: 'Oven', puntaje: 3, tipo: 'Utils' },
+  { nombre: 'Pot', puntaje: 4, tipo: 'Utils' },
+  { nombre: 'Wooden Spoon', puntaje: 4, tipo: 'Utils' },
+  { nombre: 'Rice', puntaje: 3, tipo: 'Side' },
+  { nombre: 'Cranberry Sauce', puntaje: 5, tipo: 'Side' },
+  { nombre: 'Pork', puntaje: 8, tipo: 'Protein' },
+  { nombre: 'Cutting Board', puntaje: 6, tipo: 'Utils' },
+  { nombre: 'Thermometer', puntaje: 8, tipo: 'Utils' },
+  { nombre: 'Mustard', puntaje: 6, tipo: 'Side' },
+  { nombre: 'Apple Cider', puntaje: 7, tipo: 'Side' },
+  { nombre: 'Salmon', puntaje: 3, tipo: 'Protein' },
+  { nombre: 'Heavy Cream', puntaje: 4, tipo: 'Side' },
+  { nombre: 'Pan', puntaje: 2, tipo: 'Utils' },
+  { nombre: 'Mixer', puntaje: 3, tipo: 'Utils' },
+  { nombre: 'Lemon', puntaje: 2, tipo: 'Side' },
+  { nombre: 'Asparagus', puntaje: 3, tipo: 'Vegetable' },
+  { nombre: 'Chocolate', puntaje: 4, tipo: 'Protein' },
+  { nombre: 'Strawberry', puntaje: 3, tipo: 'Vegetable' },
+  { nombre: 'Rosemary', puntaje: 3, tipo: 'Vegetable' },
+  { nombre: 'Butter', puntaje: 7, tipo: 'Side' },
+  { nombre: 'Sugar', puntaje: 6, tipo: 'Side' },
+  { nombre: 'Flour', puntaje: 8, tipo: 'Protein' },
+  { nombre: 'Rolling Pin', puntaje: 6, tipo: 'Utils' },
+  { nombre: 'Molds', puntaje: 7, tipo: 'Utils' },
+  { nombre: 'White Fondant', puntaje: 9, tipo: 'Vegetable' },
+  { nombre: 'Jam', puntaje: 7, tipo: 'Vegetable' },
+  { nombre: 'Olives', puntaje: 4, tipo: 'Side' },
+  { nombre: 'Salad', puntaje: 3, tipo: 'Vegetable' }
 ];
-
 
 const recetas = [
   // Picnic
   {
-    is_main: true,
+    es_principal: true,
+    belongs_to_level: 1,
     ingredientes: {
-      side: ['Olive oil', 'Salt'],
+      side: ['Olive Oil', 'Salt'],
       verduras: ['Onion', 'Bacon'],
       protein: ['Egg', 'Ham'],
       utils: ['Knife', 'Bowl']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 1,
     ingredientes: {
       side: ['Bread'],
-      verduras: ['Feta cheese', 'Cherry tomatoes'],
+      verduras: ['Feta Cheese', 'Cherry Tomatoes'],
       protein: ['Chicken'],
       utils: ['Tongs', 'Grill']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 1,
     ingredientes: {
-      side: ['Black olives', 'Avocado'],
-      verduras: ['Cherry tomatoes', 'Salad'],
+      side: ['Olives'],
+      verduras: ['Cherry Tomatoes', 'Salad'],
       protein: ['Chicken'],
       utils: ['Pan', 'Tongs']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 1,
     ingredientes: {
-      side: ['Black olives'],
-      verduras: ['Salad', 'Feta cheese'],
-      protein: ['Cheese'],
+      side: ['Olives'],
+      verduras: ['Salad', 'Feta Cheese'],
+      protein: [],
       utils: ['Grill', 'Pan']
     }
   },
   // Christmas Dinner
   {
-    is_main: true,
+    es_principal: true,
+    belongs_to_level: 2,
     ingredientes: {
-      side: ['Mustard', 'Apple cider'],
+      side: ['Mustard', 'Apple Cider'],
       verduras: ['Rosemary', 'Onion'],
       protein: ['Pork'],
-      utils: ['Cutting board', 'Meat thermometer']
+      utils: ['Cutting Board', 'Thermometer']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 2,
     ingredientes: {
-      side: ['Potatoes', 'Cranberry sauce'],
-      verduras: ['Glazed carrots', 'Brussels sprouts'],
+      side: ['Potatoes', 'Cranberry Sauce'],
+      verduras: ['Carrot', 'Brussels Sprouts'],
       protein: ['Turkey'],
-      utils: ['Wooden spoon', 'Tongs']
+      utils: ['Wooden Spoon', 'Tongs']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 2,
     ingredientes: {
-      side: ['Rice', 'Cranberry sauce'],
+      side: ['Rice', 'Cranberry Sauce'],
       verduras: ['Salad', 'Asparagus'],
       protein: ['Ham'],
       utils: ['Tongs', 'Pot']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 2,
     ingredientes: {
-      side: ['Rice', 'Cranberry rice'],
+      side: ['Rice', 'Cranberry Sauce'],
       verduras: ['Salad', 'Asparagus'],
       protein: ['Turkey'],
       utils: ['Tongs', 'Pot']
@@ -127,39 +134,43 @@ const recetas = [
   },
   // Wedding
   {
-    is_main: true,
+    es_principal: true,
+    belongs_to_level: 3,
     ingredientes: {
-      side: ['Butter', 'White sugar'],
-      verduras: ['White fondant', 'Jam'],
-      protein: ['Flour', 'Eggs'],
-      utils: ['Rolling pin', 'Molds']
+      side: ['Butter', 'Sugar'],
+      verduras: ['White Fondant', 'Jam'],
+      protein: ['Flour', 'Egg'],
+      utils: ['Rolling Pin', 'Molds']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 3,
     ingredientes: {
-      side: ['Lemon', 'Heavy cream'],
+      side: ['Lemon', 'Heavy Cream'],
       verduras: ['Rosemary', 'Salad'],
       protein: ['Salmon'],
-      utils: ['Pan', 'Whisk']
+      utils: ['Pan']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 3,
     ingredientes: {
       side: ['Potatoes', 'Lemon'],
-      verduras: ['Strawberries', 'Salad'],
+      verduras: ['Strawberry', 'Salad'],
       protein: ['Salmon'],
       utils: ['Oven', 'Pan']
     }
   },
   {
-    is_main: false,
+    es_principal: false,
+    belongs_to_level: 3,
     ingredientes: {
-      side: ['Heavy cream'],
-      verduras: ['Strawberries', 'Cranberry sauce'],
-      protein: ['Dark chocolate'],
-      utils: ['Mixer', 'Wooden spoon']
+      side: ['Heavy Cream'],
+      verduras: ['Strawberry', 'Cranberry Sauce'],
+      protein: ['Chocolate'],
+      utils: ['Mixer', 'Wooden Spoon']
     }
   }
 ];
@@ -170,15 +181,15 @@ async function populateDatabase() {
     console.log('Database connection established');
 
     // Eliminar todas las cartas y recetas existentes utilizando CASCADE
-    await sequelize.query('TRUNCATE "Carta" CASCADE');
-    await sequelize.query('TRUNCATE "Receta" CASCADE');
+    await sequelize.query('TRUNCATE TABLE "Ingredientes" CASCADE');
+    await sequelize.query('TRUNCATE TABLE "Receta" CASCADE');
 
     // Reiniciar el contador de la secuencia de la tabla "Receta"
     await sequelize.query('ALTER SEQUENCE "Receta_id_receta_seq" RESTART WITH 1');
 
-    // Insertar las nuevas cartas en la base de datos
-    await Carta.bulkCreate(cartas);
-    console.log('Cartas successfully populated');
+    // Insertar los nuevos ingredientes en la base de datos
+    await Ingrediente.bulkCreate(ingredientes);
+    console.log('Ingredientes successfully populated');
 
     // Insertar las nuevas recetas en la base de datos
     await Receta.bulkCreate(recetas);
