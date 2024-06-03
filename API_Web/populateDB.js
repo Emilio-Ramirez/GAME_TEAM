@@ -184,6 +184,9 @@ async function populateDatabase() {
     await sequelize.query('TRUNCATE TABLE "Cartas" CASCADE');
     await sequelize.query('TRUNCATE TABLE "Receta" CASCADE');
 
+    // Reiniciar el contador de la secuencia de la tabla "Cartas"
+    await sequelize.query('ALTER SEQUENCE "Cartas_id_carta_seq" RESTART WITH 1');
+
     // Reiniciar el contador de la secuencia de la tabla "Receta"
     await sequelize.query('ALTER SEQUENCE "Receta_id_receta_seq" RESTART WITH 1');
 
