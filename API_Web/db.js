@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize')
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -86,7 +86,7 @@ const Partida = sequelize.define('Partida', {
   },
 });
 
-const Ingrediente = sequelize.define('Ingrediente', {
+const Cartas = sequelize.define('Cartas', {
   id_carta: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -95,7 +95,7 @@ const Ingrediente = sequelize.define('Ingrediente', {
   nombre: {
     type: DataTypes.STRING,
   },
-  puntaje: {
+  valor_nutrimental: {
     type: DataTypes.INTEGER,
   },
   tipo: {
@@ -131,6 +131,6 @@ module.exports = {
   Receta,
   Nivel,
   Partida,
-  Ingrediente,
+  Cartas,
   Sesion,
 };

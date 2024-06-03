@@ -1,5 +1,5 @@
 const express = require('express');
-const { sequelize, Usuario, Receta, Nivel, Partida, Ingrediente, Sesion } = require('./db');
+const { sequelize, Usuario, Receta, Nivel, Partida, Cartas, Sesion } = require('./db');
 const bodyParser = require('body-parser');
 const app = express();
 const bcrypt = require('bcrypt');
@@ -142,7 +142,7 @@ app.get('/profile', authenticateSession, async (req, res) => {
 // Get route for ingredients
 app.get('/cartas', async (req, res) => {
   try {
-    const ingredientes = await Ingrediente.findAll();
+    const ingredientes = await Cartas.findAll();
     res.json(ingredientes);
   } catch (error) {
     console.error('Error fetching ingredientes:', error);
