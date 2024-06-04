@@ -151,15 +151,42 @@ public class DropZoneManager : MonoBehaviour
     }
 
     public void OnCardDropped(int dropZoneIndex, GameObject card)
+{
+    // Verificar si ya hay una carta en la dropzone
+    if (cardsInDropZone[dropZoneIndex].Count > 0)
     {
-        cardsInDropZone[dropZoneIndex].Add(card);
-        UpdateCardCount();
-        Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
+        Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
+        ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
+        return;
     }
 
+    cardsInDropZone[dropZoneIndex].Add(card);
+    card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
+    UpdateCardCount();
+    Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
+}
+
+private void ReturnToStart(GameObject card)
+{
+    // Devuelve la carta a su posición inicial
+    DragDrop dragDrop = card.GetComponent<DragDrop>();
+    if (dragDrop != null)
+    {
+        card.transform.position = dragDrop.StartPosition;
+        card.transform.SetParent(dragDrop.StartParent, true);
+    }
+}
     public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
     {
         Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
+        
+        // Verificar si la zona de destino ya tiene una carta
+        if (cardsInDropZone[toDropZoneIndex].Count > 0)
+        {
+            Debug.LogWarning($"DropZone {toDropZoneIndex} already has a card. Cannot move the card.");
+            return;
+        }
+
         if (cardsInDropZone[fromDropZoneIndex].Remove(card))
         {
             cardsInDropZone[toDropZoneIndex].Add(card);
@@ -206,21 +233,20 @@ public class DropZoneManager : MonoBehaviour
     }
 
     public void RegisterTurn()
-{
-    Debug.Log("Registering turn.");
-    for (int i = 0; i < numberOfDropZones; i++)
     {
-        if (cardsInDropZone[i].Count > 0)
+        Debug.Log("Registering turn.");
+        for (int i = 0; i < numberOfDropZones; i++)
         {
-            turnsLeft[i]--;
-            if (turnsLeft[i] <= 0)
+            if (cardsInDropZone[i].Count > 0)
             {
-                turnsLeft[i] = initialTurns[i];
+                turnsLeft[i]--;
+                if (turnsLeft[i] <= 0)
+                {
+                    turnsLeft[i] = initialTurns[i];
+                }
+                Debug.Log($"DropZone {i} turns left: {turnsLeft[i]}");
             }
-            Debug.Log($"DropZone {i} turns left: {turnsLeft[i]}");
         }
+        UpdateCardCount();
     }
-    UpdateCardCount();
-}
-
 }
