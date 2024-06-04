@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3451295432892669810}
   - component: {fileID: 7805645536764894116}
   - component: {fileID: -1718560944219334461}
-  - component: {fileID: -3404798521151375920}
+  - component: {fileID: -1683494228009328084}
   m_Layer: 8
   m_Name: RecipieCard
   m_TagString: Untagged
@@ -150,7 +150,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &-3404798521151375920
+--- !u!114 &-1683494228009328084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

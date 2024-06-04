@@ -14,7 +14,7 @@ public class DropZoneManager : MonoBehaviour
     public int[] initialTurns;
     public List<GameObject>[] cardsInDropZone;
     public Transform playerArea;
-    public Transform recipeArea;
+    public Transform recipeArea; // Agrega esto
     public Button startButton;
     public Button drawButton;
     public Deck deck; // Referencia al script Deck
@@ -151,31 +151,32 @@ public class DropZoneManager : MonoBehaviour
     }
 
     public void OnCardDropped(int dropZoneIndex, GameObject card)
-{
-    // Verificar si ya hay una carta en la dropzone
-    if (cardsInDropZone[dropZoneIndex].Count > 0)
     {
-        Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
-        ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
-        return;
+        // Verificar si ya hay una carta en la dropzone
+        if (cardsInDropZone[dropZoneIndex].Count > 0)
+        {
+            Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
+            ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
+            return;
+        }
+
+        cardsInDropZone[dropZoneIndex].Add(card);
+        card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
+        UpdateCardCount();
+        Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
     }
 
-    cardsInDropZone[dropZoneIndex].Add(card);
-    card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
-    UpdateCardCount();
-    Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
-}
-
-private void ReturnToStart(GameObject card)
-{
-    // Devuelve la carta a su posición inicial
-    DragDrop dragDrop = card.GetComponent<DragDrop>();
-    if (dragDrop != null)
+    private void ReturnToStart(GameObject card)
     {
-        card.transform.position = dragDrop.StartPosition;
-        card.transform.SetParent(dragDrop.StartParent, true);
+        // Devuelve la carta a su posición inicial
+        DragDrop dragDrop = card.GetComponent<DragDrop>();
+        if (dragDrop != null)
+        {
+            card.transform.position = dragDrop.StartPosition;
+            card.transform.SetParent(dragDrop.StartParent, true);
+        }
     }
-}
+
     public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
     {
         Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
@@ -184,6 +185,7 @@ private void ReturnToStart(GameObject card)
         if (cardsInDropZone[toDropZoneIndex].Count > 0)
         {
             Debug.LogWarning($"DropZone {toDropZoneIndex} already has a card. Cannot move the card.");
+            ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede mover
             return;
         }
 

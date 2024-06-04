@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
-using System.Linq;  // Añadir esta línea
+using System.Linq;
 using Newtonsoft.Json;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +19,7 @@ public class GameManager : MonoBehaviour
     public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
+    public Button deckButton;
 
     private List<Card> cards = new List<Card>();
     private List<Recipe> recipes = new List<Recipe>();
@@ -46,6 +46,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GetCards());
         StartCoroutine(GetRecipes());
         UpdateScoreUI();
+
+        if (deckButton != null)
+        {
+            deckButton.onClick.AddListener(OnDeckButtonPressed);
+        }
     }
 
     IEnumerator GetCards()
@@ -71,24 +76,24 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator GetRecipes()
-      {
-          Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
+    {
+        Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
 
-          using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
-          {
-              yield return webRequest.SendWebRequest();
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
+        {
+            yield return webRequest.SendWebRequest();
 
-              if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-              {
-                  Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
-              }
-              else
-              {
-                  Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                  recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
-              }
-          }
-      }
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
+            }
+            else
+            {
+                Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
+                recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+            }
+        }
+    }
 
     void AddCardsToRecipeArea()
     {
@@ -151,41 +156,19 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        int currentCardCount = playerCardParent.childCount;
-        int newCardsCount = 4 - currentCardCount;
-
-        if (newCardsCount <= 0)
+        // Destruir las cartas actuales en la mano del jugador
+        foreach (Transform child in playerCardParent)
         {
-            Debug.Log("Player already has 4 cards. No new cards will be added.");
-            return;
+            Destroy(child.gameObject);
         }
 
         List<Card> randomCards = new List<Card>(cards);
         randomCards.Shuffle();
 
         int cardsAdded = 0;
-        HashSet<int> existingCardIds = new HashSet<int>();
-        HashSet<string> existingCardTypes = new HashSet<string>();
-
-        // Recopilar los ids y tipos de las cartas actualmente en la mano del jugador
-        foreach (Transform child in playerCardParent)
-        {
-            TMP_Text nameText = child.Find("NameText")?.GetComponent<TMP_Text>();
-            TMP_Text typeText = child.Find("TypeText")?.GetComponent<TMP_Text>();
-            if (nameText != null && typeText != null)
-            {
-                Card cardInHand = cards.FirstOrDefault(c => c.nombre == nameText.text);
-                if (cardInHand != null)
-                {
-                    existingCardIds.Add(cardInHand.id_carta);
-                    existingCardTypes.Add(typeText.text);
-                }
-            }
-        }
-
         foreach (Card card in randomCards)
         {
-            if (cardsAdded >= newCardsCount)
+            if (cardsAdded >= 4)
             {
                 break;
             }
@@ -193,18 +176,6 @@ public class GameManager : MonoBehaviour
             if (!validCardIdsForPlayerArea.Contains(card.id_carta))
             {
                 Debug.LogWarning($"Skipping card with invalid ID for player area: {card.id_carta}");
-                continue;
-            }
-
-            if (existingCardIds.Contains(card.id_carta))
-            {
-                Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
-                continue;
-            }
-
-            if (existingCardTypes.Contains(card.tipo))
-            {
-                Debug.LogWarning($"Skipping card with duplicate type: {card.tipo}");
                 continue;
             }
 
@@ -246,10 +217,6 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Failed to find Image component on the player card prefab.");
             }
 
-            // Añadir el id y tipo de la nueva carta a los ids y tipos existentes
-            existingCardIds.Add(card.id_carta);
-            existingCardTypes.Add(card.tipo);
-
             cardsAdded++;
         }
 
@@ -257,7 +224,18 @@ public class GameManager : MonoBehaviour
         dropZoneManager?.UpdateCardCount();
     }
 
+    public void OnDeckButtonPressed()
+    {
+        deckButton.interactable = false;
+        ShuffleAndAddNewCardsToPlayerArea();
+        StartCoroutine(ReenableDeckButton());
+    }
 
+    IEnumerator ReenableDeckButton()
+    {
+        yield return new WaitForSeconds(1f);
+        deckButton.interactable = true;
+    }
 
     public void RefreshDeck()
     {
@@ -272,102 +250,95 @@ public class GameManager : MonoBehaviour
         }
     }
 
-public void CheckRecipeCombination()
-{
-    List<string> ingredientsInRecipeArea = new List<string>();
-    foreach (var dropZone in DropZoneManager.Instance.cardsInDropZone)
+    public void CheckRecipeCombination()
     {
-        foreach (GameObject cardObject in dropZone)
+        List<string> ingredientsInRecipeArea = new List<string>();
+        foreach (var dropZone in DropZoneManager.Instance.cardsInDropZone)
         {
-            string cardName = cardObject.name.ToLower();
-            ingredientsInRecipeArea.Add(cardName);
-            Debug.Log($"Added ingredient: {cardName}");
-        }
-    }
-
-    Debug.Log($"Ingredients in recipe area: {string.Join(", ", ingredientsInRecipeArea)}");
-
-    foreach (Recipe recipe in recipes)
-    {
-        Debug.Log($"Checking recipe ID: {recipe.id_receta}");
-        bool isMatch = true;
-        List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
-        int totalNutritionalValue = 0;
-
-        foreach (var ingredientGroup in recipe.ingredientes)
-        {
-            Debug.Log($"Checking ingredient group: {ingredientGroup.Key}");
-            bool groupMatched = false;
-
-            foreach (string ingredient in ingredientGroup.Value)
+            foreach (GameObject cardObject in dropZone)
             {
-                string lowerCaseIngredient = ingredient.ToLower();
-                if (remainingIngredients.Contains(lowerCaseIngredient))
+                string cardName = cardObject.name.ToLower();
+                ingredientsInRecipeArea.Add(cardName);
+                Debug.Log($"Added ingredient: {cardName}");
+            }
+        }
+
+        Debug.Log($"Ingredients in recipe area: {string.Join(", ", ingredientsInRecipeArea)}");
+
+        foreach (Recipe recipe in recipes)
+        {
+            Debug.Log($"Checking recipe ID: {recipe.id_receta}");
+            bool isMatch = true;
+            List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
+            int totalNutritionalValue = 0;
+
+            foreach (var ingredientGroup in recipe.ingredientes)
+            {
+                Debug.Log($"Checking ingredient group: {ingredientGroup.Key}");
+                bool groupMatched = false;
+
+                foreach (string ingredient in ingredientGroup.Value)
                 {
-                    Debug.Log($"Found ingredient: {lowerCaseIngredient}");
-
-                    // Buscar la carta correspondiente para obtener el valor nutrimental
-                    var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
-                    if (card != null)
+                    string lowerCaseIngredient = ingredient.ToLower();
+                    if (remainingIngredients.Contains(lowerCaseIngredient))
                     {
-                        totalNutritionalValue += card.valor_nutrimental;
-                    }
+                        Debug.Log($"Found ingredient: {lowerCaseIngredient}");
 
-                    remainingIngredients.Remove(lowerCaseIngredient);
-                    groupMatched = true;
+                        var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
+                        if (card != null)
+                        {
+                            totalNutritionalValue += card.valor_nutrimental;
+                        }
+
+                        remainingIngredients.Remove(lowerCaseIngredient);
+                        groupMatched = true;
+                        break;
+                    }
+                }
+
+                if (!groupMatched)
+                {
+                    Debug.Log($"No matching ingredient found for group: {ingredientGroup.Key}");
+                    isMatch = false;
                     break;
                 }
             }
 
-            if (!groupMatched)
+            if (isMatch && remainingIngredients.Count == 0)
             {
-                Debug.Log($"No matching ingredient found for group: {ingredientGroup.Key}");
-                isMatch = false;
-                break;
+                Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
+                IncreaseScore(totalNutritionalValue);
+                return;
             }
         }
 
-        if (isMatch && remainingIngredients.Count == 0)
-        {
-            Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
-            IncreaseScore(totalNutritionalValue);
-            return;
-        }
+        Debug.Log("No valid recipe combination found.");
     }
 
-    Debug.Log("No valid recipe combination found.");
-}
-
-
-private void IncreaseScore(int nutritionalValue)
-{
-    totalScore += nutritionalValue;
-    UpdateScoreUI();
-    Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
-    
-    // Descartar todas las cartas del dropzone
-    foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
+    private void IncreaseScore(int nutritionalValue)
     {
-        foreach (GameObject card in cardList)
+        totalScore += nutritionalValue;
+        UpdateScoreUI();
+        Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
+        
+        foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
         {
-            Destroy(card);
+            foreach (GameObject card in cardList)
+            {
+                Destroy(card);
+            }
+            cardList.Clear();
         }
-        cardList.Clear();
-    }
-    
-    // Resetear los turnos
-    for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
-    {
-        DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
-    }
 
-    // Popular las cartas de la mano
-    ShuffleAndAddNewCardsToPlayerArea();
+        for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
+        {
+            DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
+        }
+
+        ShuffleAndAddNewCardsToPlayerArea();
+    }
 }
 
-}
-
-// Extensiones para la utilidad de JSON y la función de mezclar listas (shuffle)
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
@@ -402,7 +373,6 @@ public static class ListExtensions
     }
 }
 
-// Clase Recipe para representar las recetas
 [System.Serializable]
 public class Recipe
 {
@@ -413,5 +383,3 @@ public class Recipe
     public Dictionary<string, List<string>> ingredientes;
     public object id_libro;
 }
-
-
