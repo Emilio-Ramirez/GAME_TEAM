@@ -163,3 +163,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ZoomCardPrefab: {fileID: 8171552711498485673}
+  recipeAreaZoomCardPrefab: {fileID: 6537135731154562227, guid: 59c70ca1e004ac14aa8e8d8060c9b0db, type: 3}

@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
     public GameObject ZoomCardPrefab;
-    private Transform Canvas;
+    public GameObject recipeAreaZoomCardPrefab;  // Nueva propiedad para el GameObject alternativo del área de recetas
 
+    private Transform Canvas;
     private bool isDragging;
     private bool isCardOverDropZone;
     private GameObject zoomCard;
-    private Image zoomCardImage;
     private CanvasGroup zoomCardCanvasGroup;
 
     // Agregar referencia al DropZoneManager
@@ -33,7 +33,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!isDragging && !isCardOverDropZone)
+        if (!isDragging && !isCardOverDropZone && zoomCard == null)
         {
             CreateZoomCard();
         }
@@ -61,20 +61,34 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             return;
         }
 
-        zoomCard = Instantiate(ZoomCardPrefab, Canvas);
-        zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
-
-        zoomCardImage = zoomCard.GetComponent<Image>();
-        zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
-
-        Image originalImage = GetComponent<Image>();
-        if (originalImage == null)
+        // Verificar si la carta está en la recipe area
+        bool isInRecipeArea = false;
+        if (dropZoneManager != null && dropZoneManager.recipeArea != null)
         {
-            Debug.LogError("Original card is missing Image component.");
-            return;
+            foreach (Transform child in dropZoneManager.recipeArea)
+            {
+                if (child == transform)
+                {
+                    isInRecipeArea = true;
+                    break;
+                }
+            }
         }
 
-        zoomCardImage.sprite = originalImage.sprite;
+        // Crear zoomCard como hijo de Canvas o recipeArea según corresponda
+        if (isInRecipeArea && recipeAreaZoomCardPrefab != null)
+        {
+            zoomCard = Instantiate(recipeAreaZoomCardPrefab, Canvas);
+        }
+        else
+        {
+            zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+        }
+
+        zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
+
+        zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
+
         zoomCard.transform.SetAsLastSibling();
 
         RectTransform rectTransform = zoomCard.GetComponent<RectTransform>();
@@ -89,29 +103,17 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             Vector3 centerPosition = (worldCorners[0] + worldCorners[2]) / 2; // Promedio de la esquina inferior izquierda y la esquina superior derecha
 
-            // Verificar si la carta está en la recipe area
-            bool isInRecipeArea = false;
-            if (dropZoneManager != null && dropZoneManager.recipeArea != null)
-            {
-                foreach (Transform child in dropZoneManager.recipeArea)
-                {
-                    if (child == transform)
-                    {
-                        isInRecipeArea = true;
-                        break;
-                    }
-                }
-            }
-
             if (isInRecipeArea)
             {
-                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y + 10, 0); // Ajustar hacia abajo para la recipe area
+                rectTransform.pivot = new Vector2(0.5f, 0.5f);  // Ajustar pivote si es necesario
+                rectTransform.position = new Vector3(centerPosition.x, centerPosition.y - 20, centerPosition.z); // Ajustar un poco más abajo
             }
             else
             {
                 centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y - 160, 0); // Ajustar hacia arriba para otras áreas
+                rectTransform.pivot = new Vector2(0.5f, 0.5f);  // Restaurar el pivote original
+                rectTransform.position = centerPosition;
             }
-            rectTransform.position = centerPosition;
 
             // Añadir un Debug.Log para ver la posición del clon
             Debug.Log($"ZoomCard created at position: {rectTransform.position}");

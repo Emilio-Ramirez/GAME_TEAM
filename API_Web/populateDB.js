@@ -116,10 +116,10 @@ const recetas = [
     es_principal: false,
     belongs_to_level: 2,
     ingredientes: {
-      side: ['Rice', 'Cranberry Sauce'],
-      verduras: ['Salad', 'Asparagus'],
+      side: ['Rice', 'Potatoes'],
+      verduras: ['Salad', 'Brussels Sprouts'],
       protein: ['Ham'],
-      utils: ['Tongs', 'Pot']
+      utils: ['Wooden Spoon', 'Pot']
     }
   },
   {
@@ -150,7 +150,7 @@ const recetas = [
       side: ['Lemon', 'Heavy Cream'],
       verduras: ['Rosemary', 'Salad'],
       protein: ['Salmon'],
-      utils: ['Pan']
+      utils: ['Pan', 'Mixer']
     }
   },
   {
