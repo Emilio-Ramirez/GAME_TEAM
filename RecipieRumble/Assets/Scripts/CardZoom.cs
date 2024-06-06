@@ -79,13 +79,13 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (isInRecipeArea && recipeAreaZoomCardPrefab != null)
         {
             zoomCard = Instantiate(recipeAreaZoomCardPrefab, Canvas);
+            zoomCard.transform.localScale = new Vector3(2.0f, 1.5f, 1.5f);  // Hacer la imagen más larga en el eje Y
         }
         else
         {
             zoomCard = Instantiate(ZoomCardPrefab, Canvas);
+            zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
         }
-
-        zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);  // Escalar ligeramente para efecto de zoom
 
         zoomCardCanvasGroup = zoomCard.GetComponent<CanvasGroup>();
 
