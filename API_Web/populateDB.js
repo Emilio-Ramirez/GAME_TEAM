@@ -68,14 +68,14 @@ const recetas = [
       side: ['Bread'],
       verduras: ['Feta Cheese', 'Cherry Tomatoes'],
       protein: ['Chicken'],
-      utils: ['Tongs', 'Grill']
+      utils: ['Grill', 'Tongs']
     }
   },
   {
     es_principal: false,
     belongs_to_level: 1,
     ingredientes: {
-      side: ['Olives'],
+      side: ['Olives','Bread'],
       verduras: ['Cherry Tomatoes', 'Salad'],
       protein: ['Chicken'],
       utils: ['Pan', 'Tongs']
@@ -87,7 +87,7 @@ const recetas = [
     ingredientes: {
       side: ['Olives'],
       verduras: ['Salad', 'Feta Cheese'],
-      protein: [],
+      protein: ['Jam'],
       utils: ['Grill', 'Pan']
     }
   },
