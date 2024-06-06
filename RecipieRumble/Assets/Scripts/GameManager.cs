@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     public GameObject recipeCardPrefab;
     public Transform playerCardParent;
     public Transform recipeCardParent;
-    public string apiUrl = "http://localhost:3000/cartas";
-    public string apiRecipeUrl = "http://localhost:3000/recetas";
+    public string apiUrl = "http://localhost:3000/cartas?eventoId=1"; 
+
+    public string apiRecipeUrl = "http://localhost:3000/recetas?eventoId=1";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
     public Button deckButton;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
     IEnumerator GetRecipes()
     {
