@@ -1,5 +1,78 @@
 # **Recipe Rumble**
 
+## Installation Guide
+
+1. **Clone the Repository**
+
+Clone the repository using HTTPS or SSH:
+
+```
+git clone https://github.com/your-username/recipe-rumble.git
+```
+
+2. **Navigate to the Project Directory**
+
+```
+cd recipe-rumble
+```
+
+3. **Run the Node Server**
+
+   1. Navigate to the API_WEB directory:
+      ```
+      cd api_web
+      ```
+
+   2. Create the `.env` file and add the required environment variables:
+      ```
+      touch .env
+      ```
+
+      Add the following variables to the `.env` file:
+      ```
+      DB_HOST=your_database_host
+      DB_PORT=your_database_port
+      DB_USERNAME=your_database_username
+      DB_PASSWORD=your_database_password
+      DB_DATABASE=your_database_name
+      API_PORT=3000
+      ```
+
+   3. Install the dependencies and start the server:
+      ```
+      npm install
+      npm start
+      ```
+      Make sure not to close the terminal window.
+
+4. **Run the Game**
+
+   1. Open Unity Hub.
+   2. Click on the "Add" button in the top right corner of the screen.
+   3. Select the "RecipeRumble" folder from the project directory.
+   4. Click "Open" to open the project in Unity.
+   5. In the Unity Project window, navigate to the "Scenes" folder and open the "principal menu" scene.
+   6. Click the "Play" button to start the game.
+
+The game should now be running, and you can interact with it. Make sure to follow any additional instructions or documentation provided for the game.
+
+## Inside the event
+
+- Currently the only event with full functionality is "Picnic" event . Once in picnic event you can see there are several buttons. The start button shows the game. The deck button cannot be used if the start button is not pressed. We also provided the arrows button which shows the 4 ingridient combination you can make in the game(this button is enabled throughout the entire game). And finally the menu button which leads you to the game menu.
+
+- Once you start playing, there will be 3 parts, the panel closest to the keyboard is your hand. You need to drag the cards to the middle part of the game where the white containers are. This containers have limited tuns before being descarted. The first container starting from the left hand has 1 tun available and the truns inrease by one endind with the right hand container which has 4 turns available.
+
+- A turn is defined by the pressed deck button which you can find it in the lower left corner of the screen. This button is enabled if you drag and drop a card in the containers or if you change a card from one container to another.
+
+- The cards can only move throughout the middle white containers, but they cannot be droped in the player hand again.
+
+- The combinations must have the 4 types of ingridients (1 protin, 1 side, 1 utensil and 1 vegetable). These combinatios can aldo have alternative ingridients so you can add more points.
+
+- The score can be found in the upper right corner and is calculated with the addition of nutritional value written in the cards.
+
+- You have 5 minutes to make the most combinations possible, you can consulte how much time you have left in the upper right corner.
+
+
 ## _Game Design Document_
 **Team:** Lisette Melo Reyes, Sebastián Borjas Lizardi and Emilio Ramírez Mascarúa
 

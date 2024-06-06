@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -26,37 +25,17 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-    void Start()
-    {
-        dropZone = GameObject.Find("DropZone");
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvas == null)
-        {
-            Debug.LogError("Canvas is null. Please assign it in Awake or ensure it's correctly found.");
-            return;
-        }
-
-        if (cardZoom == null)
-        {
-            Debug.LogError("CardZoom component is missing or not attached to this object.");
-            return;
-        }
-
-        if (canvasGroup == null)
-        {
-            Debug.LogError("CanvasGroup is null. A CanvasGroup component is required.");
-            return;
-        }
-
         StartParent = transform.parent;
         StartPosition = transform.position;
         IsDragging = true;
         transform.SetParent(canvas, true);
 
-        cardZoom.SetDragging(true);
+        if (cardZoom != null)
+        {
+            cardZoom.SetDragging(true);
+        }
         canvasGroup.blocksRaycasts = false;
     }
 
@@ -75,16 +54,32 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             DropZoneManager dropZoneManager = dropZone.GetComponentInParent<DropZoneManager>();
             if (dropZoneManager != null)
             {
-                int dropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, dropZone);
-                if (dropZoneIndex != -1 && dropZoneManager.cardsInDropZone[dropZoneIndex].Count == 0)
+                int fromDropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, StartParent.gameObject);
+                int toDropZoneIndex = System.Array.IndexOf(dropZoneManager.dropZones, dropZone);
+                
+                // Verifica si la dropzone destino ya tiene una carta
+                if (dropZoneManager.cardsInDropZone[toDropZoneIndex].Count > 0)
                 {
-                    transform.SetParent(dropZone.transform, true);
-                    transform.localPosition = Vector3.zero;
-                    dropZoneManager.OnCardDropped(dropZoneIndex, gameObject);
+                    Debug.LogWarning($"DropZone {toDropZoneIndex} already has a card. Cannot move the card.");
+                    ReturnToStart();
                 }
                 else
                 {
-                    ReturnToStart();
+                    if (fromDropZoneIndex != -1 && toDropZoneIndex != -1 && fromDropZoneIndex != toDropZoneIndex)
+                    {
+                        dropZoneManager.MoveCardBetweenDropZones(gameObject, fromDropZoneIndex, toDropZoneIndex);
+                    }
+                    else
+                    {
+                        dropZoneManager.OnCardDropped(toDropZoneIndex, gameObject);
+                    }
+
+                    // Add a null check for dropZone before accessing its transform
+                    if (dropZone != null)
+                    {
+                        transform.SetParent(dropZone.transform, true);
+                        transform.localPosition = Vector3.zero;
+                    }
                 }
             }
         }
@@ -121,7 +116,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Card on collision!!");
         if (collision.gameObject.CompareTag("DropZone"))
         {
             IsOverDropZone = false;

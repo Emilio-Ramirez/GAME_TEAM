@@ -5,21 +5,37 @@ using UnityEngine.UI;
 
 public class DropZoneManager : MonoBehaviour
 {
+    public static DropZoneManager Instance { get; private set; }
+
     public GameObject dropZonePrefab;
     public GameObject[] dropZones;
     public int numberOfDropZones = 4;
     public int[] turnsLeft;
-    public int[] initialTurns;  // Almacenar los turnos iniciales
+    public int[] initialTurns;
     public List<GameObject>[] cardsInDropZone;
-    public Transform playerArea; // Área del jugador
-    public Transform recipeArea; // Área de recetas
-    public Button startButton; // Botón de inicio
+    public Transform playerArea;
+    public Transform recipeArea;
+    public Button startButton;
+    public Button drawButton;
+    public Deck deck; // Referencia al script Deck
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
         dropZones = new GameObject[numberOfDropZones];
         turnsLeft = new int[numberOfDropZones];
-        initialTurns = new int[numberOfDropZones];  // Inicializar el array de turnos iniciales
+        initialTurns = new int[numberOfDropZones];
         cardsInDropZone = new List<GameObject>[numberOfDropZones];
         Vector3 centerPosition = new Vector3(0, 0, 0);
 
@@ -28,59 +44,52 @@ public class DropZoneManager : MonoBehaviour
             dropZones[i] = Instantiate(dropZonePrefab, transform);
             dropZones[i].transform.position = new Vector3(centerPosition.x, centerPosition.y + (i * 2.0f - numberOfDropZones + 1) * 50, centerPosition.z);
             turnsLeft[i] = i + 1;
-            initialTurns[i] = turnsLeft[i];  // Guardar los turnos iniciales
+            initialTurns[i] = turnsLeft[i];
             cardsInDropZone[i] = new List<GameObject>();
 
             Collider2D collider = dropZones[i].AddComponent<BoxCollider2D>();
             collider.isTrigger = true;
-            dropZones[i].SetActive(false);  // Desactivar las zonas de entrega inicialmente
-            Debug.Log($"DropZone {i} created with {turnsLeft[i]} turns left.");
+            dropZones[i].SetActive(false);
         }
 
-        // Asignar el método OnStartButtonPressed al evento onClick del botón
         if (startButton != null)
         {
             startButton.onClick.AddListener(OnStartButtonPressed);
         }
 
-        // Asegurarse de que la área de recetas está desactivada inicialmente
+        if (drawButton != null)
+        {
+            drawButton.onClick.AddListener(OnDrawButtonPressed);
+        }
+
         if (recipeArea != null)
         {
             recipeArea.gameObject.SetActive(false);
         }
 
-        // Asegurarse de que la área del jugador está desactivada inicialmente
         if (playerArea != null)
         {
             playerArea.gameObject.SetActive(false);
         }
     }
 
-    
-
     void OnStartButtonPressed()
     {
-        Debug.Log("Start Button Pressed");
-
-        // Activar el área de recetas
         if (recipeArea != null)
         {
             recipeArea.gameObject.SetActive(true);
         }
 
-        // Activar el área del jugador
         if (playerArea != null)
         {
             playerArea.gameObject.SetActive(true);
         }
 
-        // Activar las zonas de entrega
         for (int i = 0; i < numberOfDropZones; i++)
         {
             dropZones[i].SetActive(true);
         }
 
-        // Ocultar el botón de inicio después de presionarlo
         if (startButton != null)
         {
             startButton.gameObject.SetActive(false);
@@ -89,74 +98,155 @@ public class DropZoneManager : MonoBehaviour
 
     public void OnDrawButtonPressed()
     {
-        Debug.Log("Draw Button Pressed");
+        Debug.Log("Draw button pressed.");
+
+        MoveCardsLeft();
+
         for (int i = 0; i < numberOfDropZones; i++)
         {
-            Debug.Log($"Checking Drop Zone {i} - Turns Left: {turnsLeft[i]}, Card Count: {cardsInDropZone[i].Count}");
             if (cardsInDropZone[i].Count > 0)
             {
                 turnsLeft[i]--;
-                Debug.Log($"Turns decremented in Drop Zone {i}. New Turns Left: {turnsLeft[i]}");
                 if (turnsLeft[i] <= 0)
                 {
-                    foreach (GameObject card in cardsInDropZone[i])
+                    turnsLeft[i] = initialTurns[i];
+                }
+                Debug.Log($"DropZone {i} turns left: {turnsLeft[i]}");
+            }
+        }
+        UpdateCardCount();
+    }
+
+    public void MoveCardsLeft()
+    {
+        for (int i = 0; i < numberOfDropZones; i++)
+        {
+            if (cardsInDropZone[i].Count > 0)
+            {
+                for (int j = cardsInDropZone[i].Count - 1; j >= 0; j--)
+                {
+                    GameObject card = cardsInDropZone[i][j];
+                    if (card == null)
+                    {
+                        cardsInDropZone[i].RemoveAt(j);
+                        continue;
+                    }
+
+                    if (i == 0)
                     {
                         Destroy(card);
+                        cardsInDropZone[i].RemoveAt(j);
+                        Debug.Log($"Card destroyed in DropZone {i}");
                     }
-                    cardsInDropZone[i].Clear();
-                    turnsLeft[i] = initialTurns[i];  // Resetear a los turnos iniciales específicos
-                    Debug.Log($"Cards discarded and turns reset in Drop Zone {i}");
+                    else
+                    {
+                        cardsInDropZone[i - 1].Add(card);
+                        card.transform.SetParent(dropZones[i - 1].transform, false);
+                        cardsInDropZone[i].RemoveAt(j);
+                        Debug.Log($"Card moved from DropZone {i} to DropZone {i - 1}");
+                    }
                 }
             }
         }
     }
 
     public void OnCardDropped(int dropZoneIndex, GameObject card)
+{
+    // Verificar si ya hay una carta en la dropzone
+    if (cardsInDropZone[dropZoneIndex].Count > 0)
     {
-        Debug.Log($"Card dropped in Drop Zone {dropZoneIndex}");
-        if (cardsInDropZone[dropZoneIndex].Count == 0) // Asegurarse de que no haya cartas ya en la zona
+        Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
+        ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
+        return;
+    }
+
+    cardsInDropZone[dropZoneIndex].Add(card);
+    card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
+    UpdateCardCount();
+    Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
+}
+
+private void ReturnToStart(GameObject card)
+{
+    // Devuelve la carta a su posición inicial
+    DragDrop dragDrop = card.GetComponent<DragDrop>();
+    if (dragDrop != null)
+    {
+        card.transform.position = dragDrop.StartPosition;
+        card.transform.SetParent(dragDrop.StartParent, true);
+    }
+}
+    public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
+    {
+        Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
+        
+        // Verificar si la zona de destino ya tiene una carta
+        if (cardsInDropZone[toDropZoneIndex].Count > 0)
         {
-            cardsInDropZone[dropZoneIndex].Add(card);
-            Debug.Log($"Card added to Drop Zone {dropZoneIndex}, new count: {cardsInDropZone[dropZoneIndex].Count}");
+            Debug.LogWarning($"DropZone {toDropZoneIndex} already has a card. Cannot move the card.");
+            return;
+        }
+
+        if (cardsInDropZone[fromDropZoneIndex].Remove(card))
+        {
+            cardsInDropZone[toDropZoneIndex].Add(card);
+            card.transform.SetParent(dropZones[toDropZoneIndex].transform, false);
+            card.transform.SetAsLastSibling();
+            ResetTurns(fromDropZoneIndex, toDropZoneIndex);
+
+            // Indicar que una carta ha sido movida
+            if (deck != null)
+            {
+                deck.CardMoved();
+            }
+            Debug.Log("Card moved successfully.");
         }
         else
         {
-            Debug.Log($"Drop Zone {dropZoneIndex} already has a card. Cannot add another.");
+            Debug.Log("Failed to move card.");
         }
+
+        UpdateCardCount();
     }
 
-    public void RemoveCardFromDropZone(int dropZoneIndex, GameObject card)
+    private void ResetTurns(int fromDropZoneIndex, int toDropZoneIndex)
     {
-        Debug.Log($"Removing card from Drop Zone {dropZoneIndex}");
-        if (cardsInDropZone[dropZoneIndex].Remove(card))
-        {
-            card.transform.SetParent(playerArea, false);
-            Debug.Log($"Card removed from Drop Zone {dropZoneIndex} and moved to Player Area");
-        }
-        else
-        {
-            Debug.Log($"Card not found in Drop Zone {dropZoneIndex}");
-        }
+        turnsLeft[fromDropZoneIndex] = initialTurns[fromDropZoneIndex];
+        turnsLeft[toDropZoneIndex] = initialTurns[toDropZoneIndex];
+        Debug.Log($"Turns reset: DropZone {fromDropZoneIndex} -> {turnsLeft[fromDropZoneIndex]}, DropZone {toDropZoneIndex} -> {turnsLeft[toDropZoneIndex]}");
     }
 
-    public void ReturnCardToDropZone(int dropZoneIndex, GameObject card)
+    public void UpdateCardCount()
     {
-        Debug.Log($"Returning card to Drop Zone {dropZoneIndex}");
-        if (cardsInDropZone[dropZoneIndex].Count == 0) // Asegurarse de que no haya cartas ya en la zona
+        int cardCount = 0;
+        foreach (var cardList in cardsInDropZone)
         {
-            card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
-            cardsInDropZone[dropZoneIndex].Add(card);
-            Debug.Log($"Card returned to Drop Zone {dropZoneIndex}, new count: {cardsInDropZone[dropZoneIndex].Count}");
+            cardList.RemoveAll(card => card == null);
+            cardCount += cardList.Count;
         }
-        else
+
+        if (cardCount == 4)
         {
-            Debug.Log($"Drop Zone {dropZoneIndex} already has a card. Cannot add another.");
+            GameManager.Instance.CheckRecipeCombination();
         }
+        Debug.Log($"Total cards in drop zones: {cardCount}");
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void RegisterTurn()
     {
-        GameObject card = other.gameObject;
-        Debug.Log($"Card detected in Drop Zone area: {card.name}");
+        Debug.Log("Registering turn.");
+        for (int i = 0; i < numberOfDropZones; i++)
+        {
+            if (cardsInDropZone[i].Count > 0)
+            {
+                turnsLeft[i]--;
+                if (turnsLeft[i] <= 0)
+                {
+                    turnsLeft[i] = initialTurns[i];
+                }
+                Debug.Log($"DropZone {i} turns left: {turnsLeft[i]}");
+            }
+        }
+        UpdateCardCount();
     }
 }

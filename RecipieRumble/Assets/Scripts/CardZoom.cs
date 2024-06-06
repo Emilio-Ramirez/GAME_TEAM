@@ -105,7 +105,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             if (isInRecipeArea)
             {
-                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y + 200, 0); // Ajustar hacia abajo para la recipe area
+                centerPosition -= new Vector3(0, originalRectTransform.sizeDelta.y + 10, 0); // Ajustar hacia abajo para la recipe area
             }
             else
             {
