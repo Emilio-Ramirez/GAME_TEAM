@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
     public Button deckButton;
 
     private List<Card> cards = new List<Card>();
-    private List<Recipe> recipes = new List<Recipe>();
-    private HashSet<int> validCardIdsForRecipeArea = new HashSet<int> { 1, 2, 3, 4 };
-    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46};
+    public List<Recipe> recipes = new List<Recipe>();  // Hacer esta lista pública
+    private HashSet<int> validCardIdsForRecipeArea = new HashSet<int>();
+    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int>();
     private int totalScore = 0;
 
     void Awake()
@@ -37,6 +37,29 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        LoadValidCardIds();
+    }
+
+    void LoadValidCardIds()
+    {
+        Sprite[] picnicSprites = Resources.LoadAll<Sprite>("Sprites/Picnic");
+        foreach (Sprite sprite in picnicSprites)
+        {
+            if (int.TryParse(sprite.name, out int id))
+            {
+                validCardIdsForPlayerArea.Add(id);
+            }
+        }
+
+        Sprite[] eventDishesSprites = Resources.LoadAll<Sprite>("Sprites/Picnic/EventDishes");
+        foreach (Sprite sprite in eventDishesSprites)
+        {
+            if (int.TryParse(sprite.name, out int id))
+            {
+                validCardIdsForRecipeArea.Add(id);
+            }
         }
     }
 
@@ -75,7 +98,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 
     IEnumerator GetRecipes()
     {

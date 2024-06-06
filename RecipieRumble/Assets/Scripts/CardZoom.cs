@@ -1,6 +1,8 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
@@ -41,7 +43,11 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        DestroyZoomCard();
+        // Solo destruir la zoomCard si realmente no está en hover
+        if (!isDragging && !isCardOverDropZone)
+        {
+            DestroyZoomCard();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -107,6 +113,7 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 rectTransform.pivot = new Vector2(0.5f, 0.5f);  // Ajustar pivote si es necesario
                 rectTransform.position = new Vector3(centerPosition.x, centerPosition.y - 20, centerPosition.z); // Ajustar un poco más abajo
+                UpdateIngredientsText();  // Actualizar el texto de ingredientes
             }
             else
             {
@@ -154,6 +161,28 @@ public class CardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (overDropZone)
         {
             DestroyZoomCard();
+        }
+    }
+
+    private void UpdateIngredientsText()
+    {
+        if (zoomCard != null)
+        {
+            TextMeshProUGUI ingredientsText = zoomCard.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (ingredientsText != null)
+            {
+                int cardId;
+                if (int.TryParse(gameObject.name, out cardId))
+                {
+                    Recipe recipe = GameManager.Instance.recipes.FirstOrDefault(r => r.id_receta == cardId);
+                    if (recipe != null)
+                    {
+                        string ingredients = string.Join(", ", recipe.ingredientes.SelectMany(g => g.Value).ToList());
+                        ingredientsText.text = ingredients;
+                    }
+                }
+            }
         }
     }
 }

@@ -2040,8 +2040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b13e2d1ee1c58947883c9cd3210d7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: 04c0f8014a7689c4792e3a797c36ce3a, type: 3}
-  canvas: {fileID: 0}
+  videoClip: {fileID: 32900000, guid: 2236d863378bc9f4982b35f335c3f00f, type: 3}
+  canvas: {fileID: 208390697}
 --- !u!328 &1593219739
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -2050,7 +2050,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593219736}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 04c0f8014a7689c4792e3a797c36ce3a, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 2236d863378bc9f4982b35f335c3f00f, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2185,6 +2185,7 @@ MonoBehaviour:
   apiRecipeUrl: http://localhost:3000/recetas
   dropZoneManager: {fileID: 1216164501}
   scoreText: {fileID: 1260460895}
+  deckButton: {fileID: 1267061987}
 --- !u!82 &1898345446
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2307,6 +2308,10 @@ PrefabInstance:
     - target: {fileID: 2173588862765458801, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
       propertyPath: m_Color.a
       value: 0.011764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173588862765458801, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4916790905920789709, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
       propertyPath: m_Pivot.x
