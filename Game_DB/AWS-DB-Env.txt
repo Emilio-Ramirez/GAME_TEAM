@@ -1,0 +1,6 @@
+DB_HOST=recipe-db.clm20sesasin.us-east-2.rds.amazonaws.com
+DB_USER=admin
+DB_PASS=password123
+DB_NAME=Recipe_Rumble
+DB_PORT=3306
+API_PORT=3000
