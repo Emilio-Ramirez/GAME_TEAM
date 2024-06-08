@@ -145,7 +145,9 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private IEnumerator FetchAndDisplayIngredients(int recipeId)
     {
-        string url = $"{apiRecipeUrl}?id={recipeId}&belongs_to_level=1"; // Filtrando por recipeId y nivel 1
+        // Filtrar por el nivel correcto basado en la lógica de tu aplicación
+        int level = 1; // Ajusta el nivel según tu lógica o pasa como parámetro
+        string url = $"{apiRecipeUrl}?id={recipeId}&belongs_to_level={level}";
 
         Debug.Log($"Fetching ingredients for recipeId {recipeId} from URL: {url}");
 
@@ -168,7 +170,8 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
                 if (recipes.Count > 0)
                 {
                     RecipeData recipe = recipes[0];
-                
+                    Debug.Log($"Receta nivel: {recipe.belongs_to_level}"); // Log para asegurar que el nivel es correcto
+
                     // Formatear los ingredientes
                     string ingredientsText = $"<b>Ingredientes:</b>\n";
                     if (recipe.ingredientes.ContainsKey("protein"))
