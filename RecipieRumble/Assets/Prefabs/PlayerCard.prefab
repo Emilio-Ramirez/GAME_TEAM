@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 7805645536764894116}
   - component: {fileID: -1718560944219334461}
   - component: {fileID: 5755800129441518868}
-  - component: {fileID: 4446416040704652064}
+  - component: {fileID: 8923271834386658075}
   m_Layer: 8
   m_Name: PlayerCard
   m_TagString: Untagged
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DropZone: {fileID: 8171552711498485673}
---- !u!114 &4446416040704652064
+--- !u!114 &8923271834386658075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8171552711498485673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff94aa51c66511247842247eeeb14490, type: 3}
+  m_Script: {fileID: 11500000, guid: ebeadc2c62cb6c246b6ca9e9d2e62076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ZoomCardPrefab: {fileID: 8171552711498485673}

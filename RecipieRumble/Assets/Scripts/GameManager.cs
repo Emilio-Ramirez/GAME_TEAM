@@ -15,12 +15,14 @@ public class GameManager : MonoBehaviour
     public GameObject recipeCardPrefab;
     public Transform playerCardParent;
     public Transform recipeCardParent;
-    public string apiUrl = "http://localhost:3000/cartas?eventoId=1"; 
-
-    public string apiRecipeUrl = "http://localhost:3000/recetas?eventoId=1";
+    public string apiUrl = "http://localhost:3000/cartas"; 
+    public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
     public Button deckButton;
+    
+    public GameObject fireworksPrefab; // Añadir una referencia al prefab de fuegos artificiales
+    public Canvas canvas; // Añadir una referencia al Canvas
 
     private List<Card> cards = new List<Card>();
     public List<Recipe> recipes = new List<Recipe>();  // Hacer esta lista pública
@@ -114,7 +116,17 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+                List<Recipe> allRecipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+                
+                // Filtrar las recetas que pertenecen a belongs_to_level 1
+                recipes = allRecipes.Where(r => r.belongs_to_level == 1).ToList();
+                
+                // Asignar id_receta como nombre de la receta y mostrar ingredientes
+                foreach (var recipe in recipes)
+                {
+                    recipe.nombre = recipe.id_receta.ToString();
+                    Debug.Log($"Receta ID: {recipe.id_receta}, Ingredientes: {string.Join(", ", recipe.ingredientes.SelectMany(ig => ig.Value))}");
+                }
             }
         }
     }
@@ -359,6 +371,16 @@ public class GameManager : MonoBehaviour
             DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
         }
 
+        // Instanciar fuegos artificiales como hijo del Canvas y centrarlos
+        if (fireworksPrefab != null && canvas != null)
+        {
+            GameObject fireworks = Instantiate(fireworksPrefab, canvas.transform);
+            RectTransform rectTransform = fireworks.GetComponent<RectTransform>();
+            rectTransform.localPosition = Vector3.zero; // Centrar en el Canvas
+            rectTransform.localScale = Vector3.one; // Asegurar que el tamaño sea correcto
+            rectTransform.SetAsLastSibling(); // Asegurar que los fuegos artificiales estén al frente
+        }
+
         ShuffleAndAddNewCardsToPlayerArea();
     }
 }
@@ -405,5 +427,6 @@ public class Recipe
     public string nombre;
     public int valor_nutrimental;
     public Dictionary<string, List<string>> ingredientes;
+    public int belongs_to_level;
     public object id_libro;
 }

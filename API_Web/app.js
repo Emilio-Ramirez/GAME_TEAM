@@ -201,10 +201,16 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
 
 app.get('/recetas', async (req, res) => {
   try {
-    const { eventoId } = req.query;
+    const { eventoId, id } = req.query; // Obtener ambos parámetros de consulta
 
-    // If eventoId is provided, filter recetas by that event ID
-    const whereCondition = eventoId ? { eventoId: eventoId } : {};
+    // Construir condición de filtro según los parámetros recibidos
+    let whereCondition = {};
+    if (eventoId) {
+      whereCondition.eventoId = eventoId;
+    }
+    if (id) {
+      whereCondition.id_receta = id;
+    }
 
     const recetas = await Receta.findAll({ where: whereCondition });
     res.json(recetas);

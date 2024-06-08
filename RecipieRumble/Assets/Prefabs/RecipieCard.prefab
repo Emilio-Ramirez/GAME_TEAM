@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3451295432892669810}
   - component: {fileID: 7805645536764894116}
   - component: {fileID: -1718560944219334461}
-  - component: {fileID: -1683494228009328084}
+  - component: {fileID: 4519903714866665628}
   m_Layer: 8
   m_Name: RecipieCard
   m_TagString: Untagged
@@ -150,7 +150,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &-1683494228009328084
+--- !u!114 &4519903714866665628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,8 +159,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8171552711498485673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff94aa51c66511247842247eeeb14490, type: 3}
+  m_Script: {fileID: 11500000, guid: da046b54318e9254293483c130ba8581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZoomCardPrefab: {fileID: 8171552711498485673}
-  recipeAreaZoomCardPrefab: {fileID: 6537135731154562227, guid: 59c70ca1e004ac14aa8e8d8060c9b0db, type: 3}
+  recipeAreaImagePrefab: {fileID: 6537135731154562227, guid: 59c70ca1e004ac14aa8e8d8060c9b0db, type: 3}
+  apiRecipeUrl: http://localhost:3000/recetas

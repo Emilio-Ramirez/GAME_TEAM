@@ -800,6 +800,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1267061990}
     - target: {fileID: 8534436962341810690, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
+      propertyPath: cardPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534436962341810690, guid: 1c8b01ba7126a6142831465ac88b8545, type: 3}
       propertyPath: drawButton
       value: 
       objectReference: {fileID: 1267061987}
@@ -1197,7 +1201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Deck
+  m_text: Turn
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
   m_sharedMaterial: {fileID: -1917108666738320207, guid: 1205b037da5bc4868a19f3179a372cdd, type: 2}
@@ -2186,6 +2190,9 @@ MonoBehaviour:
   dropZoneManager: {fileID: 1216164501}
   scoreText: {fileID: 1260460895}
   deckButton: {fileID: 1267061987}
+  fireworksPrefab: {fileID: 3610403687711943073, guid: bb31e13bebe66e14b939970966d16be6, type: 3}
+  canvas: {fileID: 208390697}
+  recipes: []
 --- !u!82 &1898345446
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2396,6 +2403,10 @@ PrefabInstance:
     - target: {fileID: 9119187200113938371, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
       propertyPath: m_Name
       value: RecipieArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119187200113938371, guid: 3329249a34f9aa444af81cfa9b5d04d1, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
