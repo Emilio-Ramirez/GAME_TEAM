@@ -17,6 +17,10 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
     private Transform Canvas;
     private GameObject zoomCard;
     private bool isPointerInside = false;
+    private const int LEVEL = 1; // Nivel fijo
+
+    private static Dictionary<int, RecipeData> level1Recipes = new Dictionary<int, RecipeData>(); // Almacena recetas del nivel 1
+    private static HashSet<int> assignedRecipeIds = new HashSet<int> { 1, 2, 3, 4 }; // Almacena los IDs de recetas asignadas
 
     // Define colors for each ingredient type
     private readonly Color proteinColor = new Color32(200, 88, 77, 255); // Red
@@ -34,8 +38,53 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
             return;
         }
 
-        // Asignar el recipeId basado en la posición de la carta en el padre
-        AssignRecipeId();
+        // Cargar recetas del nivel 1 si no están ya cargadas
+        if (level1Recipes.Count == 0)
+        {
+            StartCoroutine(LoadLevel1Recipes());
+        }
+        else
+        {
+            // Asignar el recipeId basado en la posición de la carta en el padre
+            AssignRecipeId();
+        }
+    }
+
+    private IEnumerator LoadLevel1Recipes()
+    {
+        string url = $"{apiRecipeUrl}?belongs_to_level={LEVEL}";
+
+        Debug.Log($"Fetching level {LEVEL} recipes from URL: {url}");
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, URL: {url}");
+            }
+            else
+            {
+                string jsonResponse = webRequest.downloadHandler.text;
+                Debug.Log($"Response for level {LEVEL} recipes: {jsonResponse}");
+
+                List<RecipeData> recipes = JsonConvert.DeserializeObject<List<RecipeData>>(jsonResponse);
+
+                foreach (var recipe in recipes)
+                {
+                    if (recipe.belongs_to_level == LEVEL)
+                    {
+                        level1Recipes[recipe.id_receta] = recipe;
+                    }
+                }
+
+                Debug.Log($"Loaded {level1Recipes.Count} recipes for level {LEVEL}");
+
+                // Asignar el recipeId basado en la posición de la carta en el padre
+                AssignRecipeId();
+            }
+        }
     }
 
     private void AssignRecipeId()
@@ -48,7 +97,14 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
         }
 
         int siblingIndex = transform.GetSiblingIndex();
-        recipeId = siblingIndex + 1; // Asignar el id_receta basado en la posición (index + 1)
+        recipeId = siblingIndex % 4 + 1; // Asignar el id_receta de manera cíclica entre 1 y 4
+
+        // Verificar si el recipeId ya ha sido asignado antes
+        if (!assignedRecipeIds.Contains(recipeId))
+        {
+            Debug.Log($"RecipeId {recipeId} ya fue asignado previamente, no se reasignará.");
+            return;
+        }
 
         Debug.Log($"Asignado recipeId {recipeId} a la carta en la posición {siblingIndex}");
     }
@@ -56,7 +112,7 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void OnPointerEnter(PointerEventData eventData)
     {
         isPointerInside = true;
-        if (zoomCard == null)
+        if (zoomCard == null && recipeId <= 4) // Solo crear la carta de zoom si el recipeId es válido
         {
             CreateZoomCard();
         }
@@ -130,8 +186,8 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
         // Re-enable raycasts after positioning
         //canvasGroup.blocksRaycasts = true;
 
-        // Fetch and display ingredients for the specific recipe
-        StartCoroutine(FetchAndDisplayIngredients(recipeId));
+        // Display ingredients for the specific recipe from the pre-loaded data
+        DisplayIngredients(recipeId);
     }
 
     private void DestroyZoomCard()
@@ -143,71 +199,44 @@ public class RecipeAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
         }
     }
 
-    private IEnumerator FetchAndDisplayIngredients(int recipeId)
+    private void DisplayIngredients(int recipeId)
     {
-        // Filtrar por el nivel correcto basado en la lógica de tu aplicación
-        int level = 1; // Ajusta el nivel según tu lógica o pasa como parámetro
-        string url = $"{apiRecipeUrl}?id={recipeId}&belongs_to_level={level}";
-
-        Debug.Log($"Fetching ingredients for recipeId {recipeId} from URL: {url}");
-
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        if (level1Recipes.TryGetValue(recipeId, out RecipeData recipe))
         {
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            // Formatear los ingredientes
+            string ingredientsText = $"<b>Ingredientes:</b>\n";
+            if (recipe.ingredientes.ContainsKey("protein"))
             {
-                Debug.LogError($"Error: {webRequest.error}, URL: {url}");
+                ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(proteinColor)}>Protein: {string.Join(", ", recipe.ingredientes["protein"])}</color>\n";
+            }
+            if (recipe.ingredientes.ContainsKey("side"))
+            {
+                ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(sideColor)}>Side: {string.Join(", ", recipe.ingredientes["side"])}</color>\n";
+            }
+            if (recipe.ingredientes.ContainsKey("verduras"))
+            {
+                ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(vegetableColor)}>Vegetable: {string.Join(", ", recipe.ingredientes["verduras"])}</color>\n";
+            }
+            if (recipe.ingredientes.ContainsKey("utils"))
+            {
+                ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(utensilsColor)}>Utensils: {string.Join(", ", recipe.ingredientes["utils"])}</color>\n";
+            }
+
+            Debug.Log($"Fetched ingredients for recipeId {recipeId}: {ingredientsText}");
+
+            TextMeshProUGUI ingredientsTextComponent = zoomCard.GetComponentInChildren<TextMeshProUGUI>();
+            if (ingredientsTextComponent != null)
+            {
+                ingredientsTextComponent.text = ingredientsText;
             }
             else
             {
-                string jsonResponse = webRequest.downloadHandler.text;
-                Debug.Log($"Response for recipeId {recipeId}: {jsonResponse}");
-
-                List<RecipeData> recipes = JsonConvert.DeserializeObject<List<RecipeData>>(jsonResponse);
-
-                // Suponiendo que solo hay una receta en la respuesta para el id específico
-                if (recipes.Count > 0)
-                {
-                    RecipeData recipe = recipes[0];
-                    Debug.Log($"Receta nivel: {recipe.belongs_to_level}"); // Log para asegurar que el nivel es correcto
-
-                    // Formatear los ingredientes
-                    string ingredientsText = $"<b>Ingredientes:</b>\n";
-                    if (recipe.ingredientes.ContainsKey("protein"))
-                    {
-                        ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(proteinColor)}>Protein: {string.Join(", ", recipe.ingredientes["protein"])}</color>\n";
-                    }
-                    if (recipe.ingredientes.ContainsKey("side"))
-                    {
-                        ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(sideColor)}>Side: {string.Join(", ", recipe.ingredientes["side"])}</color>\n";
-                    }
-                    if (recipe.ingredientes.ContainsKey("verduras"))
-                    {
-                        ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(vegetableColor)}>Vegetable: {string.Join(", ", recipe.ingredientes["verduras"])}</color>\n";
-                    }
-                    if (recipe.ingredientes.ContainsKey("utils"))
-                    {
-                        ingredientsText += $"<color=#{ColorUtility.ToHtmlStringRGBA(utensilsColor)}>Utensils: {string.Join(", ", recipe.ingredientes["utils"])}</color>\n";
-                    }
-
-                    Debug.Log($"Fetched ingredients for recipeId {recipeId}: {ingredientsText}");
-
-                    TextMeshProUGUI ingredientsTextComponent = zoomCard.GetComponentInChildren<TextMeshProUGUI>();
-                    if (ingredientsTextComponent != null)
-                    {
-                        ingredientsTextComponent.text = ingredientsText;
-                    }
-                    else
-                    {
-                        Debug.LogError("No TextMeshProUGUI component found in zoomCard.");
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"No recipes found for recipeId {recipeId}.");
-                }
+                Debug.LogError("No TextMeshProUGUI component found in zoomCard.");
             }
+        }
+        else
+        {
+            Debug.LogError($"No recipes found for recipeId {recipeId} or the recipe does not belong to level {LEVEL}.");
         }
     }
 }
