@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+// MODIF
 public class Timer : MonoBehaviour
 {
     public float totalTime = 60f;  // Tiempo total para el juego en segundos (1 minuto)

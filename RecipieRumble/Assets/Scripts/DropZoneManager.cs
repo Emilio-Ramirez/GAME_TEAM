@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// MODIF
 public class DropZoneManager : MonoBehaviour
 {
     public static DropZoneManager Instance { get; private set; }

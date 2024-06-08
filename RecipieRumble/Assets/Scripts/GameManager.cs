@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;  // Añadir esta línea
 using Newtonsoft.Json;
-
+//MODIF
 
 public class GameManager : MonoBehaviour
 {
