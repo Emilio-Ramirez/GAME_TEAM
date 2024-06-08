@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour
     private List<Card> cards = new List<Card>();
     private List<Recipe> recipes = new List<Recipe>();
     private HashSet<int> validCardIdsForRecipeArea = new HashSet<int> { 1, 2, 3, 4 };
-    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46};
+    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46, 47, 48 };
     private int totalScore = 0;
+    private Timer timer;
 
     void Awake()
     {
@@ -46,6 +47,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GetCards());
         StartCoroutine(GetRecipes());
         UpdateScoreUI();
+
+        timer = FindObjectOfType<Timer>();
+        if (timer == null)
+        {
+            Debug.LogError("No Timer component found in the scene.");
+        }
+
     }
 
     IEnumerator GetCards()
@@ -63,7 +71,19 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
+                List<Card> loadedCards = JsonHelper.FromJson<Card>(webRequest.downloadHandler.text).ToList();
+                // Modificación para evitar el error de conversión
+                cards = loadedCards.Select(card =>
+                {
+                    if (card.tipo == "Special")
+                    {
+                        return new SpecialCard(card.id_carta, card.nombre, card.valor_nutrimental, card.tipo, 1) as Card;
+                    }
+                    return card;
+                }).ToList();
+
+                Debug.Log(cards);
+
                 AddCardsToRecipeArea();
                 ShuffleAndAddNewCardsToPlayerArea();
             }
@@ -71,24 +91,24 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator GetRecipes()
-      {
-          Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
+    {
+        Debug.Log("Attempting to connect to URL: " + apiRecipeUrl);
 
-          using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
-          {
-              yield return webRequest.SendWebRequest();
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiRecipeUrl))
+        {
+            yield return webRequest.SendWebRequest();
 
-              if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-              {
-                  Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
-              }
-              else
-              {
-                  Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                  recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
-              }
-          }
-      }
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, URL: {apiRecipeUrl}");
+            }
+            else
+            {
+                Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
+                recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+            }
+        }
+    }
 
     void AddCardsToRecipeArea()
     {
@@ -185,6 +205,8 @@ public class GameManager : MonoBehaviour
 
         foreach (Card card in randomCards)
         {
+            Debug.Log("CARDS CARDS CARDS: " + card.id_carta);
+
             if (cardsAdded >= newCardsCount)
             {
                 break;
@@ -201,11 +223,13 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
                 continue;
             }
-
-            if (existingCardTypes.Contains(card.tipo))
+            if (card.tipo != "Special")
             {
-                Debug.LogWarning($"Skipping card with duplicate type: {card.tipo}");
-                continue;
+                if (existingCardTypes.Contains(card.tipo))
+                {
+                    Debug.LogWarning($"Skipping card with duplicate type: {card.tipo}");
+                    continue;
+                }
             }
 
             GameObject newCard = Instantiate(cardPrefab, playerCardParent);
@@ -234,13 +258,27 @@ public class GameManager : MonoBehaviour
 
             if (cardImage != null)
             {
-                string imagePath = $"Sprites/Picnic/{card.id_carta}";
+                string imagePath;
+                if (card.id_carta == 47 || card.id_carta == 48)
+                {
+                    imagePath = $"Sprites/SpecialCards/{card.id_carta}";
+
+                }
+                else
+                {
+                    imagePath = $"Sprites/Picnic/{card.id_carta}";
+                }
                 cardImage.sprite = Resources.Load<Sprite>(imagePath);
                 if (cardImage.sprite == null)
                 {
                     Debug.LogError($"Image not found for card: {imagePath}");
                 }
+                else
+                {
+                    Debug.Log($"Image FOUND FOUND FOUND for: {imagePath}");
+                }
             }
+
             else
             {
                 Debug.LogWarning("Failed to find Image component on the player card prefab.");
@@ -272,98 +310,140 @@ public class GameManager : MonoBehaviour
         }
     }
 
-public void CheckRecipeCombination()
-{
-    List<string> ingredientsInRecipeArea = new List<string>();
-    foreach (var dropZone in DropZoneManager.Instance.cardsInDropZone)
+    public void CheckRecipeCombination()
     {
-        foreach (GameObject cardObject in dropZone)
+        List<string> ingredientsInRecipeArea = new List<string>();
+        foreach (var dropZone in DropZoneManager.Instance.cardsInDropZone)
         {
-            string cardName = cardObject.name.ToLower();
-            ingredientsInRecipeArea.Add(cardName);
-            Debug.Log($"Added ingredient: {cardName}");
-        }
-    }
-
-    Debug.Log($"Ingredients in recipe area: {string.Join(", ", ingredientsInRecipeArea)}");
-
-    foreach (Recipe recipe in recipes)
-    {
-        Debug.Log($"Checking recipe ID: {recipe.id_receta}");
-        bool isMatch = true;
-        List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
-        int totalNutritionalValue = 0;
-
-        foreach (var ingredientGroup in recipe.ingredientes)
-        {
-            Debug.Log($"Checking ingredient group: {ingredientGroup.Key}");
-            bool groupMatched = false;
-
-            foreach (string ingredient in ingredientGroup.Value)
+            foreach (GameObject cardObject in dropZone)
             {
-                string lowerCaseIngredient = ingredient.ToLower();
-                if (remainingIngredients.Contains(lowerCaseIngredient))
+                string cardName = cardObject.name.ToLower();
+                ingredientsInRecipeArea.Add(cardName);
+                Debug.Log($"Added ingredient: {cardName}");
+                if (cardName == "points" || cardName == "time")
                 {
-                    Debug.Log($"Found ingredient: {lowerCaseIngredient}");
 
-                    // Buscar la carta correspondiente para obtener el valor nutrimental
-                    var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
-                    if (card != null)
+                    Debug.Log($" OBJOBJOBJOBJOBJOBJOBJOBJO: {cardObject}");
+                    SpecialAbilityUse(cardObject, cardName);
+                    Debug.Log($"Used Special HabilityYYYYYYYYYY");
+                    Destroy(cardObject);
+                    Debug.Log("Card DESTROYEDDDDDDDD");
+
+
+                }
+            }
+        }
+
+        Debug.Log($"Ingredients in recipe area: {string.Join(", ", ingredientsInRecipeArea)}");
+
+        foreach (Recipe recipe in recipes)
+        {
+            Debug.Log($"Checking recipe ID: {recipe.id_receta}");
+            bool isMatch = true;
+            List<string> remainingIngredients = new List<string>(ingredientsInRecipeArea);
+            int totalNutritionalValue = 0;
+
+            foreach (var ingredientGroup in recipe.ingredientes)
+            {
+                Debug.Log($"Checking ingredient group: {ingredientGroup.Key}");
+                bool groupMatched = false;
+
+                foreach (string ingredient in ingredientGroup.Value)
+                {
+                    string lowerCaseIngredient = ingredient.ToLower();
+                    if (remainingIngredients.Contains(lowerCaseIngredient))
                     {
-                        totalNutritionalValue += card.valor_nutrimental;
-                    }
+                        Debug.Log($"Found ingredient: {lowerCaseIngredient}");
 
-                    remainingIngredients.Remove(lowerCaseIngredient);
-                    groupMatched = true;
+                        // Buscar la carta correspondiente para obtener el valor nutrimental
+                        var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
+                        if (card != null)
+                        {
+                            totalNutritionalValue += card.valor_nutrimental;
+                        }
+
+                        remainingIngredients.Remove(lowerCaseIngredient);
+                        groupMatched = true;
+                        break;
+                    }
+                }
+
+                if (!groupMatched)
+                {
+                    Debug.Log($"No matching ingredient found for group: {ingredientGroup.Key}");
+                    isMatch = false;
                     break;
                 }
             }
 
-            if (!groupMatched)
+            if (isMatch && remainingIngredients.Count == 0)
             {
-                Debug.Log($"No matching ingredient found for group: {ingredientGroup.Key}");
-                isMatch = false;
-                break;
+                Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
+                IncreaseScore(totalNutritionalValue);
+                return;
             }
         }
 
-        if (isMatch && remainingIngredients.Count == 0)
+        Debug.Log("No valid recipe combination found.");
+    }
+
+
+    private void IncreaseScore(int nutritionalValue)
+    {
+        totalScore += nutritionalValue;
+        UpdateScoreUI();
+        Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
+
+        // Descartar todas las cartas del dropzone
+        foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
         {
-            Debug.Log($"Combination found for recipe ID: {recipe.id_receta}");
-            IncreaseScore(totalNutritionalValue);
-            return;
+            foreach (GameObject card in cardList)
+            {
+                Destroy(card);
+            }
+            cardList.Clear();
+        }
+
+        // Resetear los turnos
+        for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
+        {
+            DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
+        }
+
+        // Popular las cartas de la mano
+        ShuffleAndAddNewCardsToPlayerArea();
+    }
+
+    private void SpecialAbilityUse(GameObject card, string cardName)
+    {
+        if (cardName == "points")
+        {
+            totalScore = totalScore - 10;
+            UpdateScoreUI();
+            Debug.Log("Decreased Score");
+
+        }
+        if (cardName == "time")
+        {
+            IncreaseGameTimer();
+            Debug.Log("Timmer increased");
+        }
+
+
+    }
+
+    public void IncreaseGameTimer()
+    {
+        if (timer != null)
+        {
+            timer.IncreaseTimer();
+        }
+        else
+        {
+            Debug.LogWarning("Timer reference is not set in GameManager.");
         }
     }
 
-    Debug.Log("No valid recipe combination found.");
-}
-
-
-private void IncreaseScore(int nutritionalValue)
-{
-    totalScore += nutritionalValue;
-    UpdateScoreUI();
-    Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
-    
-    // Descartar todas las cartas del dropzone
-    foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
-    {
-        foreach (GameObject card in cardList)
-        {
-            Destroy(card);
-        }
-        cardList.Clear();
-    }
-    
-    // Resetear los turnos
-    for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
-    {
-        DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
-    }
-
-    // Popular las cartas de la mano
-    ShuffleAndAddNewCardsToPlayerArea();
-}
 
 }
 
@@ -401,7 +481,6 @@ public static class ListExtensions
         }
     }
 }
-
 // Clase Recipe para representar las recetas
 [System.Serializable]
 public class Recipe
