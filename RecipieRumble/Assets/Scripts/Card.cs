@@ -8,6 +8,5 @@ public class Card
     public int valor_nutrimental;
     public string tipo;
 
-
+    
 }
-

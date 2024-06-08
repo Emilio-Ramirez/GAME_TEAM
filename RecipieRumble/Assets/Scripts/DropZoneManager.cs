@@ -151,35 +151,35 @@ public class DropZoneManager : MonoBehaviour
     }
 
     public void OnCardDropped(int dropZoneIndex, GameObject card)
+{
+    // Verificar si ya hay una carta en la dropzone
+    if (cardsInDropZone[dropZoneIndex].Count > 0)
     {
-        // Verificar si ya hay una carta en la dropzone
-        if (cardsInDropZone[dropZoneIndex].Count > 0)
-        {
-            Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
-            ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
-            return;
-        }
-
-        cardsInDropZone[dropZoneIndex].Add(card);
-        card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
-        UpdateCardCount();
-        Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
+        Debug.LogWarning($"DropZone {dropZoneIndex} already has a card. Cannot place another card.");
+        ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede colocar
+        return;
     }
 
-    private void ReturnToStart(GameObject card)
+    cardsInDropZone[dropZoneIndex].Add(card);
+    card.transform.SetParent(dropZones[dropZoneIndex].transform, false);
+    UpdateCardCount();
+    Debug.Log($"Card dropped in DropZone {dropZoneIndex}");
+}
+
+private void ReturnToStart(GameObject card)
+{
+    // Devuelve la carta a su posición inicial
+    DragDrop dragDrop = card.GetComponent<DragDrop>();
+    if (dragDrop != null)
     {
-        // Devuelve la carta a su posición inicial
-        DragDrop dragDrop = card.GetComponent<DragDrop>();
-        if (dragDrop != null)
-        {
-            card.transform.position = dragDrop.StartPosition;
-            card.transform.SetParent(dragDrop.StartParent, true);
-        }
+        card.transform.position = dragDrop.StartPosition;
+        card.transform.SetParent(dragDrop.StartParent, true);
     }
+}
     public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
     {
         Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
-
+        
         // Verificar si la zona de destino ya tiene una carta
         if (cardsInDropZone[toDropZoneIndex].Count > 0)
         {
