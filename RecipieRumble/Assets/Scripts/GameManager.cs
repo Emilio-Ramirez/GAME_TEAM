@@ -16,12 +16,12 @@ public class GameManager : MonoBehaviour
     public GameObject recipeCardPrefab;
     public Transform playerCardParent;
     public Transform recipeCardParent;
-    public string apiUrl = "http://localhost:3000/cartas"; 
+    public string apiUrl = "http://localhost:3000/cartas";
     public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
     public Button deckButton;
-    
+
     public GameObject fireworksPrefab; // Añadir una referencia al prefab de fuegos artificiales
     public Canvas canvas; // Añadir una referencia al Canvas
 
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public List<Recipe> recipes = new List<Recipe>();  // Hacer esta lista pública
     private HashSet<int> validCardIdsForRecipeArea = new HashSet<int>();
     private HashSet<int> validCardIdsForPlayerArea = new HashSet<int>();
+
     private int totalScore = 0;
     private Timer timer;
 
@@ -102,21 +103,10 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                List<Card> loadedCards = JsonHelper.FromJson<Card>(webRequest.downloadHandler.text).ToList();
-                // Modificación para evitar el error de conversión
-                cards = loadedCards.Select(card =>
-                {
-                    if (card.tipo == "Special")
-                    {
-                        return new SpecialCard(card.id_carta, card.nombre, card.valor_nutrimental, card.tipo, 1) as Card;
-                    }
-                    return card;
-                }).ToList();
-
-                Debug.Log(cards);
-
+                cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
                 AddCardsToRecipeArea();
                 ShuffleAndAddNewCardsToPlayerArea();
+
             }
         }
     }
@@ -137,10 +127,10 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
                 List<Recipe> allRecipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
-                
+
                 // Filtrar las recetas que pertenecen a belongs_to_level 1
                 recipes = allRecipes.Where(r => r.belongs_to_level == 1).ToList();
-                
+
                 // Asignar id_receta como nombre de la receta y mostrar ingredientes
                 foreach (var recipe in recipes)
                 {
@@ -221,7 +211,9 @@ public class GameManager : MonoBehaviour
         List<Card> randomCards = new List<Card>(cards);
         randomCards.Shuffle();
 
+
         int cardsAdded = 0;
+        Debug.Log("DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG : " + randomCards[0]);
         foreach (Card card in randomCards)
         {
             if (cardsAdded >= 4)
@@ -229,27 +221,22 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
+
+
             if (!validCardIdsForPlayerArea.Contains(card.id_carta))
             {
                 Debug.LogWarning($"Skipping card with invalid ID for player area: {card.id_carta}");
                 continue;
             }
 
-            if (existingCardIds.Contains(card.id_carta))
-            {
-                Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
-                continue;
-            }
-            if (card.tipo != "Special")
-            {
-                if (existingCardTypes.Contains(card.tipo))
-                {
-                    Debug.LogWarning($"Skipping card with duplicate type: {card.tipo}");
-                    continue;
-                }
-            }
+            // if (randomCards.Contains(card))
+            // {
+            //     Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
+            //     continue;
+            // }
 
             GameObject newCard = Instantiate(cardPrefab, playerCardParent);
+            Debug.Log("CARTA NEWCARD: " + newCard);
             if (newCard == null)
             {
                 Debug.LogError("Failed to instantiate new card prefab for player area.");
@@ -276,20 +263,15 @@ public class GameManager : MonoBehaviour
             if (cardImage != null)
             {
                 string imagePath;
-                if (card.id_carta == 47 || card.id_carta == 48)
-                {
-                    imagePath = $"Sprites/SpecialCards/{card.id_carta}";
+                string imagePath_special;
+                imagePath = $"Sprites/Picnic/{card.id_carta}";
 
-                }
-                else
-                {
-                    imagePath = $"Sprites/Picnic/{card.id_carta}";
-                }
                 cardImage.sprite = Resources.Load<Sprite>(imagePath);
                 if (cardImage.sprite == null)
                 {
                     Debug.LogError($"Image not found for card: {imagePath}");
                 }
+
                 else
                 {
                     Debug.Log($"Image FOUND FOUND FOUND for: {imagePath}");
