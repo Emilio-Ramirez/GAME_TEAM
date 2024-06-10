@@ -14,7 +14,7 @@ public class DropZoneManager : MonoBehaviour
     public int[] initialTurns;
     public List<GameObject>[] cardsInDropZone;
     public Transform playerArea;
-    public Transform recipeArea;
+    public Transform recipeArea; // Agrega esto
     public Button startButton;
     public Button drawButton;
     public Deck deck; // Referencia al script Deck
@@ -176,6 +176,7 @@ public class DropZoneManager : MonoBehaviour
             card.transform.SetParent(dragDrop.StartParent, true);
         }
     }
+
     public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
     {
         Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
@@ -184,6 +185,7 @@ public class DropZoneManager : MonoBehaviour
         if (cardsInDropZone[toDropZoneIndex].Count > 0)
         {
             Debug.LogWarning($"DropZone {toDropZoneIndex} already has a card. Cannot move the card.");
+            ReturnToStart(card);  // Agrega esta línea para devolver la carta a su posición inicial si no se puede mover
             return;
         }
 

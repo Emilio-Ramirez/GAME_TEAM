@@ -77,7 +77,7 @@ public class Deck : MonoBehaviour
         // Verificar si se ha movido una carta y actualizar el botón de la baraja
         if (cardMoved)
         {
-            Debug.Log("Card was moved, enabling deck button.");
+            //Debug.Log("Card was moved, enabling deck button.");
             deckButton.interactable = true;
         }
     }

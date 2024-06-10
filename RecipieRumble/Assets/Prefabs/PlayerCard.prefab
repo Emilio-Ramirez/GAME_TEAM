@@ -626,8 +626,8 @@ GameObject:
   - component: {fileID: 3451295432892669810}
   - component: {fileID: 7805645536764894116}
   - component: {fileID: -1718560944219334461}
-  - component: {fileID: 3556360992153553895}
   - component: {fileID: 5755800129441518868}
+  - component: {fileID: 8923271834386658075}
   m_Layer: 8
   m_Name: PlayerCard
   m_TagString: Untagged
@@ -769,19 +769,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &3556360992153553895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8171552711498485673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff94aa51c66511247842247eeeb14490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ZoomCardPrefab: {fileID: 8171552711498485673}
 --- !u!114 &5755800129441518868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,4 +781,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c44ba447cbb0c439e17ed8610bf7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DropZone: {fileID: 0}
+  DropZone: {fileID: 8171552711498485673}
+--- !u!114 &8923271834386658075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171552711498485673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeadc2c62cb6c246b6ca9e9d2e62076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ZoomCardPrefab: {fileID: 8171552711498485673}

@@ -139,10 +139,16 @@ app.get('/profile', authenticateSession, async (req, res) => {
   }
 });
 
-// Get route for ingredients
+
+// Get route for ingredients with optional filtering by event ID
 app.get('/cartas', async (req, res) => {
   try {
-    const ingredientes = await Cartas.findAll();
+    const { eventoId } = req.query;
+
+    // If eventoId is provided, filter cartas by that event ID
+    const whereCondition = eventoId ? { eventoId: eventoId } : {};
+
+    const ingredientes = await Cartas.findAll({ where: whereCondition });
     res.json(ingredientes);
   } catch (error) {
     console.error('Error fetching ingredientes:', error);
@@ -192,9 +198,21 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
   }
 });
 
+
 app.get('/recetas', async (req, res) => {
   try {
-    const recetas = await Receta.findAll();
+    const { eventoId, id } = req.query; // Obtener ambos parámetros de consulta
+
+    // Construir condición de filtro según los parámetros recibidos
+    let whereCondition = {};
+    if (eventoId) {
+      whereCondition.eventoId = eventoId;
+    }
+    if (id) {
+      whereCondition.id_receta = id;
+    }
+
+    const recetas = await Receta.findAll({ where: whereCondition });
     res.json(recetas);
   } catch (error) {
     console.error('Error fetching recetas:', error);

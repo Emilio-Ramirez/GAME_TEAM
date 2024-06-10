@@ -10,14 +10,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private Transform canvas;
     private GameObject dropZone;
-    private CardZoom cardZoom;
+    private PlayerAreaCardZoom cardZoom;
     private CanvasGroup canvasGroup;
     public GameObject DropZone;
 
     private void Awake()
     {
         canvas = GameObject.Find("Main Canvas").transform;
-        cardZoom = GetComponent<CardZoom>();
+        cardZoom = GetComponent<PlayerAreaCardZoom>();
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {

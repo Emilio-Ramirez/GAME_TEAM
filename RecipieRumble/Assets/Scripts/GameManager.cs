@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
-using System.Linq;  // Añadir esta línea
+using System.Linq;
 using Newtonsoft.Json;
 //MODIF
 
@@ -16,15 +16,19 @@ public class GameManager : MonoBehaviour
     public GameObject recipeCardPrefab;
     public Transform playerCardParent;
     public Transform recipeCardParent;
-    public string apiUrl = "http://localhost:3000/cartas";
+    public string apiUrl = "http://localhost:3000/cartas"; 
     public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
+    public Button deckButton;
+    
+    public GameObject fireworksPrefab; // Añadir una referencia al prefab de fuegos artificiales
+    public Canvas canvas; // Añadir una referencia al Canvas
 
     private List<Card> cards = new List<Card>();
-    private List<Recipe> recipes = new List<Recipe>();
-    private HashSet<int> validCardIdsForRecipeArea = new HashSet<int> { 1, 2, 3, 4 };
-    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 45, 46, 47, 48 };
+    public List<Recipe> recipes = new List<Recipe>();  // Hacer esta lista pública
+    private HashSet<int> validCardIdsForRecipeArea = new HashSet<int>();
+    private HashSet<int> validCardIdsForPlayerArea = new HashSet<int>();
     private int totalScore = 0;
     private Timer timer;
 
@@ -37,6 +41,29 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        LoadValidCardIds();
+    }
+
+    void LoadValidCardIds()
+    {
+        Sprite[] picnicSprites = Resources.LoadAll<Sprite>("Sprites/Picnic");
+        foreach (Sprite sprite in picnicSprites)
+        {
+            if (int.TryParse(sprite.name, out int id))
+            {
+                validCardIdsForPlayerArea.Add(id);
+            }
+        }
+
+        Sprite[] eventDishesSprites = Resources.LoadAll<Sprite>("Sprites/Picnic/EventDishes");
+        foreach (Sprite sprite in eventDishesSprites)
+        {
+            if (int.TryParse(sprite.name, out int id))
+            {
+                validCardIdsForRecipeArea.Add(id);
+            }
         }
     }
 
@@ -54,6 +81,10 @@ public class GameManager : MonoBehaviour
             Debug.LogError("No Timer component found in the scene.");
         }
 
+        if (deckButton != null)
+        {
+            deckButton.onClick.AddListener(OnDeckButtonPressed);
+        }
     }
 
     IEnumerator GetCards()
@@ -105,7 +136,17 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
-                recipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+                List<Recipe> allRecipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
+                
+                // Filtrar las recetas que pertenecen a belongs_to_level 1
+                recipes = allRecipes.Where(r => r.belongs_to_level == 1).ToList();
+                
+                // Asignar id_receta como nombre de la receta y mostrar ingredientes
+                foreach (var recipe in recipes)
+                {
+                    recipe.nombre = recipe.id_receta.ToString();
+                    Debug.Log($"Receta ID: {recipe.id_receta}, Ingredientes: {string.Join(", ", recipe.ingredientes.SelectMany(ig => ig.Value))}");
+                }
             }
         }
     }
@@ -171,43 +212,19 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        int currentCardCount = playerCardParent.childCount;
-        int newCardsCount = 4 - currentCardCount;
-
-        if (newCardsCount <= 0)
+        // Destruir las cartas actuales en la mano del jugador
+        foreach (Transform child in playerCardParent)
         {
-            Debug.Log("Player already has 4 cards. No new cards will be added.");
-            return;
+            Destroy(child.gameObject);
         }
 
         List<Card> randomCards = new List<Card>(cards);
         randomCards.Shuffle();
 
         int cardsAdded = 0;
-        HashSet<int> existingCardIds = new HashSet<int>();
-        HashSet<string> existingCardTypes = new HashSet<string>();
-
-        // Recopilar los ids y tipos de las cartas actualmente en la mano del jugador
-        foreach (Transform child in playerCardParent)
-        {
-            TMP_Text nameText = child.Find("NameText")?.GetComponent<TMP_Text>();
-            TMP_Text typeText = child.Find("TypeText")?.GetComponent<TMP_Text>();
-            if (nameText != null && typeText != null)
-            {
-                Card cardInHand = cards.FirstOrDefault(c => c.nombre == nameText.text);
-                if (cardInHand != null)
-                {
-                    existingCardIds.Add(cardInHand.id_carta);
-                    existingCardTypes.Add(typeText.text);
-                }
-            }
-        }
-
         foreach (Card card in randomCards)
         {
-            Debug.Log("CARDS CARDS CARDS: " + card.id_carta);
-
-            if (cardsAdded >= newCardsCount)
+            if (cardsAdded >= 4)
             {
                 break;
             }
@@ -284,10 +301,6 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Failed to find Image component on the player card prefab.");
             }
 
-            // Añadir el id y tipo de la nueva carta a los ids y tipos existentes
-            existingCardIds.Add(card.id_carta);
-            existingCardTypes.Add(card.tipo);
-
             cardsAdded++;
         }
 
@@ -295,7 +308,18 @@ public class GameManager : MonoBehaviour
         dropZoneManager?.UpdateCardCount();
     }
 
+    public void OnDeckButtonPressed()
+    {
+        deckButton.interactable = false;
+        ShuffleAndAddNewCardsToPlayerArea();
+        StartCoroutine(ReenableDeckButton());
+    }
 
+    IEnumerator ReenableDeckButton()
+    {
+        yield return new WaitForSeconds(1f);
+        deckButton.interactable = true;
+    }
 
     public void RefreshDeck()
     {
@@ -445,9 +469,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-}
-
-// Extensiones para la utilidad de JSON y la función de mezclar listas (shuffle)
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
@@ -490,7 +511,6 @@ public class Recipe
     public string nombre;
     public int valor_nutrimental;
     public Dictionary<string, List<string>> ingredientes;
+    public int belongs_to_level;
     public object id_libro;
 }
-
-
