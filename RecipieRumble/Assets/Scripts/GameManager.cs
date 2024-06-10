@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 using Newtonsoft.Json;
+//MODIF
 
 public class GameManager : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class GameManager : MonoBehaviour
     public GameObject recipeCardPrefab;
     public Transform playerCardParent;
     public Transform recipeCardParent;
-    public string apiUrl = "http://localhost:3000/cartas"; 
+    public string apiUrl = "http://localhost:3000/cartas";
     public string apiRecipeUrl = "http://localhost:3000/recetas";
     public DropZoneManager dropZoneManager;
     public TextMeshProUGUI scoreText;
     public Button deckButton;
-    
+
     public GameObject fireworksPrefab; // Añadir una referencia al prefab de fuegos artificiales
     public Canvas canvas; // Añadir una referencia al Canvas
 
@@ -28,7 +29,9 @@ public class GameManager : MonoBehaviour
     public List<Recipe> recipes = new List<Recipe>();  // Hacer esta lista pública
     private HashSet<int> validCardIdsForRecipeArea = new HashSet<int>();
     private HashSet<int> validCardIdsForPlayerArea = new HashSet<int>();
+
     private int totalScore = 0;
+    private Timer timer;
 
     void Awake()
     {
@@ -73,6 +76,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GetRecipes());
         UpdateScoreUI();
 
+        timer = FindObjectOfType<Timer>();
+        if (timer == null)
+        {
+            Debug.LogError("No Timer component found in the scene.");
+        }
+
         if (deckButton != null)
         {
             deckButton.onClick.AddListener(OnDeckButtonPressed);
@@ -97,6 +106,7 @@ public class GameManager : MonoBehaviour
                 cards = new List<Card>(JsonHelper.FromJson<Card>(webRequest.downloadHandler.text));
                 AddCardsToRecipeArea();
                 ShuffleAndAddNewCardsToPlayerArea();
+
             }
         }
     }
@@ -117,10 +127,10 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Connection successful. Response: " + webRequest.downloadHandler.text);
                 List<Recipe> allRecipes = JsonConvert.DeserializeObject<List<Recipe>>(webRequest.downloadHandler.text);
-                
+
                 // Filtrar las recetas que pertenecen a belongs_to_level 1
                 recipes = allRecipes.Where(r => r.belongs_to_level == 1).ToList();
-                
+
                 // Asignar id_receta como nombre de la receta y mostrar ingredientes
                 foreach (var recipe in recipes)
                 {
@@ -201,7 +211,9 @@ public class GameManager : MonoBehaviour
         List<Card> randomCards = new List<Card>(cards);
         randomCards.Shuffle();
 
+
         int cardsAdded = 0;
+        Debug.Log("DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG : " + randomCards[0]);
         foreach (Card card in randomCards)
         {
             if (cardsAdded >= 4)
@@ -209,13 +221,22 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
+
+
             if (!validCardIdsForPlayerArea.Contains(card.id_carta))
             {
                 Debug.LogWarning($"Skipping card with invalid ID for player area: {card.id_carta}");
                 continue;
             }
 
+            // if (randomCards.Contains(card))
+            // {
+            //     Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
+            //     continue;
+            // }
+
             GameObject newCard = Instantiate(cardPrefab, playerCardParent);
+            Debug.Log("CARTA NEWCARD: " + newCard);
             if (newCard == null)
             {
                 Debug.LogError("Failed to instantiate new card prefab for player area.");
@@ -241,13 +262,22 @@ public class GameManager : MonoBehaviour
 
             if (cardImage != null)
             {
-                string imagePath = $"Sprites/Picnic/{card.id_carta}";
+                string imagePath;
+                string imagePath_special;
+                imagePath = $"Sprites/Picnic/{card.id_carta}";
+
                 cardImage.sprite = Resources.Load<Sprite>(imagePath);
                 if (cardImage.sprite == null)
                 {
                     Debug.LogError($"Image not found for card: {imagePath}");
                 }
+
+                else
+                {
+                    Debug.Log($"Image FOUND FOUND FOUND for: {imagePath}");
+                }
             }
+
             else
             {
                 Debug.LogWarning("Failed to find Image component on the player card prefab.");
@@ -296,6 +326,17 @@ public class GameManager : MonoBehaviour
                 string cardName = cardObject.name.ToLower();
                 ingredientsInRecipeArea.Add(cardName);
                 Debug.Log($"Added ingredient: {cardName}");
+                if (cardName == "points" || cardName == "time")
+                {
+
+                    Debug.Log($" OBJOBJOBJOBJOBJOBJOBJOBJO: {cardObject}");
+                    SpecialAbilityUse(cardObject, cardName);
+                    Debug.Log($"Used Special HabilityYYYYYYYYYY");
+                    Destroy(cardObject);
+                    Debug.Log("Card DESTROYEDDDDDDDD");
+
+
+                }
             }
         }
 
@@ -320,6 +361,7 @@ public class GameManager : MonoBehaviour
                     {
                         Debug.Log($"Found ingredient: {lowerCaseIngredient}");
 
+                        // Buscar la carta correspondiente para obtener el valor nutrimental
                         var card = cards.FirstOrDefault(c => c.nombre.ToLower() == lowerCaseIngredient);
                         if (card != null)
                         {
@@ -351,12 +393,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("No valid recipe combination found.");
     }
 
+
     private void IncreaseScore(int nutritionalValue)
     {
         totalScore += nutritionalValue;
         UpdateScoreUI();
         Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
-        
+
+        // Descartar todas las cartas del dropzone
         foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
         {
             foreach (GameObject card in cardList)
@@ -366,22 +410,44 @@ public class GameManager : MonoBehaviour
             cardList.Clear();
         }
 
+        // Resetear los turnos
         for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
         {
             DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
         }
 
-        // Instanciar fuegos artificiales como hijo del Canvas y centrarlos
-        if (fireworksPrefab != null && canvas != null)
+        // Popular las cartas de la mano
+        ShuffleAndAddNewCardsToPlayerArea();
+    }
+
+    private void SpecialAbilityUse(GameObject card, string cardName)
+    {
+        if (cardName == "points")
         {
-            GameObject fireworks = Instantiate(fireworksPrefab, canvas.transform);
-            RectTransform rectTransform = fireworks.GetComponent<RectTransform>();
-            rectTransform.localPosition = Vector3.zero; // Centrar en el Canvas
-            rectTransform.localScale = Vector3.one; // Asegurar que el tamaño sea correcto
-            rectTransform.SetAsLastSibling(); // Asegurar que los fuegos artificiales estén al frente
+            totalScore = totalScore - 10;
+            UpdateScoreUI();
+            Debug.Log("Decreased Score");
+
+        }
+        if (cardName == "time")
+        {
+            IncreaseGameTimer();
+            Debug.Log("Timmer increased");
         }
 
-        ShuffleAndAddNewCardsToPlayerArea();
+
+    }
+
+    public void IncreaseGameTimer()
+    {
+        if (timer != null)
+        {
+            timer.IncreaseTimer();
+        }
+        else
+        {
+            Debug.LogWarning("Timer reference is not set in GameManager.");
+        }
     }
 }
 
@@ -418,7 +484,7 @@ public static class ListExtensions
         }
     }
 }
-
+// Clase Recipe para representar las recetas
 [System.Serializable]
 public class Recipe
 {

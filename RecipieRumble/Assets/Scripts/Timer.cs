@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+// MODIF
 public class Timer : MonoBehaviour
 {
     public float totalTime = 60f;  // Tiempo total para el juego en segundos (1 minuto)
@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
     public GameObject gameOverScreenPrefab;  // Referencia al prefab de la pantalla de Game Over
     public Canvas mainCanvas;  // Referencia al Canvas principal
 
-    public TMP_Text timerText;  
+    public TMP_Text timerText;
     public Button startButton;  // Referencia al botón de UI para iniciar el temporizador
     public AudioSource audioSource;  // Referencia al AudioSource para reproducir el sonido
 
@@ -141,6 +141,14 @@ public class Timer : MonoBehaviour
         // Detener el audio cuando la escena se descarga
         StopAudio();
     }
+
+    public void IncreaseTimer()
+    {
+        totalTime += 15;
+        currentTime += 15;
+        UpdateTimerText();  // Asegúrate de que el texto del temporizador se actualice también
+    }
+
 
     private void StopAudio()
     {

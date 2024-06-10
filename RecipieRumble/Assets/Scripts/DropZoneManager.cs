@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// MODIF
 public class DropZoneManager : MonoBehaviour
 {
     public static DropZoneManager Instance { get; private set; }
@@ -180,7 +180,7 @@ public class DropZoneManager : MonoBehaviour
     public void MoveCardBetweenDropZones(GameObject card, int fromDropZoneIndex, int toDropZoneIndex)
     {
         Debug.Log($"Moving card from DropZone {fromDropZoneIndex} to DropZone {toDropZoneIndex}");
-        
+
         // Verificar si la zona de destino ya tiene una carta
         if (cardsInDropZone[toDropZoneIndex].Count > 0)
         {
