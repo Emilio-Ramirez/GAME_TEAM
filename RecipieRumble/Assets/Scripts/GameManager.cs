@@ -467,7 +467,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Timer reference is not set in GameManager.");
         }
     }
-
+}
 
 public static class JsonHelper
 {
