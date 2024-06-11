@@ -5,8 +5,15 @@ async function syncAndDropTables() {
     await sequelize.authenticate();
     console.log('Database connection established');
 
-    // Eliminar todas las tablas de la base de datos
-    await sequelize.dropAllSchemas();
+    // Obtener una lista de todas las tablas en la base de datos
+    const tables = await sequelize.showAllSchemas();
+
+    // Eliminar todas las tablas
+    for (const table of tables) {
+      if (table !== 'information_schema') { // Excluir el esquema 'information_schema'
+        await sequelize.drop({ tableName: table });
+      }
+    }
     console.log('All tables dropped successfully');
 
     // Sincronizar los modelos con la base de datos

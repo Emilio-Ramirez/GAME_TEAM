@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize');
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -8,7 +8,7 @@ dotenv.config();
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  dialect: 'postgres',
+  dialect: 'mysql',
 });
 
 const Usuario = sequelize.define('Usuario', {
@@ -35,6 +35,9 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  tableName: 'Usuario', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 const Receta = sequelize.define('Receta', {
@@ -59,6 +62,9 @@ const Receta = sequelize.define('Receta', {
       utils: {},
     },
   },
+}, {
+  tableName: 'Receta', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 const Nivel = sequelize.define('Nivel', {
@@ -70,6 +76,9 @@ const Nivel = sequelize.define('Nivel', {
   titulo: {
     type: DataTypes.STRING,
   },
+}, {
+  tableName: 'Nivel', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 const Partida = sequelize.define('Partida', {
@@ -84,6 +93,9 @@ const Partida = sequelize.define('Partida', {
   puntaje: {
     type: DataTypes.INTEGER,
   },
+}, {
+  tableName: 'Partida', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 const Cartas = sequelize.define('Cartas', {
@@ -101,6 +113,9 @@ const Cartas = sequelize.define('Cartas', {
   tipo: {
     type: DataTypes.STRING,
   },
+}, {
+  tableName: 'Cartas', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 const Sesion = sequelize.define('Sesion', {
@@ -122,6 +137,9 @@ const Sesion = sequelize.define('Sesion', {
   ultima_actividad: {
     type: DataTypes.DATE,
   },
+}, {
+  tableName: 'Sesion', // Especificar expl’citamente el nombre de la tabla
+  timestamps: false, // Deshabilitar las columnas createdAt y updatedAt si no las necesitas
 });
 
 // Export the Sequelize instance and models
