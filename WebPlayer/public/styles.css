@@ -13,23 +13,49 @@ body {
 }
 
 .top-bar {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a lo largo del eje horizontal */
+    align-items: center; /* Centra verticalmente los elementos dentro de la barra */
     width: 100%;
     background-color: #593E2E; /* Color de fondo de la barra superior */
-    padding: 10px 0;
-    text-align: right; /* Alinear el texto a la derecha */
+    padding: 10px 20px;
     color: #FFFFFF; /* Color del texto */
     position: fixed; /* Barra fija */
     top: 0;
     left: 0;
     z-index: 1000;
-    padding-right: 20px; /* Espacio a la derecha */
 }
 
-.top-bar a {
-    color: #FFFFFF;
+.instruction-link{
     text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
+    color: #F5F5DC;
+
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center; /* Centra verticalmente los iconos dentro de cada sección */
+}
+
+.nav-left {
+    justify-content: flex-start; /* Alinea los enlaces a la izquierda dentro del contenedor */
+}
+
+.nav-right {
+    justify-content: flex-end; /* Alinea los enlaces a la derecha dentro del contenedor */
+}
+
+.nav-icon {
+    height: 40px; /* Ajusta el tamaño de los iconos según sea necesario */
+    margin: 0 10px; /* Espaciado entre iconos */
+}
+
+/* Opcional: Estilo para los enlaces */
+.nav-left a, .nav-right a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center; /* Asegura que el contenido del enlace esté centrado verticalmente */
 }
 
 .centered-div {
@@ -69,4 +95,33 @@ h2 {
 
 .button:hover {
     background-color: #FF9191;
+}
+
+.chef-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #FF7171;
+    color: white;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+.return-button:hover {
+    background-color: #FF9191;
+}
+
+.instruction-text{
+    color: #593E2E;
 }
