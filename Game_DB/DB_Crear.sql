@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     average_dishes_per_event FLOAT,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL
-);
+) ENGINE=InnoDB;
 
 -- Tabla Receta
 CREATE TABLE IF NOT EXISTS Receta (
@@ -18,20 +18,20 @@ CREATE TABLE IF NOT EXISTS Receta (
     es_principal BOOLEAN DEFAULT FALSE,
     belongs_to_level INT,
     ingredientes JSON
-);
+) ENGINE=InnoDB;
 
 -- Tabla Nivel
 CREATE TABLE IF NOT EXISTS Nivel (
     id_nivel INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(20)
-);
+) ENGINE=InnoDB;
 
 -- Tabla Partida
 CREATE TABLE IF NOT EXISTS Partida (
     id_partida INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE,
     puntaje INT
-);
+) ENGINE=InnoDB;
 
 -- Tabla Cartas
 CREATE TABLE IF NOT EXISTS Cartas (
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Cartas (
     nombre VARCHAR(20),
     valor_nutrimental INT,
     tipo VARCHAR(20)
-);
+) ENGINE=InnoDB;
 
 -- Tabla Sesion
 CREATE TABLE IF NOT EXISTS Sesion (
@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS Sesion (
     token VARCHAR(20) UNIQUE,
     fecha_inicio DATE,
     fecha_expiracion DATE,
-    ultima_actividad DATE
-);
+    ultima_actividad DATE,
+    id_usuario INT,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+) ENGINE=InnoDB;
 
 ---
 --- Views ---
