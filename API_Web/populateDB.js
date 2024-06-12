@@ -46,7 +46,9 @@
 //   { nombre: 'White Fondant', valor_nutrimental: 9, tipo: 'Vegetable' },
 //   { nombre: 'Jam', valor_nutrimental: 7, tipo: 'Vegetable' },
 //   { nombre: 'Olives', valor_nutrimental: 4, tipo: 'Side' },
-//   { nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' }
+//   { nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' },
+//   { nombre: 'time', valor_nutrimental: 0, tipo: 'Special'},
+//   { nombre: 'points', valor_nutrimental: 0, tipo: 'Special'}
 // ];
 
 // const recetas = [
