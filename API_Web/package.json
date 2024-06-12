@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "nodemon app.js",
     "sync_db": "node sync_db.js",
-    "populateDB": "node populateDB.js"
+    "populateDB": "node populateDB.js",
+    "populateEstadisticas": "node populateEstadisticas.js"
   },
   "author": "",
   "license": "ISC",
