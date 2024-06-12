@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 using Newtonsoft.Json;
-//MODIF
 
 public class GameManager : MonoBehaviour
 {
@@ -211,9 +210,7 @@ public class GameManager : MonoBehaviour
         List<Card> randomCards = new List<Card>(cards);
         randomCards.Shuffle();
 
-
         int cardsAdded = 0;
-        Debug.Log("DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG : " + randomCards[0]);
         foreach (Card card in randomCards)
         {
             if (cardsAdded >= 4)
@@ -221,22 +218,13 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
-
-
             if (!validCardIdsForPlayerArea.Contains(card.id_carta))
             {
                 Debug.LogWarning($"Skipping card with invalid ID for player area: {card.id_carta}");
                 continue;
             }
 
-            // if (randomCards.Contains(card))
-            // {
-            //     Debug.LogWarning($"Skipping card with duplicate ID: {card.id_carta}");
-            //     continue;
-            // }
-
             GameObject newCard = Instantiate(cardPrefab, playerCardParent);
-            Debug.Log("CARTA NEWCARD: " + newCard);
             if (newCard == null)
             {
                 Debug.LogError("Failed to instantiate new card prefab for player area.");
@@ -271,13 +259,11 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.LogError($"Image not found for card: {imagePath}");
                 }
-
                 else
                 {
                     Debug.Log($"Image FOUND FOUND FOUND for: {imagePath}");
                 }
             }
-
             else
             {
                 Debug.LogWarning("Failed to find Image component on the player card prefab.");
@@ -328,14 +314,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"Added ingredient: {cardName}");
                 if (cardName == "points" || cardName == "time")
                 {
-
                     Debug.Log($" OBJOBJOBJOBJOBJOBJOBJOBJO: {cardObject}");
                     SpecialAbilityUse(cardObject, cardName);
                     Debug.Log($"Used Special HabilityYYYYYYYYYY");
                     Destroy(cardObject);
                     Debug.Log("Card DESTROYEDDDDDDDD");
-
-
                 }
             }
         }
@@ -393,11 +376,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("No valid recipe combination found.");
     }
 
-
     private void IncreaseScore(int nutritionalValue)
     {
         totalScore += nutritionalValue;
         UpdateScoreUI();
+        StartCoroutine(ScoreFlash());
+
         Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
 
         // Descartar todas las cartas del dropzone
@@ -420,6 +404,30 @@ public class GameManager : MonoBehaviour
         ShuffleAndAddNewCardsToPlayerArea();
     }
 
+    private IEnumerator ScoreFlash()
+    {
+        Color originalColor = scoreText.color;
+        Color flashColor = Color.yellow;
+        float flashDuration = 3.0f;
+        Vector3 originalScale = scoreText.transform.localScale;
+        Vector3 flashScale = originalScale * 1.2f;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < flashDuration)
+        {
+            scoreText.color = flashColor;
+            scoreText.transform.localScale = flashScale;
+            yield return new WaitForSeconds(0.2f);
+            scoreText.color = originalColor;
+            scoreText.transform.localScale = originalScale;
+            yield return new WaitForSeconds(0.2f);
+            elapsedTime += 0.4f;
+        }
+
+        scoreText.color = originalColor;
+        scoreText.transform.localScale = originalScale;
+    }
+
     private void SpecialAbilityUse(GameObject card, string cardName)
     {
         if (cardName == "points")
@@ -427,15 +435,12 @@ public class GameManager : MonoBehaviour
             totalScore = totalScore - 10;
             UpdateScoreUI();
             Debug.Log("Decreased Score");
-
         }
         if (cardName == "time")
         {
             IncreaseGameTimer();
             Debug.Log("Timmer increased");
         }
-
-
     }
 
     public void IncreaseGameTimer()
@@ -484,6 +489,7 @@ public static class ListExtensions
         }
     }
 }
+
 // Clase Recipe para representar las recetas
 [System.Serializable]
 public class Recipe

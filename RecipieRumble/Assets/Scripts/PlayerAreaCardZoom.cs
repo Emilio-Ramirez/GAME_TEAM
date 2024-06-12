@@ -7,7 +7,7 @@ using TMPro;
 public class PlayerAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
     public GameObject ZoomCardPrefab;
-    
+
     private Transform Canvas;
     private bool isDragging;
     private bool isCardOverDropZone;
@@ -30,22 +30,27 @@ public class PlayerAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("OnPointerEnter called.");
         if (!isDragging && !isCardOverDropZone && zoomCard == null)
         {
+            Debug.Log("Creating zoom card.");
             CreateZoomCard();
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("OnPointerExit called.");
         if (!isDragging && !isCardOverDropZone)
         {
+            Debug.Log("Destroying zoom card.");
             DestroyZoomCard();
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("OnDrag called.");
         if (isDragging && zoomCard != null)
         {
             RectTransform rt = zoomCard.GetComponent<RectTransform>();
@@ -94,6 +99,30 @@ public class PlayerAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             zoomCardCanvasGroup.blocksRaycasts = false;
         }
+
+        // Eliminar Rigidbody y Collider del clon
+        Rigidbody2D zoomCardRigidbody = zoomCard.GetComponent<Rigidbody2D>();
+        Debug.Log("HOLASAAAAAA", zoomCard);
+        if (zoomCardRigidbody != null)
+        {
+            Destroy(zoomCardRigidbody);
+            Debug.Log("Rigidbody removed from zoom card.");
+        }
+
+        BoxCollider2D zoomCardCollider = zoomCard.GetComponent<BoxCollider2D>();
+        if (zoomCardCollider != null)
+        {
+            Destroy(zoomCardCollider);
+            Debug.Log("Collider removed from zoom card.");
+        }
+
+        // Eliminar el script DragDrop del clon
+        DragDrop dragDropScript = zoomCard.GetComponent<DragDrop>();
+        if (dragDropScript != null)
+        {
+            Destroy(dragDropScript);
+            Debug.Log("DragDrop script removed from zoom card.");
+        }
     }
 
     private void DestroyZoomCard()
@@ -103,12 +132,14 @@ public class PlayerAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
             zoomCard.transform.localScale = new Vector3(1, 1, 1);
             Destroy(zoomCard);
             zoomCard = null;
+            Debug.Log("ZoomCard destroyed.");
         }
     }
 
     public void SetDragging(bool dragging)
     {
         isDragging = dragging;
+        Debug.Log($"SetDragging called. Dragging: {dragging}");
         if (dragging)
         {
             DestroyZoomCard();
@@ -118,6 +149,7 @@ public class PlayerAreaCardZoom : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void SetCardOverDropZone(bool overDropZone)
     {
         isCardOverDropZone = overDropZone;
+        Debug.Log($"SetCardOverDropZone called. OverDropZone: {overDropZone}");
         if (overDropZone)
         {
             DestroyZoomCard();

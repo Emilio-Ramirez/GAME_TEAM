@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DropZone
   - Player Area
+  - Confetti
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - DropZone
   - Cards
-  - 
+  - Confetti
   - 
   - 
   - 
@@ -48,4 +49,16 @@ TagManager:
     locked: 0
   - name: Cards
     uniqueID: 3147841225
+    locked: 0
+  - name: New Layer 3
+    uniqueID: 3662054043
+    locked: 0
+  - name: UI
+    uniqueID: 538529825
+    locked: 0
+  - name: Effects
+    uniqueID: 3018360299
+    locked: 0
+  - name: Confetti
+    uniqueID: 716181231
     locked: 0
