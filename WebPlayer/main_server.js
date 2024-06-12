@@ -39,6 +39,11 @@ app.get('/us', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'us.html'));
 });
 
+app.get('/instructions', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'instructions.html'));
+});
+
+
 
 app.post('/register', async (req, res) => {
     try {
