@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.IO;
 
 public class BackgroundVideo : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class BackgroundVideo : MonoBehaviour
         VideoPlayer videoPlayer = rawImageObject.AddComponent<VideoPlayer>();
         videoPlayer.clip = videoClip;
         videoPlayer.isLooping = true;
+        videoPlayer.url = Path.Combine(Application.streamingAssetsPath, "Background.mp4");
 
         // Crear y asignar la RenderTexture
         RenderTexture renderTexture = new RenderTexture(1920, 1080, 0);
