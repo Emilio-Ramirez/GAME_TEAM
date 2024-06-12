@@ -455,50 +455,68 @@ public class GameManager : MonoBehaviour
       StartCoroutine(UpdateUserScoresCoroutine());
   }
 
-  private IEnumerator UpdateUserScoresCoroutine()
+private IEnumerator UpdateUserScoresCoroutine()
+{
+    // Obtener el puntaje total y el nivel actual del usuario
+    int puntajeMaximo = totalScore;
+    float averageDishesPerEvent = 1;  // Implementa esta funci—n segœn tu l—gica
+    
+    // Obtener el nivel actual desde PlayerPrefs
+    int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);  // Valor predeterminado de 1 si no se encuentra
+    string nivel = GetLevelNameFromIndex(currentLevel);  // Convertir el ’ndice de nivel a su nombre correspondiente
+
+
+    // Crear una instancia de ScoresData con los datos a enviar
+    ScoresData scores = new ScoresData
+    {
+        puntaje_maximo = puntajeMaximo,
+        average_dishes_per_event = averageDishesPerEvent,
+        nivel = string.IsNullOrEmpty(nivel) ? "unknown" : nivel
+    };
+
+
+    // Crear la solicitud POST
+    string url = "http://localhost:3000/update-scores";
+    var request = new UnityWebRequest(url, "POST");
+    byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+    request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    request.downloadHandler = new DownloadHandlerBuffer();
+    request.SetRequestHeader("Content-Type", "application/json");
+
+    // Agregar el token de sesi—n a los encabezados de la solicitud
+    string token = PlayerPrefs.GetString("token");
+    request.SetRequestHeader("token", token.Trim('"'));
+
+    // Enviar la solicitud y esperar la respuesta
+    yield return request.SendWebRequest();
+
+    if (request.result == UnityWebRequest.Result.Success)
+    {
+        Debug.Log("User scores updated successfully");
+        Debug.Log("Response: " + request.downloadHandler.text);
+    }
+    else
+    {
+        Debug.LogError("Error updating user scores: " + request.error);
+        Debug.LogError("Response: " + request.downloadHandler.text);
+    }
+}
+
+  // M?todo para convertir el ?ndice de nivel a su nombre correspondiente
+  private string GetLevelNameFromIndex(int levelIndex)
   {
-      // Obtener el puntaje total y el nivel actual del usuario
-      int puntajeMaximo = totalScore;
-      float averageDishesPerEvent = 1;  // Implementa esta funci—n segœn tu l—gica
-      string nivel = PlayerPrefs.GetInt("CurrentLevel").ToString();  // Convertir el nivel a string
-
-      // Crear el objeto JSON con los datos a enviar
-      var scores = new
+      switch (levelIndex)
       {
-          puntaje_maximo = puntajeMaximo,
-          average_dishes_per_event = averageDishesPerEvent,
-          nivel = nivel
-      };
-
-      string jsonData = JsonUtility.ToJson(scores);
-
-      // Crear la solicitud POST
-      string url = "http://localhost:3000/update-scores";
-      var request = new UnityWebRequest(url, "POST");
-      byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-      request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-      request.downloadHandler = new DownloadHandlerBuffer();
-      request.SetRequestHeader("Content-Type", "application/json");
-
-      // Agregar el token de sesi—n a los encabezados de la solicitud
-      string token = PlayerPrefs.GetString("token");
-      Debug.Log("Token: " + token);
-      request.SetRequestHeader("token", token.Trim('"'));
-
-      // Enviar la solicitud y esperar la respuesta
-      yield return request.SendWebRequest();
-
-      if (request.result == UnityWebRequest.Result.Success)
-      {
-          Debug.Log("User scores updated successfully");
-      }
-      else
-      {
-          Debug.LogError("Error updating user scores: " + request.error);
+          case 1:
+              return "wedding";
+          case 2:
+              return "picnic";
+          case 3:
+              return "christmas_dinner";
+          default:
+              return "unknown"; // Valor predeterminado si el ?ndice no coincide con ning?n nivel v?lido
       }
   }
-
-
 }
 
 
@@ -551,4 +569,12 @@ public class Recipe
     public Dictionary<string, List<string>> ingredientes;
     public int belongs_to_level;
     public object id_libro;
+}
+
+[System.Serializable]
+public class ScoresData
+{
+    public int puntaje_maximo;
+    public float average_dishes_per_event;
+    public string nivel;
 }

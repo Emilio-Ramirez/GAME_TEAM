@@ -48,7 +48,9 @@ const cards = [
   { nombre: 'White Fondant', valor_nutrimental: 9, tipo: 'Vegetable' },
   { nombre: 'Jam', valor_nutrimental: 7, tipo: 'Vegetable' },
   { nombre: 'Olives', valor_nutrimental: 4, tipo: 'Side' },
-  { nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' }
+  { nombre: 'Salad', valor_nutrimental: 3, tipo: 'Vegetable' },
+  { nombre: 'time', valor_nutrimental: 0, tipo: 'Special' },
+  { nombre: 'points', valor_nutrimental: 0, tipo: 'Special' }
 ];
 
 const recetas = [
@@ -94,7 +96,7 @@ const recetas = [
     }
   },
   //Christmas Dinner
-{
+  {
     es_principal: true,
     belongs_to_level: 2,
     ingredientes: {
@@ -135,7 +137,7 @@ const recetas = [
     }
   },
   //Wedding
-{
+  {
     es_principal: true,
     belongs_to_level: 3,
     ingredientes: {
@@ -179,7 +181,7 @@ const recetas = [
 
 async function populateDatabase() {
   try {
-   console.log('Attempting to authenticate with the database...');
+    console.log('Attempting to authenticate with the database...');
     await sequelize.authenticate();
     console.log('Database connection established');
     // Eliminar todas las cartas y recetas existentes utilizando CASCADE
