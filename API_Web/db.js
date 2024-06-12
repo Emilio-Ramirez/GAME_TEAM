@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize');
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -35,6 +35,9 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  tableName: 'Usuario',
+  timestamps: false,
 });
 
 const Receta = sequelize.define('Receta', {
@@ -59,6 +62,9 @@ const Receta = sequelize.define('Receta', {
       utils: {},
     },
   },
+}, {
+  tableName: 'Receta',
+  timestamps: false,
 });
 
 const Nivel = sequelize.define('Nivel', {
@@ -70,6 +76,9 @@ const Nivel = sequelize.define('Nivel', {
   titulo: {
     type: DataTypes.STRING,
   },
+}, {
+  tableName: 'Nivel',
+  timestamps: false,
 });
 
 const Partida = sequelize.define('Partida', {
@@ -84,6 +93,9 @@ const Partida = sequelize.define('Partida', {
   puntaje: {
     type: DataTypes.INTEGER,
   },
+}, {
+  tableName: 'Partida',
+  timestamps: false,
 });
 
 const Cartas = sequelize.define('Cartas', {
@@ -101,6 +113,9 @@ const Cartas = sequelize.define('Cartas', {
   tipo: {
     type: DataTypes.STRING,
   },
+}, {
+  tableName: 'Cartas',
+  timestamps: false,
 });
 
 const Sesion = sequelize.define('Sesion', {
@@ -129,6 +144,9 @@ const Sesion = sequelize.define('Sesion', {
       key: 'id_usuario',
     },
   },
+}, {
+  tableName: 'Sesion',
+  timestamps: false,
 });
 
 // Export the Sequelize instance and models

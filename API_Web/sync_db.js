@@ -5,8 +5,21 @@ async function syncAndDropTables() {
     await sequelize.authenticate();
     console.log('Database connection established');
 
+    // Obtener los nombres de todas las tablas en la base de datos
+    const [results, metadata] = await sequelize.query(`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE';
+    `);
+
+    const tableNames = results.map(result => result.table_name);
+
     // Eliminar todas las tablas de la base de datos
-    await sequelize.dropAllSchemas();
+    for (const tableName of tableNames) {
+      await sequelize.query(`DROP TABLE IF EXISTS "${tableName}" CASCADE;`);
+    }
+
     console.log('All tables dropped successfully');
 
     // Sincronizar los modelos con la base de datos
