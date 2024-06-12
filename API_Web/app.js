@@ -45,14 +45,21 @@ const generateSessionToken = () => {
 // Middleware to authenticate session
 const authenticateSession = async (req, res, next) => {
   try {
-    const { token } = req.headers;
+    let { token } = req.headers;
+
+    // Parse the token from the JSON string
+    let parsedToken = JSON.parse(token);
+    let extractedToken = parsedToken.token;
 
     // Find the session in the database
-    const session = await Sesion.findOne({ where: { token } });
+    console.log('Token:', token);
+    console.log('Extracted Token:', extractedToken);
+    console.log('Searching token');
+    const session = await Sesion.findOne({ where: { token: extractedToken } });
     if (!session) {
       return res.status(401).json({ error: 'Invalid session' });
     }
-
+    console.log('Token found');
     // Check if the session has expired
     if (session.fecha_expiracion < new Date()) {
       await session.destroy();

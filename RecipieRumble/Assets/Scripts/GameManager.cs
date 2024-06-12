@@ -230,16 +230,39 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("Failed to instantiate new card prefab for player area.");
                 continue;
             }
-
             TMP_Text nameText = newCard.transform.Find("NameText")?.GetComponent<TMP_Text>();
             TMP_Text valueText = newCard.transform.Find("ValueText")?.GetComponent<TMP_Text>();
             TMP_Text typeText = newCard.transform.Find("TypeText")?.GetComponent<TMP_Text>();
             Image cardImage = newCard.transform.Find("Image")?.GetComponent<Image>();
+            GameObject nutritionalValueText = newCard.transform.Find("ValueText")?.gameObject; // El objeto que contiene el valor nutricional
+            GameObject nutritionalValueTitle = newCard.transform.Find("Text")?.gameObject; // El objeto "Text" que contiene "Nutritional Value:"
 
             if (nameText != null && valueText != null && typeText != null)
             {
                 nameText.text = card.nombre;
-                valueText.text = card.valor_nutrimental.ToString();
+                if (card.nombre != "points" && card.nombre != "time")
+                {
+                    valueText.text = card.valor_nutrimental.ToString();
+                    if (nutritionalValueTitle != null)
+                    {
+                        nutritionalValueTitle.SetActive(true);
+                    }
+                    if (nutritionalValueText != null)
+                    {
+                        nutritionalValueText.SetActive(true);
+                    }
+                }
+                else
+                {
+                    if (nutritionalValueTitle != null)
+                    {
+                        nutritionalValueTitle.SetActive(false);
+                    }
+                    if (nutritionalValueText != null)
+                    {
+                        nutritionalValueText.SetActive(false);
+                    }
+                }
                 typeText.text = card.tipo;
                 newCard.name = card.nombre;
             }
@@ -454,8 +477,104 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Timer reference is not set in GameManager.");
         }
     }
+    
+  private void IncreaseScore(int nutritionalValue)
+  {
+      totalScore += nutritionalValue;
+      UpdateScoreUI();
+      Debug.Log($"Score increased by {nutritionalValue}. New score: {totalScore}");
+      
+      // Descartar todas las cartas del dropzone
+      foreach (var cardList in DropZoneManager.Instance.cardsInDropZone)
+      {
+          foreach (GameObject card in cardList)
+          {
+              Destroy(card);
+          }
+          cardList.Clear();
+      }
+      
+      // Resetear los turnos
+      for (int i = 0; i < DropZoneManager.Instance.numberOfDropZones; i++)
+      {
+          DropZoneManager.Instance.turnsLeft[i] = DropZoneManager.Instance.initialTurns[i];
+      }
+
+      // Popular las cartas de la mano
+      ShuffleAndAddNewCardsToPlayerArea();
+  }
+  public void UpdateUserScores()
+  {
+      StartCoroutine(UpdateUserScoresCoroutine());
+  }
+
+private IEnumerator UpdateUserScoresCoroutine()
+{
+    // Obtener el puntaje total y el nivel actual del usuario
+    int puntajeMaximo = totalScore;
+    float averageDishesPerEvent = 1;  // Implementa esta funci�n seg�n tu l�gica
+    
+    // Obtener el nivel actual desde PlayerPrefs
+    int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);  // Valor predeterminado de 1 si no se encuentra
+    string nivel = GetLevelNameFromIndex(currentLevel);  // Convertir el �ndice de nivel a su nombre correspondiente
+
+
+    // Crear una instancia de ScoresData con los datos a enviar
+    ScoresData scores = new ScoresData
+    {
+        puntaje_maximo = puntajeMaximo,
+        average_dishes_per_event = averageDishesPerEvent,
+        nivel = string.IsNullOrEmpty(nivel) ? "unknown" : nivel
+    };
+
+
+    // Crear la solicitud POST
+    string url = "http://localhost:3000/update-scores";
+    var request = new UnityWebRequest(url, "POST");
+    byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+    request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    request.downloadHandler = new DownloadHandlerBuffer();
+    request.SetRequestHeader("Content-Type", "application/json");
+
+    // Agregar el token de sesi�n a los encabezados de la solicitud
+    string token = PlayerPrefs.GetString("token");
+    request.SetRequestHeader("token", token.Trim('"'));
+
+    // Enviar la solicitud y esperar la respuesta
+    yield return request.SendWebRequest();
+
+    if (request.result == UnityWebRequest.Result.Success)
+    {
+        Debug.Log("User scores updated successfully");
+        Debug.Log("Response: " + request.downloadHandler.text);
+    }
+    else
+    {
+        Debug.LogError("Error updating user scores: " + request.error);
+        Debug.LogError("Response: " + request.downloadHandler.text);
+    }
 }
 
+  // M?todo para convertir el ?ndice de nivel a su nombre correspondiente
+  private string GetLevelNameFromIndex(int levelIndex)
+  {
+      switch (levelIndex)
+      {
+          case 1:
+              return "wedding";
+          case 2:
+              return "picnic";
+          case 3:
+              return "christmas_dinner";
+          default:
+              return "unknown"; // Valor predeterminado si el ?ndice no coincide con ning?n nivel v?lido
+      }
+  }
+}
+
+
+
+// Extensiones para la utilidad de JSON y la función de mezclar listas (shuffle)
 public static class JsonHelper
 {
     public static T[] FromJson<T>(string json)
@@ -490,6 +609,8 @@ public static class ListExtensions
     }
 }
 
+
+  
 // Clase Recipe para representar las recetas
 [System.Serializable]
 public class Recipe
@@ -501,4 +622,12 @@ public class Recipe
     public Dictionary<string, List<string>> ingredientes;
     public int belongs_to_level;
     public object id_libro;
+}
+
+[System.Serializable]
+public class ScoresData
+{
+    public int puntaje_maximo;
+    public float average_dishes_per_event;
+    public string nivel;
 }

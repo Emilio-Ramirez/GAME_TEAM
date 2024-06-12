@@ -2,7 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-// MODIF
+using UnityEngine.Networking;
+using System.Collections;
+
 public class Timer : MonoBehaviour
 {
     public float totalTime = 60f;  // Tiempo total para el juego en segundos (1 minuto)
@@ -54,14 +56,24 @@ public class Timer : MonoBehaviour
                 currentTime = 0;
                 isTimerRunning = false;
                 Debug.Log("¡Se acabó el tiempo!");
+                GameManager.Instance.UpdateUserScores();
+                Debug.Log("Scores updated");
 
                 // Detener el audio
                 StopAudio();
 
                 if (OnTimeUp != null)
-                {
-                    OnTimeUp();  // Desencadena el evento cuando se acaba el tiempo
-                }
+                  {
+                      OnTimeUp();  // Desencadena el evento cuando se acaba el tiempo
+                      if (GameManager.Instance != null)
+                      {
+                          GameManager.Instance.UpdateUserScores();
+                      }
+                      else
+                      {
+                          Debug.LogError("GameManager instance not found.");
+                      }
+                  }
                 // Instancia y muestra la pantalla de Game Over
                 if (gameOverScreenPrefab != null)
                 {

@@ -122,13 +122,6 @@ const Sesion = sequelize.define('Sesion', {
   ultima_actividad: {
     type: DataTypes.DATE,
   },
-  id_usuario: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Usuario,
-      key: 'id_usuario',
-    },
-  },
 });
 
 // Export the Sequelize instance and models
