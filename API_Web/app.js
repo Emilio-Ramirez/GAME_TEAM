@@ -171,7 +171,7 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
 
     console.log('Updating scores for user ID:', userId);
     console.log('Received scores:', { puntaje_maximo, average_dishes_per_event, nivel });
-
+    s
     // Validate that the nivel is one of the valid levels
     const validLevels = ['wedding', 'picnic', 'christmas_dinner'];
     if (!validLevels.includes(nivel)) {
@@ -229,6 +229,93 @@ app.get('/recetas', async (req, res) => {
 
 app.listen(process.env.API_PORT, () => {
   console.log(`Server is running on http://localhost:${process.env.API_PORT}`);
+});
+
+
+// ************************ 
+// Estadisticas
+// ************************
+
+
+app.get('/estadistica-usuarios-semana', async (req, res) => {
+  try {
+    const usuariosSemana = await Sesion.count({
+      where: {
+        fecha_inicio: {
+          [Op.gte]: moment().subtract(7, 'days').toDate()
+        }
+      },
+      distinct: true,
+      col: 'id_usuario'
+    });
+    res.json({ cantidad_usuarios_semana: usuariosSemana });
+  } catch (error) {
+    console.error('Error al obtener la cantidad de usuarios en la œltima semana:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.get('/estadistica-recetas-top', async (req, res) => {
+  try {
+    const recetasTop = await Receta.findAll({
+      attributes: ['id_receta', 'ingredientes'],
+      order: [['utilizaciones', 'DESC']],
+      limit: 5
+    });
+    res.json(recetasTop);
+  } catch (error) {
+    console.error('Error al obtener las recetas m‡s utilizadas:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+
+//Usa la vista v_partidas_por_nivel
+app.get('/estadistica-promedio-puntaje-nivel', async (req, res) => {
+  try {
+    const promedioPuntajeNivel = await sequelize.query(
+      'SELECT titulo, AVG(puntaje) AS promedio_puntaje FROM v_partidas_por_nivel GROUP BY titulo',
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    res.json(promedioPuntajeNivel);
+  } catch (error) {
+    console.error('Error al obtener el promedio de puntaje por nivel:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.get('/estadistica-partidas-semana', async (req, res) => {
+  try {
+    const partidasSemana = await Partida.findAll({
+      attributes: [
+        [sequelize.fn('DATE', sequelize.col('fecha')), 'dia'],
+        [sequelize.fn('COUNT', sequelize.col('id_partida')), 'cantidad_partidas']
+      ],
+      where: {
+        fecha: {
+          [Op.gte]: moment().subtract(7, 'days').toDate()
+        }
+      },
+      group: [sequelize.fn('DATE', sequelize.col('fecha'))]
+    });
+    res.json(partidasSemana);
+  } catch (error) {
+    console.error('Error al obtener la cantidad de partidas jugadas por dÃ­a en la Ãºltima semana:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.get('/estadistica-usuarios-rango', async (req, res) => {
+  try {
+    const usuariosPorRango = await Usuario.findAll({
+      attributes: ['usr_rank', [sequelize.fn('COUNT', sequelize.col('id_usuario')), 'cantidad_usuarios']],
+      group: ['usr_rank']
+    });
+    res.json(usuariosPorRango);
+  } catch (error) {
+    console.error('Error al obtener la cantidad de usuarios por rango:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
 
 module.exports = app;
