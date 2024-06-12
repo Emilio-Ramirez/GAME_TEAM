@@ -123,9 +123,7 @@ h2 {
 }
 
 .instruction-text{
-<<<<<<< Updated upstream
-    color: #da9c78;
-=======
+
     color: #593E2E;
 }
 
@@ -154,5 +152,5 @@ h2 {
     height: 100%;
     width: 0;
     background-color: #4caf50;
->>>>>>> Stashed changes
+
 }
