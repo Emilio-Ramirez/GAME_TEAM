@@ -1,40 +1,44 @@
 const express = require('express');
+const path = require('path');
 const { sequelize, Usuario, Receta, Nivel, Partida, Cartas, Sesion } = require('./db');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const { v4: uuidv4 } = require('uuid');
-const path = require('path');
 
 const app = express();
 
 // Load environment variables
 dotenv.config();
 
-// Add these lines before your routes
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Use path.join to construct paths
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/Build', express.static(path.join(__dirname, 'public', 'RecipeWeb', 'Build')));
 
-// Función GET para la pagina de inicio
+app.use((req, res, next) => {
+    if (req.path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+    }
+    next();
+});
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Use path.join to construct paths
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Función GET para el player
 app.get('/play', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'play.html')); // Use path.join to construct paths
+    res.sendFile(path.join(__dirname, 'public', 'play.html'));
 });
 
-// Función GET para la pagina de documentación
 app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'about.html')); // Use path.join to construct paths
+    res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
 
-// Función GET para la pagina us
 app.get('/us', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'us.html')); // Use path.join to construct paths
+    res.sendFile(path.join(__dirname, 'public', 'us.html'));
 });
+
 
 app.post('/register', async (req, res) => {
     try {

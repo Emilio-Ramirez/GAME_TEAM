@@ -242,16 +242,39 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("Failed to instantiate new card prefab for player area.");
                 continue;
             }
-
             TMP_Text nameText = newCard.transform.Find("NameText")?.GetComponent<TMP_Text>();
             TMP_Text valueText = newCard.transform.Find("ValueText")?.GetComponent<TMP_Text>();
             TMP_Text typeText = newCard.transform.Find("TypeText")?.GetComponent<TMP_Text>();
             Image cardImage = newCard.transform.Find("Image")?.GetComponent<Image>();
+            GameObject nutritionalValueText = newCard.transform.Find("ValueText")?.gameObject; // El objeto que contiene el valor nutricional
+            GameObject nutritionalValueTitle = newCard.transform.Find("Text")?.gameObject; // El objeto "Text" que contiene "Nutritional Value:"
 
             if (nameText != null && valueText != null && typeText != null)
             {
                 nameText.text = card.nombre;
-                valueText.text = card.valor_nutrimental.ToString();
+                if (card.nombre != "points" && card.nombre != "time")
+                {
+                    valueText.text = card.valor_nutrimental.ToString();
+                    if (nutritionalValueTitle != null)
+                    {
+                        nutritionalValueTitle.SetActive(true);
+                    }
+                    if (nutritionalValueText != null)
+                    {
+                        nutritionalValueText.SetActive(true);
+                    }
+                }
+                else
+                {
+                    if (nutritionalValueTitle != null)
+                    {
+                        nutritionalValueTitle.SetActive(false);
+                    }
+                    if (nutritionalValueText != null)
+                    {
+                        nutritionalValueText.SetActive(false);
+                    }
+                }
                 typeText.text = card.tipo;
                 newCard.name = card.nombre;
             }

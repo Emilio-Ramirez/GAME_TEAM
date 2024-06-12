@@ -123,5 +123,36 @@ h2 {
 }
 
 .instruction-text{
+<<<<<<< Updated upstream
     color: #da9c78;
+=======
+    color: #593E2E;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 50px); 
+    padding-top: 60px; 
+}
+
+#unityCanvas {
+    width: 1000px;
+    height: 600px;
+}
+
+#loadingBar {
+    width: 500%;
+    height: 4px;
+    background-color: #ccc;
+    margin-bottom: 15px;
+}
+
+#progressBarFull {
+    height: 100%;
+    width: 0;
+    background-color: #4caf50;
+>>>>>>> Stashed changes
 }
