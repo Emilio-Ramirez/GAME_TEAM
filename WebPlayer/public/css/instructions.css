@@ -54,6 +54,19 @@ body {
     display: flex;
     flex-wrap: wrap; /* Permitir que los contenedores se ajusten en filas múltiples */
 }
+.return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #FF7171;
+    color: white;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-left: auto;
+}
 .column {
     width: 48%;
     box-sizing: border-box;
@@ -72,3 +85,8 @@ body {
 .title-green { color: #568759; }
 .title-orange { color: #F68B3F; }
 .title-purple { color: #99B0AF; }
+
+.chef-container{
+    display: flex;
+}
+
