@@ -42,7 +42,7 @@ async function generarSesionesAleatorias(usuarioId) {
   const fechaActual = moment();
 
   for (let i = 0; i < 10; i++) {
-    const fechaInicio = fechaActual.subtract(Math.random() * 30, 'days').toDate();
+    const fechaInicio = fechaActual.subtract(Math.random() * 7, 'days').toDate();
     const fechaExpiracion = moment(fechaInicio).add(Math.random() * 3, 'days').toDate();
     const ultimaActividad = moment(fechaInicio).add(Math.random() * 72, 'hours').toDate();
 
