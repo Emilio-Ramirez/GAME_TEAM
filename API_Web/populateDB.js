@@ -91,7 +91,7 @@ const recetas = [
     ingredientes: {
       side: ['Olives'],
       verduras: ['Salad', 'Feta Cheese'],
-      protein: [],
+      protein: ['Ham'],
       utils: ['Grill', 'Pan']
     }
   },
