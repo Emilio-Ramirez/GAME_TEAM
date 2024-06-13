@@ -154,3 +154,34 @@ h2 {
     background-color: #4caf50;
 
 }
+
+.chart-container {
+    max-width: 100%;
+    height: 500px;
+    margin: 10px; /* Reducimos el margen vertical */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 150px;
+}
+
+@media (min-width: 768px) {
+    .chart-container {
+        max-width: 1000px;
+        height: 600px;
+    }
+}

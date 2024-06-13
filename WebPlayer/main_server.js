@@ -72,6 +72,50 @@ app.get('/api/usuarios-por-rango', async (req, res) => {
   }
 });
 
+// Nueva ruta para obtener la cantidad de usuarios por semana
+app.get('/api/estadistica-usuarios-semana', async (req, res) => {
+  try {
+    const data = await fetchData(`${apiBaseUrl}/estadistica-usuarios-semana`);
+    res.json(data);
+  } catch (error) {
+    console.error('Error obteniendo la cantidad de usuarios por semana:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Nueva ruta para obtener la cantidad de partidas por semana
+app.get('/api/estadistica-partidas-semana', async (req, res) => {
+  try {
+    const data = await fetchData(`${apiBaseUrl}/estadistica-partidas-semana`);
+    res.json(data);
+  } catch (error) {
+    console.error('Error obteniendo la cantidad de partidas por semana:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Nueva ruta para obtener los top puntajes
+app.get('/api/top-puntajes', async (req, res) => {
+  try {
+    const data = await fetchData(`${apiBaseUrl}/top-puntajes`);
+    res.json(data);
+  } catch (error) {
+    console.error('Error obteniendo los top puntajes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Nueva ruta para obtener el promedio de puntaje por nivel
+app.get('/api/estadistica-promedio-puntaje-nivel', async (req, res) => {
+  try {
+    const data = await fetchData(`${apiBaseUrl}/estadistica-promedio-puntaje-nivel`);
+    res.json(data);
+  } catch (error) {
+    console.error('Error obteniendo el promedio de puntaje por nivel:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 const port = process.env.API_PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

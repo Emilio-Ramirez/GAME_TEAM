@@ -5,7 +5,8 @@ const app = express();
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const { v4: uuidv4 } = require('uuid');
-
+const moment = require('moment')
+const { Op } = require('sequelize');
 // Load environment variables
 dotenv.config();
 
@@ -233,35 +234,60 @@ app.listen(process.env.API_PORT, () => {
 // Estadisticas
 // ************************
 
-
 app.get('/estadistica-usuarios-semana', async (req, res) => {
   try {
-    const usuariosSemana = await Sesion.count({
+    const usuariosPorSemana = await Sesion.findAll({
       where: {
         fecha_inicio: {
-          [Op.gte]: moment().subtract(7, 'days').toDate()
+          [Op.gte]: moment().subtract(70, 'days').toDate()
         }
       },
-      distinct: true,
-      col: 'id_usuario'
+      attributes: [
+        [sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1'), 'semana'], // Calcular el número de semana
+        [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('id_usuario'))), 'cantidad_usuarios']
+      ],
+      group: [sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1')], // Agrupar por semana
+      order: [[sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1'), 'DESC']] // Ordenar por semana descendente
     });
-    res.json({ cantidad_usuarios_semana: usuariosSemana });
+    res.json(usuariosPorSemana);
   } catch (error) {
-    console.error('Error al obtener la cantidad de usuarios en la œltima semana:', error);
+    console.error('Error al obtener la cantidad de usuarios por semana en las últimas 10 semanas:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
-app.get('/estadistica-recetas-top', async (req, res) => {
+app.get('/estadistica-partidas-semana', async (req, res) => {
   try {
-    const recetasTop = await Receta.findAll({
-      attributes: ['id_receta', 'ingredientes'],
-      order: [['utilizaciones', 'DESC']],
-      limit: 5
+    const conexionesPorDia = await Sesion.findAll({
+      where: {
+        fecha_inicio: {
+          [Op.gte]: moment().subtract(10, 'days').toDate()
+        }
+      },
+      attributes: [
+        [sequelize.fn('DATE', sequelize.col('fecha_inicio')), 'dia'],
+        [sequelize.fn('COUNT', sequelize.col('id_usuario')), 'cantidad_conexiones']
+      ],
+      group: [sequelize.fn('DATE', sequelize.col('fecha_inicio'))],
+      order: [['dia', 'DESC']]
     });
-    res.json(recetasTop);
+    res.json(conexionesPorDia);
   } catch (error) {
-    console.error('Error al obtener las recetas m‡s utilizadas:', error);
+    console.error('Error al obtener la cantidad de conexiones por día en los últimos 10 días:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.get('/top-puntajes', async (req, res) => {
+  try {
+    const topUsuarios = await Usuario.findAll({
+      attributes: ['username', 'puntaje_maximo'],
+      order: [['puntaje_maximo', 'DESC']],
+      limit: 10,
+    });
+    res.json(topUsuarios);
+  } catch (error) {
+    console.error('Error al obtener los usuarios con los puntajes más altos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -281,26 +307,6 @@ app.get('/estadistica-promedio-puntaje-nivel', async (req, res) => {
   }
 });
 
-app.get('/estadistica-partidas-semana', async (req, res) => {
-  try {
-    const partidasSemana = await Partida.findAll({
-      attributes: [
-        [sequelize.fn('DATE', sequelize.col('fecha')), 'dia'],
-        [sequelize.fn('COUNT', sequelize.col('id_partida')), 'cantidad_partidas']
-      ],
-      where: {
-        fecha: {
-          [Op.gte]: moment().subtract(7, 'days').toDate()
-        }
-      },
-      group: [sequelize.fn('DATE', sequelize.col('fecha'))]
-    });
-    res.json(partidasSemana);
-  } catch (error) {
-    console.error('Error al obtener la cantidad de partidas jugadas por dÃ­a en la Ãºltima semana:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }
-});
 
 app.get('/estadistica-usuarios-rango', async (req, res) => {
   try {
