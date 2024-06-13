@@ -7,6 +7,12 @@ const dotenv = require('dotenv');
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment')
 const { Op } = require('sequelize');
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'http://localhost:3001'
+}));
+
 // Load environment variables
 dotenv.config();
 
@@ -243,7 +249,7 @@ app.get('/estadistica-usuarios-semana', async (req, res) => {
         }
       },
       attributes: [
-        [sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1'), 'semana'], // Calcular el número de semana
+        [sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1'), 'semana'], // Calcular el nï¿½mero de semana
         [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('id_usuario'))), 'cantidad_usuarios']
       ],
       group: [sequelize.literal('EXTRACT(WEEK FROM fecha_inicio) + 1')], // Agrupar por semana
@@ -251,7 +257,7 @@ app.get('/estadistica-usuarios-semana', async (req, res) => {
     });
     res.json(usuariosPorSemana);
   } catch (error) {
-    console.error('Error al obtener la cantidad de usuarios por semana en las últimas 10 semanas:', error);
+    console.error('Error al obtener la cantidad de usuarios por semana en las ï¿½ltimas 10 semanas:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -273,7 +279,7 @@ app.get('/estadistica-partidas-semana', async (req, res) => {
     });
     res.json(conexionesPorDia);
   } catch (error) {
-    console.error('Error al obtener la cantidad de conexiones por día en los últimos 10 días:', error);
+    console.error('Error al obtener la cantidad de conexiones por dï¿½a en los ï¿½ltimos 10 dï¿½as:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -287,7 +293,7 @@ app.get('/top-puntajes', async (req, res) => {
     });
     res.json(topUsuarios);
   } catch (error) {
-    console.error('Error al obtener los usuarios con los puntajes más altos:', error);
+    console.error('Error al obtener los usuarios con los puntajes mï¿½s altos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });

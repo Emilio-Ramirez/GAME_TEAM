@@ -2,10 +2,16 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
 // Load environment variables
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/Build', express.static(path.join(__dirname, 'public', 'RecipeWeb', 'Build')));
+
+app.use(cors({ 
+  origin: 'http://localhost:3000'
+}));
+
 
 app.use((req, res, next) => {
   if (req.path.endsWith('.js')) {
