@@ -64,12 +64,14 @@ function renderGraficaPastel(data) {
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)', // Rojo
           'rgba(54, 162, 235, 0.2)', // Azul
-          'rgba(255, 206, 86, 0.2)'  // Amarillo
+          'rgba(255, 206, 86, 0.2)',  // Amarillo
+          'rgba(75, 192, 192, 0.2)',  // Verde
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)', // Rojo
           'rgba(54, 162, 235, 1)', // Azul
-          'rgba(255, 206, 86, 1)'  // Amarillo
+          'rgba(255, 206, 86, 1)',  // Amarillo
+          'rgba(75, 192, 192, 1)',  // Verde
         ],
         borderWidth: 1
       }]

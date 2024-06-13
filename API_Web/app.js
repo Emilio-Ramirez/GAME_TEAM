@@ -288,12 +288,17 @@ app.get('/top-puntajes', async (req, res) => {
   try {
     const topUsuarios = await Usuario.findAll({
       attributes: ['username', 'puntaje_maximo'],
+      where: {
+        puntaje_maximo: {
+          [Op.not]: null
+        }
+      },
       order: [['puntaje_maximo', 'DESC']],
       limit: 10,
     });
     res.json(topUsuarios);
   } catch (error) {
-    console.error('Error al obtener los usuarios con los puntajes m�s altos:', error);
+    console.error('Error al obtener los usuarios con los puntajes más altos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -320,7 +325,14 @@ app.get('/estadistica-usuarios-rango', async (req, res) => {
       attributes: ['usr_rank', [sequelize.fn('COUNT', sequelize.col('id_usuario')), 'cantidad_usuarios']],
       group: ['usr_rank']
     });
-    res.json(usuariosPorRango);
+
+    const usuariosPorRangoFiltrados = usuariosPorRango.filter(usuario => usuario.usr_rank !== null);
+
+    if (usuariosPorRangoFiltrados.length === 0) {
+      return res.status(404).json({ mensaje: 'No hay usuarios registrados' });
+    }
+
+    res.json(usuariosPorRangoFiltrados);
   } catch (error) {
     console.error('Error al obtener la cantidad de usuarios por rango:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
