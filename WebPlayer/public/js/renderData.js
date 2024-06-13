@@ -51,7 +51,6 @@ fetch('/api/estadistica-promedio-puntaje-nivel')
 function renderGraficaPastel(data) {
   const labels = data.map(item => item.usr_rank);
   const valores = data.map(item => item.cantidad_usuarios);
-
   const ctx = document.getElementById('grafica-pastel').getContext('2d');
   new Chart(ctx, {
     type: 'pie',
@@ -76,6 +75,12 @@ function renderGraficaPastel(data) {
       }]
     },
     options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Distribución de Usuarios por Rango'
+        }
+      },
       scales: {
         y: {
           beginAtZero: true

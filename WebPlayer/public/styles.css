@@ -232,10 +232,26 @@ h2 {
     margin: 0 10px;
 }
 
-@media (min-width: 768px) {
+.chart-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 400px;
+    margin: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .chart-row {
+        flex-direction: column;
+    }
+
     .chart-container {
-        max-width: 1000px;
-        height: 600px;
-        padding-top: 200px
+        width: 90%;
+        margin: 10px 0;
     }
 }
