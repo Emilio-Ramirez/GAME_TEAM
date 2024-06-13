@@ -169,8 +169,6 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
     const userId = req.session.id_usuario;
     const { puntaje_maximo, average_dishes_per_event, nivel } = req.body;
 
-    console.log('Updating scores for user ID:', userId);
-    console.log('Received scores:', { puntaje_maximo, average_dishes_per_event, nivel });
     s
     // Validate that the nivel is one of the valid levels
     const validLevels = ['wedding', 'picnic', 'christmas_dinner'];
@@ -186,7 +184,6 @@ app.post('/update-scores', authenticateSession, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log('User found:', user.toJSON());
 
     // Update the user's scores
     user.puntaje_maximo = puntaje_maximo;
