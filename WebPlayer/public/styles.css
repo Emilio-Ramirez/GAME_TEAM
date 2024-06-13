@@ -212,9 +212,30 @@ h2 {
     margin-top: 150px;
 }
 
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #4B3E2F;
+    padding: 10px;
+    position: relative; /* Para asegurarse de que esté en el flujo del documento */
+    z-index: 10; /* Asegurarse de que esté encima de otros elementos */
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+}
+
 @media (min-width: 768px) {
     .chart-container {
         max-width: 1000px;
         height: 600px;
+        padding-top: 200px
     }
 }
