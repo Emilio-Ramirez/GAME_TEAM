@@ -4,7 +4,6 @@ const Chart = require('chart.js/auto');
 fetch('/api/usuarios-por-rango')
   .then(response => response.json())
   .then(data => {
-    renderUsuariosPorRango(data);
     renderGraficaPastel(data);
   })
   .catch(error => {
