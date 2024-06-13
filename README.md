@@ -298,39 +298,44 @@ _(example)_
 
 ### **Abstract Classes / Components**
 
-1. BasePhysics
-   1. BasePlayer
-   2. BaseEnemy
-   3. BaseObject
-2. BaseObstacle
-3. BaseInteractable
-
-_(example)_
+1. **CardBase**
+   - Represents the base class for all game cards.
+   - Common methods like `Draw()`, `Play()`, and `Discard()`.
+2. **UIElementBase**
+   - Base for all user interface elements.
+   - Common methods like `Show()`, `Hide()`, and `Update()`.
+3. **GameEventBase**
+   - Base class for game events.
+   - Common methods like `StartEvent()`, `EndEvent()`, and `UpdateEvent()`.
 
 ### **Derived Classes / Component Compositions**
 
-1. BasePlayer
-   1. PlayerMain
-   2. PlayerUnlockable
-2. BaseEnemy
-   1. EnemyWolf
-   2. EnemyGoblin
-   3. EnemyGuard (may drop key)
-   4. EnemyGiantRat
-   5. EnemyPrisoner
-3. BaseObject
-   1. ObjectRock (pick-up-able, throwable)
-   2. ObjectChest (pick-up-able, throwable, spits gold coins with key)
-   3. ObjectGoldCoin (cha-ching!)
-   4. ObjectKey (pick-up-able, throwable)
-4. BaseObstacle
-   1. ObstacleWindow (destroyed with rock)
-   2. ObstacleWall
-   3. ObstacleGate (watches to see if certain buttons are pressed)
-5. BaseInteractable
-   1. InteractableButton
-
-_(example)_
+1. **CardBase**
+   - **IngredientCard**
+     - `ProtinCard`
+     - `SideCard`
+     - `VegetableCard`
+   - **UtensilCard**
+   - **SpecialCard**
+     - `BonusCard`
+     - `PenaltyCard`
+2. **UIElementBase**
+   - **Button**
+     - `StartButton`
+     - `DeckButton`
+     - `ArrowsButton`
+     - `MenuButton`
+   - **Panel**
+     - `HandPanel`
+     - `GamePanel`
+     - `ScorePanel`
+   - **Text**
+     - `TimerText`
+     - `ScoreText`
+3. **GameEventBase**
+   - **PicnicEvent**
+   - **WeddingEvent**
+   - **ChristmasDinnerEvent**
 
 ## _Graphics_
 
@@ -338,44 +343,42 @@ _(example)_
 
 ### **Style Attributes**
 
-What kinds of colors will you be using? Do you have a limited palette to work with? A post-processed HSV map/image? Consistency is key for immersion.
+**Graphic Style:**
+- **Color Palette:**
+  - Bright and cheerful colors for events like picnic and wedding.
+  - Warm and festive colors for the Christmas dinner.
+- **Style:**
+  - Animated and cartoonish theme.
+  - Minimalistic materials.
+  - Solid, thick outlines with flat hues.
+  - Emphasis on smooth curves over sharp angles.
 
-What kind of graphic style are you going for? Cartoony? Pixel-y? Cute? How, specifically? Solid, thick outlines with flat hues? Non-black outlines with limited tints/shades? Emphasize smooth curvatures over sharp angles? Describe a set of general rules depicting your style here.
-
-Well-designed feedback, both good (e.g. leveling up) and bad (e.g. being hit), are great for teaching the player how to play through trial and error, instead of scripting a lengthy tutorial. What kind of visual feedback are you going to use to let the player know they&#39;re interacting with something? That they \*can\* interact with something?
+**Visual Feedback:**
+- **Interaction:**
+  - Glow or shadow to indicate an interactive element.
+  - Visual effects like flashes or color changes to indicate correct actions or errors.
 
 ### **Graphics Needed**
 
-1. Characters
-   1. Human-like
-      1. Goblin (idle, walking, throwing)
-      2. Guard (idle, walking, stabbing)
-      3. Prisoner (walking, running)
-   2. Other
-      1. Wolf (idle, walking, running)
-      2. Giant Rat (idle, scurrying)
-2. Blocks
-   1. Dirt
-   2. Dirt/Grass
-   3. Stone Block
-   4. Stone Bricks
-   5. Tiled Floor
-   6. Weathered Stone Block
-   7. Weathered Stone Bricks
-3. Ambient
-   1. Tall Grass
-   2. Rodent (idle, scurrying)
-   3. Torch
-   4. Armored Suit
-   5. Chains (matching Weathered Stone Bricks)
-   6. Blood stains (matching Weathered Stone Bricks)
-4. Other
-   1. Chest
-   2. Door (matching Stone Bricks)
-   3. Gate
-   4. Button (matching Weathered Stone Bricks)
-
-_(example)_
+1. **Characters**
+   - **Chef** (various interaction animations)
+   - **Interactive Cards**
+     - `ProtinCard`
+     - `SideCard`
+     - `VegetableCard`
+     - `UtensilCard`
+2. **Ambient Objects**
+   - **Picnic Setting**
+     - Picnic table
+     - Picnic cloth
+   - **Wedding Setting**
+     - Wedding decorations
+   - **Christmas Setting**
+     - Christmas setting
+3. **User Interface**
+   - Buttons (start, deck, arrows, menu)
+   - Panels (hand, game, score)
+   - Texts (timer, score)
 
 ## _Sounds/Music_
 
@@ -383,72 +386,74 @@ _(example)_
 
 ### **Style Attributes**
 
-Again, consistency is key. Define that consistency here. What kind of instruments do you want to use in your music? Any particular tempo, key? Influences, genre? Mood?
-
-Stylistically, what kind of sound effects are you looking for? Do you want to exaggerate actions with lengthy, cartoony sounds (e.g. mario&#39;s jump), or use just enough to let the player know something happened (e.g. mega man&#39;s landing)? Going for realism? You can use the music style as a bit of a reference too.
-
-Remember, auditory feedback should stand out from the music and other sound effects so the player hears it well. Volume, panning, and frequency/pitch are all important aspects to consider in both music _and_ sounds - so plan accordingly!
+**Music:**
+- **Instruments:**
+  - Use of cheerful instruments like guitar, ukulele for the picnic.
+  - Orchestral sounds and bells for the wedding.
+  - Festive melodies and choirs for the Christmas dinner.
+- **Genre:**
+  - Lively and cheerful.
+  - Festive and exciting.
+- **Sound Effects:**
+  - Exaggerated for actions (e.g., bell sounds when completing a recipe).
+  - Realistic and short for basic interactions (e.g., click sound when pressing a button).
 
 ### **Sounds Needed**
 
-1. Effects
-   1. Soft Footsteps (dirt floor)
-   2. Sharper Footsteps (stone floor)
-   3. Soft Landing (low vertical velocity)
-   4. Hard Landing (high vertical velocity)
-   5. Glass Breaking
-   6. Chest Opening
-   7. Door Opening
-2. Feedback
-   1. Relieved &quot;Ahhhh!&quot; (health)
-   2. Shocked &quot;Ooomph!&quot; (attacked)
-   3. Happy chime (extra life)
-   4. Sad chime (died)
-
-_(example)_
+1. **Effects**
+   - Soft footsteps (picnic floor)
+   - Festive sounds (wedding and Christmas floors)
+   - Card interaction sounds
+   - Success and failure sounds for recipe combinations
+2. **Feedback**
+   - Happy chime (when completing a recipe)
+   - Sad chime (when discarding a card)
+   - Timer sound (countdown)
+   - Score sound (when updating the score)
 
 ### **Music Needed**
 
-1. Slow-paced, nerve-racking &quot;forest&quot; track
-2. Exciting &quot;castle&quot; track
-3. Creepy, slow &quot;dungeon&quot; track
-4. Happy ending credits track
-5. Rick Astley&#39;s hit #1 single &quot;Never Gonna Give You Up&quot;
-
-_(example)_
+1. **Tracks**
+   - Lively and cheerful melody for the picnic.
+   - Exciting and festive music for the wedding.
+   - Festive and Christmas melody for the Christmas dinner.
 
 ## _Schedule_
 
 ---
 
-_(define the main activities and the expected dates when they should be finished. This is only a reference, and can change as the project is developed)_
+1. **Development of Base Classes**
+   - **CardBase**
+     - Development of derived classes (IngredientCard, UtensilCard, SpecialCard).
+   - **UIElementBase**
+     - Development of buttons, panels, and texts.
+   - **GameEventBase**
+     - Development of specific events (PicnicEvent, WeddingEvent, ChristmasDinnerEvent).
 
-1. develop base classes
-   1. base entity
-      1. base player
-      2. base enemy
-      3. base block
-2. base app state
-   1. game world
-   2. menu world
-3. develop player and basic block classes
-   1. physics / collisions
-4. find some smooth controls/physics
-5. develop other derived classes
-   1. blocks
-      1. moving
-      2. falling
-      3. breaking
-      4. cloud
-   2. enemies
-      1. soldier
-      2. rat
-      3. etc.
-6. design levels
-   1. introduce motion/jumping
-   2. introduce throwing
-   3. mind the pacing, let the player play between lessons
-7. design sounds
-8. design music
+2. **Development of Application State**
+   - **Game World**
+     - Implementation of game logic.
+   - **Menu World**
+     - Implementation of menu logic.
 
-_(example)_
+3. **Development of Player and Basic Block Classes**
+   - Physics and collisions.
+
+4. **Find Smooth Controls/Physics Systems**
+   - Adjustment and testing of controls.
+
+5. **Development of Other Derived Classes**
+   - **Blocks**
+     - Animated, falling, breaking.
+   - **Enemies**
+     - Implementation of enemies if necessary.
+
+6. **Level Design**
+   - Introduction of movement and jumping mechanics.
+   - Introduction of card combination mechanics.
+
+7. **Sound Design**
+   - Creation and implementation of sound effects.
+
+8. **Music Design**
+   - Composition and implementation of music tracks.
